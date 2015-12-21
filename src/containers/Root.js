@@ -9,7 +9,7 @@ export default class Root extends React.Component {
     store: React.PropTypes.object.isRequired
   }
 
-  get content () {
+  get content() {
     return (
       <Router history={this.props.history}>
         {this.props.routes}
@@ -17,7 +17,7 @@ export default class Root extends React.Component {
     )
   }
 
-  get devTools () {
+  get devTools() {
     if (__DEBUG__) {
       if (__DEBUG_NEW_WINDOW__) {
         require('../redux/utils/createDevToolsWindow')(this.props.store)
@@ -28,7 +28,7 @@ export default class Root extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return (
       <Provider store={this.props.store}>
         <div style={{ height: '100%' }}>

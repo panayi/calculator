@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": "eslint-config-airbnb",
   "env": {
     "browser": true,
@@ -56,7 +57,7 @@
     "import/named": 0,
     "import/namespace": 0,
     "import/no-unresolved": [2, {"commonjs": true, "amd": true}],
-    "import/no-named-as-default": 2,
+    "import/no-named-as-default": 0,
     "react/jsx-boolean-value": 2,
     "react/jsx-closing-bracket-location": 2,
     "react/jsx-curly-spacing": 0,
@@ -82,16 +83,13 @@
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
-      "moduleDirectory": ["node_modules", "src", "app", "config"]
+      "moduleDirectory": ["node_modules", "src"]
     }
   },
-  "globals": {
-    "__DEVELOPMENT__": true,
-    "__CLIENT__": true,
-    "__SERVER__": true,
-    "__DISABLE_SSR__": true,
-    "__DEVTOOLS__": true,
-    "socket": true,
-    "webpackIsomorphicTools": true
+  "globals" : {
+    "__DEV__": false,
+    "__PROD__": false,
+    "__DEBUG__": false,
+    "__DEBUG_NEW_WINDOW__": false
   }
 }

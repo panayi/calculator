@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "0.18.0",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "calculator-react-redux-fp",
+  "version": "0.0.1",
+  "description": "Calculator web app built with React, Redux and (hopefully) point free functional programming",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
@@ -18,9 +18,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/panayi/calculator.git"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
+  "author": "Panagiotis Panagi <ppanagi@dynopia.com> (http://www.dynopia.com)",
   "license": "MIT",
   "dependencies": {
     "cssnano": "^3.3.2",

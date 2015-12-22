@@ -71,11 +71,5 @@ describe('(View) Home', () => {
       TestUtils.Simulate.keyPress(input, { key: '0', keyCode: 48, which: 48 })
       _spies.dispatch.should.have.been.called
     })
-
-    it('should not dispatch an action when the pressed key is not found in handlers', () => {
-      _spies.dispatch.should.have.not.been.called
-      TestUtils.Simulate.keyPress(input, { key: '@', keyCode: 64, which: 64 })
-      _spies.dispatch.should.have.not.been.called
-    })
   })
 })

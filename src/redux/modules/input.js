@@ -20,28 +20,18 @@ export const actionTypes = {
 const _actionType = actionType(actionTypes)
 
 const doHandleEvent = R.curry((dispatch, event) => {
-  const __actionType = _actionType(event)
-  if (__actionType) {
-    dispatch({
-      type: __actionType,
-      payload: character(event)
-    })
-  }
+  event.preventDefault()
+  dispatch({
+    type: _actionType(event),
+    payload: character(event)
+  })
 })
 
 const keyEventHandlers = (dispatch) => {
   const _doHandleEvent = doHandleEvent(dispatch)
   return {
-    onKeyDown(event) {
-      if (isNonPrintable(event)) {
-        event.preventDefault()
-        _doHandleEvent(event)
-      }
-    },
-
-    onKeyPress(event) {
-      _doHandleEvent(event)
-    }
+    onKeyDown: R.when(isNonPrintable, _doHandleEvent),
+    onKeyPress: _doHandleEvent
   }
 }
 

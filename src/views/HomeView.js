@@ -1,20 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { keyEventHandlers } from 'redux/modules/input'
+import { actions as keyEventsActions } from 'redux/modules/keyEvents'
 // import styles from './HomeView.scss'
 
-// We define mapStateToProps where we'd normally use
-// the @connect decorator so the data requirements are clear upfront, but then
-// export the decorated component after the main class definition so
-// the component can be tested w/ and w/o being connected.
-// See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
   input: state.input
 })
 export class HomeView extends Component {
   static propTypes = {
     input: PropTypes.string,
-    dispatch: PropTypes.func
+    handleKeyDown: PropTypes.func,
+    handleKeyPress: PropTypes.func
   }
 
   render() {
@@ -28,7 +24,8 @@ export class HomeView extends Component {
           <input
             type="text"
             value={input}
-            {...keyEventHandlers(this.props.dispatch)}
+            onKeyDown={this.props.handleKeyDown}
+            onKeyPress={this.props.handleKeyPress}
             onChange={() => { /* silence React warning */ }}
           />
         </h2>
@@ -38,4 +35,4 @@ export class HomeView extends Component {
   }
 }
 
-export default connect(mapStateToProps)(HomeView)
+export default connect(mapStateToProps, keyEventsActions)(HomeView)

@@ -5,11 +5,12 @@ import {
   compose,
   createStore
 } from 'redux'
+import keyEventHandler from './middleware/keyEventHandler'
 
 export default function configureStore(initialState: ?Object) {
   let createStoreWithMiddleware
 
-  const middleware = applyMiddleware(thunk)
+  const middleware = applyMiddleware(thunk, keyEventHandler)
 
   if (__DEBUG__) {
     createStoreWithMiddleware = compose(
@@ -17,7 +18,9 @@ export default function configureStore(initialState: ?Object) {
       require('containers/DevTools').instrument()
     )
   } else {
-    createStoreWithMiddleware = compose(middleware)
+    createStoreWithMiddleware = compose(
+      middleware
+    )
   }
 
   const store = createStoreWithMiddleware(createStore)(

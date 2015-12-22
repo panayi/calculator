@@ -14,10 +14,10 @@ describe('(Helper) Key', () => {
     actionType = _actionType(actionTypes)
 
     keyEvents = {
-      $: { keyCode: 36, which: null },
-      c: { keyCode: null, which: 67 },
-      backspace: { keyCode: 8, which: 8 },
-      tilde: { keyCode: null, which: 126 }
+      $: $.Event('keypress', { keyCode: 36 }),
+      c: $.Event('keypress', { which: 67 }),
+      backspace: $.Event('keydown', { keyCode: 8, which: 8 }),
+      tilde: $.Event('keypress', { which: 126 })
     }
   })
 

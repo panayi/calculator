@@ -1,6 +1,5 @@
 import { handleActions } from 'redux-actions'
 import R from 'ramda'
-import { actionType, isNonPrintable, character } from '../helpers/key'
 
 // ------------------------------------
 // Constants
@@ -17,27 +16,9 @@ export const actionTypes = {
 // Actions
 // ------------------------------------
 
-const _actionType = actionType(actionTypes)
-
-const doHandleEvent = R.curry((dispatch, event) => {
-  event.preventDefault()
-  dispatch({
-    type: _actionType(event),
-    payload: character(event)
-  })
-})
-
-const keyEventHandlers = (dispatch) => {
-  const _doHandleEvent = doHandleEvent(dispatch)
-  return {
-    onKeyDown: R.when(isNonPrintable, _doHandleEvent),
-    onKeyPress: _doHandleEvent
-  }
-}
-
-export {
-  keyEventHandlers
-}
+// No actions are defined in this module.
+// Actions for this module are dispatched internally
+// in '../middlewares/keyHandler'.
 
 // ------------------------------------
 // Reducer

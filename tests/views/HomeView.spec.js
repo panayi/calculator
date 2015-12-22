@@ -2,6 +2,7 @@
 
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
+import { bindActionCreators } from 'redux'
 import { HomeView } from 'views/HomeView'
 
 function shallowRender(component) {
@@ -26,10 +27,13 @@ describe('(View) Home', () => {
   let _spies
 
   beforeEach(() => {
-    _spies = {
-      dispatch: sinon.spy()
+    _spies = {}
+    _props = {
+      ...bindActionCreators({
+        handleKeyDown: (_spies.handleKeyDown = sinon.spy()),
+        handleKeyPress: (_spies.handleKeyPress = sinon.spy())
+      }, _spies.dispatch = sinon.spy())
     }
-    _props = _spies
 
     _component = shallowRenderWithProps(_props)
     _rendered = renderWithProps(_props)
@@ -53,7 +57,7 @@ describe('(View) Home', () => {
     expect(h2.textContent).to.match(/Enter an expression to calculate/)
   })
 
-  describe('Expression input', () => {
+  describe('Calculator input', () => {
     let input
 
     beforeEach(() => {
@@ -66,9 +70,15 @@ describe('(View) Home', () => {
       expect(input).to.exist
     })
 
-    it('should dispatch an action when the pressed key is found in handlers', () => {
+    it('should dispatch an action on keyDown', () => {
       _spies.dispatch.should.have.not.been.called
-      TestUtils.Simulate.keyPress(input, { key: '0', keyCode: 48, which: 48 })
+      TestUtils.Simulate.keyDown(input, { key: 'r', keyCode: 82, which: 82 })
+      _spies.dispatch.should.have.been.called
+    })
+
+    it('should dispatch an action on keyPress', () => {
+      _spies.dispatch.should.have.not.been.called
+      TestUtils.Simulate.keyPress(input, { key: 'r', keyCode: 82, which: 82 })
       _spies.dispatch.should.have.been.called
     })
   })

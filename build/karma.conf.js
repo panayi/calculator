@@ -17,7 +17,7 @@ const karmaConfig = {
     }
   ],
   singleRun: !argv.watch,
-  frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai'],
+  frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai', 'jquery-1.8.3'],
   preprocessors: {
     [`${config.dir_test}/**/*.js`]: ['webpack']
   },

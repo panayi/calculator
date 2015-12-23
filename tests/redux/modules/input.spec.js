@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import reducer, { actionTypes } from 'redux/modules/input'
+import reducer from 'redux/modules/input'
+import { actionTypes } from 'redux/modules'
 
 describe('(Redux Module) input', () => {
   describe('reducer', () => {
@@ -7,37 +8,42 @@ describe('(Redux Module) input', () => {
       expect(reducer(undefined, {})).to.equal('')
     })
 
-    it('should handle DIGITS', () => {
-      expect(reducer('', {
-        type: actionTypes.DIGITS,
-        payload: '0'
-      })).to.equal('0')
-    })
-
-    it('should handle OPERATIONS', () => {
-      expect(reducer('', {
-        type: actionTypes.OPERATIONS,
-        payload: '+'
-      })).to.equal('+')
-    })
-
-    it('should handle SPACE', () => {
-      expect(reducer('', {
-        type: actionTypes.SPACE,
-        payload: ' '
-      })).to.equal(' ')
+    it('should handle allowed PRINTABLE characters', () => {
+      expect(reducer('9', {
+        type: actionTypes.PRINTABLE,
+        payload: '4'
+      })).to.equal('94')
     })
 
     it('should handle BACKSPACE', () => {
-      expect(reducer('1', {
+      expect(reducer('1*3', {
         type: actionTypes.BACKSPACE
+      })).to.equal('1*')
+    })
+
+    it('should empty the input on ADD_CALCULATION without error', () => {
+      const state = '566*390'
+
+      expect(reducer(state, {
+        type: actionTypes.ADD_CALCULATION,
+        payload: {
+          input: state,
+          output: 2
+        }
       })).to.equal('')
     })
 
-    it('should handle ENTER', () => {
-      expect(reducer('  1 2 3   ', {
-        type: actionTypes.ENTER
-      })).to.equal('123')
+    it('should not change state on ADD_CALCULATION with error', () => {
+      const state = '1+1'
+
+      expect(reducer(state, {
+        type: actionTypes.ADD_CALCULATION,
+        payload: {
+          input: state,
+          output: 2
+        },
+        error: true
+      })).to.equal(state)
     })
   })
 })

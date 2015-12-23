@@ -1,4 +1,4 @@
-import { isNonPrintable, actionType as _actionType, character } from 'redux/helpers/key'
+import { isControl, actionType as _actionType, character } from 'redux/helpers/key'
 
 describe('(Helper) Key', () => {
   let actionTypes
@@ -26,7 +26,7 @@ describe('(Helper) Key', () => {
   })
 
   it('should detect control character', function () {
-    expect(isNonPrintable(keyEvents.backspace)).to.equal(true)
+    expect(isControl(keyEvents.backspace)).to.equal(true)
   })
 
   it('should return the action type when using literal characters', () => {

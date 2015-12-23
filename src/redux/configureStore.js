@@ -1,16 +1,18 @@
-import thunk from 'redux-thunk'
-import rootReducer from './modules'
-import {
-  applyMiddleware,
-  compose,
-  createStore
-} from 'redux'
-import keyEventHandler from './middleware/keyEventHandler'
+import { applyMiddleware, compose, createStore } from 'redux'
+import rootReducer, { actionTypes, actions } from './modules'
+import calculateMiddleware from './middleware/calculate'
+import handleKeyEventsMiddleware from './middleware/handleKeyEvents'
 
 export default function configureStore(initialState: ?Object) {
   let createStoreWithMiddleware
 
-  const middleware = applyMiddleware(thunk, keyEventHandler)
+  const middleware = applyMiddleware(
+    handleKeyEventsMiddleware(actionTypes),
+    calculateMiddleware({
+      calculateActionType: actionTypes.CALCULATE,
+      addCalculation: actions.addCalculation
+    })
+  )
 
   if (__DEBUG__) {
     createStoreWithMiddleware = compose(

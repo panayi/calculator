@@ -4,11 +4,12 @@ import R from 'ramda'
 // Helpers
 // ------------------------------------
 
-// TODO: list is incomplete
-const nonPrintableCharacters = {
+// TODO: the list is incomplete
+// WARNING: Don't define ENTER (keyCode = 16) in this list,
+// otherwise calculations won't be triggered.
+const controlCharacters = {
   8: 'backspace',
   9: 'tab',
-  13: 'enter',
   16: 'shift',
   17: 'ctrl',
   18: 'alt',
@@ -28,7 +29,7 @@ const nonPrintableCharacters = {
 }
 
 // *log :: String -> String
-const log = (xyz) => { // eslint-disable-line no-unused-vars
+const log = (xyz) => {
   console.log(xyz)
   return xyz
 }
@@ -46,8 +47,8 @@ const whichProp = R.prop('which')
 // keyCode :: Event -> KeyCode
 const keyCode = R.either(whichProp, keyCodeProp)
 
-// isNonPrintable :: Event -> Boolean
-const isNonPrintable = R.compose(R.contains(R.__, R.keys(nonPrintableCharacters)), R.toString, keyCode)
+// isControl :: Event -> Boolean
+const isControl = R.compose(R.contains(R.__, R.keys(controlCharacters)), R.toString, keyCode)
 
 // char :: Event -> Char
 const char = R.curry(code => String.fromCharCode(code))
@@ -73,8 +74,9 @@ const actionType = R.curry((actionTypes) => {
 const character = R.compose(char, keyCode)
 
 export {
-  keyCode,
-  isNonPrintable,
   actionType,
-  character
+  character,
+  isControl,
+  keyCode,
+  log
 }

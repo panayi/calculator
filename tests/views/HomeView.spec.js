@@ -31,7 +31,8 @@ describe('(View) Home', () => {
     _props = {
       ...bindActionCreators({
         handleKeyDown: (_spies.handleKeyDown = sinon.spy()),
-        handleKeyPress: (_spies.handleKeyPress = sinon.spy())
+        handleKeyPress: (_spies.handleKeyPress = sinon.spy()),
+        calculate: (_spies.calculate = sinon.spy())
       }, _spies.dispatch = sinon.spy())
     }
 
@@ -61,8 +62,8 @@ describe('(View) Home', () => {
     let input
 
     beforeEach(() => {
-      input = TestUtils.findRenderedDOMComponentWithTag(
-        renderWithProps({ ..._props }), 'input'
+      input = TestUtils.findRenderedDOMComponentWithClass(
+        renderWithProps({ ..._props }), 'calculator'
       )
     })
 
@@ -71,15 +72,35 @@ describe('(View) Home', () => {
     })
 
     it('should dispatch an action on keyDown', () => {
-      _spies.dispatch.should.have.not.been.called
+      _spies.handleKeyDown.should.have.not.been.called
       TestUtils.Simulate.keyDown(input, { key: 'r', keyCode: 82, which: 82 })
-      _spies.dispatch.should.have.been.called
+      _spies.handleKeyDown.should.have.been.called
     })
 
     it('should dispatch an action on keyPress', () => {
-      _spies.dispatch.should.have.not.been.called
+      _spies.handleKeyPress.should.have.not.been.called
       TestUtils.Simulate.keyPress(input, { key: 'r', keyCode: 82, which: 82 })
-      _spies.dispatch.should.have.been.called
+      _spies.handleKeyPress.should.have.been.called
+    })
+  })
+
+  describe('Calculator submit', () => {
+    let form
+
+    beforeEach(() => {
+      form = TestUtils.findRenderedDOMComponentWithTag(
+        renderWithProps({ ..._props }), 'form'
+      )
+    })
+
+    it('should be rendered', () => {
+      expect(form).to.exist
+    })
+
+    it('should dispatch an action on submit', () => {
+      _spies.calculate.should.have.not.been.called
+      TestUtils.Simulate.submit(form)
+      _spies.calculate.should.have.been.called
     })
   })
 })

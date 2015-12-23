@@ -4,19 +4,16 @@ import { createAction } from 'redux-actions'
 // Constants
 // ------------------------------------
 export const actionTypes = {
-  KEY_DOWN: 'KEY_DOWN',
-  KEY_PRESS: 'KEY_PRESS'
+  CALCULATE: 'CALCULATE',
 }
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-const handleKeyDown = createAction(actionTypes.KEY_DOWN)
-const handleKeyPress = createAction(actionTypes.KEY_PRESS)
+const calculate = createAction(actionTypes.CALCULATE)
 
 export const actions = {
-  handleKeyDown,
-  handleKeyPress
+  calculate
 }
 
 // ------------------------------------
@@ -24,4 +21,4 @@ export const actions = {
 // ------------------------------------
 
 // No reducer for this module.
-// The above action is handled internally in 'redux/middlewares/handleKeyEvent'.
+// The above action is handled internally in 'redux/middlewares/calculate'.

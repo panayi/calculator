@@ -19,7 +19,8 @@ const _styles = (themeVariables) => {
       backgroundColor: themeVariables.colors.canvasDark
     },
     inputBox: {
-      backgroundColor: themeVariables.colors.canvasDark
+      backgroundColor: themeVariables.colors.canvasDark,
+      borderTop: `1px solid ${themeVariables.colors.border}`
     }
   }
 }
@@ -55,14 +56,14 @@ export class HomeView extends Component {
     const styles = _styles(themeVariables)
 
     return (
-      <Flex type="box" theme={themeVariables} vertical inner gutter nowrap>
-        <Flex type="content" theme={themeVariables} fullWidth gutter inner style={styles.resultsBox}>
+      <Flex preset="box" theme={themeVariables} vertical inner gutter nowrap>
+        <Flex preset="content" theme={themeVariables} fullWidth gutter inner style={styles.resultsBox}>
           <Calculations
             calculations={calculations}
             themeVariables={themeVariables}
           />
         </Flex>
-        <Flex type="box" theme={themeVariables} fullWidth border={['top']} gutter nogrow style={styles.inputBox}>
+        <Flex preset="box" theme={themeVariables} fullWidth gutter nogrow style={styles.inputBox}>
           <CalculationInput
             input={input}
             onKeyDown={handleKeyDown}

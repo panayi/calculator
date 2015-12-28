@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-expressions */
-
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { HomeView } from 'views/HomeView'
+import CalculationInput from 'components/CalculationInput'
+import Calculations from 'components/Calculations'
+import Flex from 'containers/Flex'
+
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
@@ -35,27 +38,24 @@ describe('(View) Home', () => {
         calculate: (_spies.calculate = sinon.spy())
       }, _spies.dispatch = sinon.spy())
     }
-
     _component = shallowRenderWithProps(_props)
     _rendered = renderWithProps(_props)
   })
 
-  it('Should render as a <div>.', () => {
-    expect(_component.type).to.equal('div')
+  it('Should render as a <Flex>.', () => {
+    expect(_component.type).to.equal(Flex)
   })
 
-  it('Should include an <h1> with welcome text.', () => {
-    const h1 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h1')
+  it('Should include an instance of Calculations.', () => {
+    const calculations = TestUtils.findRenderedComponentWithType(_rendered, Calculations)
 
-    expect(h1).to.exist
-    expect(h1.textContent).to.match(/Welcome to \*the calculator\*/)
+    expect(calculations).to.exist
   })
 
-  it('Should render with an <h2> that includes Sample Counter text.', () => {
-    const h2 = TestUtils.findRenderedDOMComponentWithTag(_rendered, 'h2')
+  it('Should include an instance of CalculationInput.', () => {
+    const calculationInput = TestUtils.findRenderedComponentWithType(_rendered, CalculationInput)
 
-    expect(h2).to.exist
-    expect(h2.textContent).to.match(/Enter an expression to calculate/)
+    expect(calculationInput).to.exist
   })
 
   describe('Calculator input', () => {

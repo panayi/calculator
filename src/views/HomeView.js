@@ -1,20 +1,41 @@
 import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import { actions as calculateActions } from 'redux/modules/calculate'
 import { actions as keyEventsActions } from 'redux/modules/keyEvents'
+import baseThemeVariables from 'themes/_base/variables'
+import CalculationInput from 'components/CalculationInput'
+import Calculations from 'components/Calculations'
+import calculationsSelector from 'redux/selectors/calculations'
+import Flex from 'containers/Flex'
+import inputSelector from 'redux/selectors/input'
+import themeVariablesSelector from 'redux/selectors/themeVariables'
 
-const mapStateToProps = (state) => ({
-  input: state.input,
-  calculations: state.calculations
-})
+const _styles = (themeVariables) => {
+  return {
+    resultsBox: {
+      overflow: 'auto',
+      backgroundColor: themeVariables.colors.canvasDark
+    },
+    inputBox: {
+      backgroundColor: themeVariables.colors.canvasDark
+    }
+  }
+}
+
 export class HomeView extends Component {
   static propTypes = {
-    input: PropTypes.string,
+    calculate: PropTypes.func,
     calculations: PropTypes.array,
     handleKeyDown: PropTypes.func,
     handleKeyPress: PropTypes.func,
-    calculate: PropTypes.func
+    input: PropTypes.string,
+    themeVariables: PropTypes.object
+  }
+
+  static defaultProps = {
+    themeVariables: baseThemeVariables
   }
 
   handleSubmit(event) {
@@ -23,39 +44,43 @@ export class HomeView extends Component {
     calculate(input)
   }
 
-  lastCalculationOutput() {
-    return R.compose(R.prop('output'), R.defaultTo({}), R.head,
-        R.reverse, R.defaultTo([]))(this.props.calculations)
-  }
-
   render() {
-    const { input } = this.props
+    const {
+      calculations,
+      handleKeyDown,
+      handleKeyPress,
+      input,
+      themeVariables
+    } = this.props
+    const styles = _styles(themeVariables)
 
     return (
-      <div className="container">
-        <h1>Welcome to *the calculator*</h1>
-        <h3>
-          Result: {this.lastCalculationOutput()}
-        </h3>
-        <h2>
-          Enter an expression to calculate:&nbsp;
-          <form onSubmit={(event) => this.handleSubmit(event)}>
-          <input
-            type="text"
-            className="calculator"
-            value={input}
-            onKeyDown={this.props.handleKeyDown}
-            onKeyPress={this.props.handleKeyPress}
-            onChange={() => { /* silence React warning */ }}
+      <Flex type="box" theme={themeVariables} vertical inner gutter nowrap>
+        <Flex type="content" theme={themeVariables} fullWidth gutter inner style={styles.resultsBox}>
+          <Calculations
+            calculations={calculations}
+            themeVariables={themeVariables}
           />
-          <input type="submit" style={{ display: 'none' }} />
-          </form>
-        </h2>
-        <hr />
-      </div>
+        </Flex>
+        <Flex type="box" theme={themeVariables} fullWidth border={['top']} gutter nogrow style={styles.inputBox}>
+          <CalculationInput
+            input={input}
+            onKeyDown={handleKeyDown}
+            onKeyPress={handleKeyPress}
+            onSubmit={this.handleSubmit.bind(this)}
+            themeVariables={themeVariables}
+          />
+        </Flex>
+      </Flex>
     )
   }
 }
 
+const selector = createStructuredSelector({
+  calculations: calculationsSelector,
+  input: inputSelector,
+  themeVariables: themeVariablesSelector
+})
 const actions = R.merge(calculateActions, keyEventsActions)
-export default connect(mapStateToProps, actions)(HomeView)
+
+export default connect(selector, actions)(HomeView)

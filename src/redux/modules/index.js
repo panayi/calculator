@@ -8,23 +8,28 @@ import calculations, { actionTypes as calculationsActionTypes,
 import input, { actionTypes as inputActionTypes } from './input'
 import { actionTypes as keyActionTypes, actions as keyActions }
     from './keyEvents'
+import theme, { actionTypes as themeActionTypes,
+    actions as themeActions } from './theme'
 
 const actionTypes = R.mergeAll([
   calculateActionTypes,
   calculationsActionTypes,
   inputActionTypes,
-  keyActionTypes
+  keyActionTypes,
+  themeActionTypes
 ])
 
 const actions = R.mergeAll([
   calculateActions,
   calculationsActions,
-  keyActions
+  keyActions,
+  themeActions
 ])
 
 export default combineReducers({
   calculations,
   input,
+  theme,
   router: routeReducer
 })
 

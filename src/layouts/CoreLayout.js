@@ -1,27 +1,25 @@
-import React from 'react'
-import '../styles/core.scss'
+import React, { Component, PropTypes } from 'react'
+import Flex from 'containers/Flex'
+import ThemeManager from 'containers/ThemeManager'
 
-// Note: Stateless/function components *will not* hot reload!
-// react-transform *only* works on component classes.
-//
-// Since layouts rarely change, they are a good place to
-// leverage React's new Statelesss Functions:
-// https://facebook.github.io/react/docs/reusable-components.html#stateless-functions
-//
-// CoreLayout is a pure function of it's props, so we can
-// define it with a plain javascript function...
-function CoreLayout({ children }) {
-  return (
-    <div className="page-container">
-      <div className="view-container">
-        {children}
-      </div>
-    </div>
-  )
+export default class CoreLayout extends Component {
+  static propTypes = {
+    children: PropTypes.element
+  }
+
+  render() {
+    const { children } = this.props
+    return (
+      <ThemeManager>
+        <Flex type="frame">
+          <Flex type="box" fullHeight nogrow width="150px">
+            Sidebar
+          </Flex>
+          <Flex type="box" fullHeight>
+            {children}
+          </Flex>
+        </Flex>
+      </ThemeManager>
+    )
+  }
 }
-
-CoreLayout.propTypes = {
-  children: React.PropTypes.element
-}
-
-export default CoreLayout

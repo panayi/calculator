@@ -1,6 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
+import ThemeManager from 'containers/ThemeManager'
 
 export default class Root extends React.Component {
   static propTypes = {
@@ -31,10 +32,10 @@ export default class Root extends React.Component {
   render() {
     return (
       <Provider store={this.props.store}>
-        <div>
+        <ThemeManager>
           {this.content}
           {this.devTools}
-        </div>
+        </ThemeManager>
       </Provider>
     )
   }

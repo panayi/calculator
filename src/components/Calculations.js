@@ -1,19 +1,34 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
+import tinycolor from 'tinycolor2'
 
-const _styles = (theme) => {
+const _styles = (themeVariables) => {
   return {
     result: {
-      paddingTop: theme.gutter * 0.65,
-      paddingBottom: theme.gutter * 0.65
+      paddingTop: themeVariables.gutter * 0.65,
+      paddingBottom: themeVariables.gutter * 0.65
     },
     resultOutput: {
-      fontSize: theme.fontSizes.xlarge,
+      fontSize: themeVariables.fontSizes.xlarge,
     },
     resultInput: {
-      fontSize: theme.fontSizes.small,
-      color: theme.colors.accent,
+      fontSize: themeVariables.fontSizes.small,
+      color: themeVariables.colors.accent,
       marginTop: '-2px'
+    },
+    overlay: {
+      position: 'absolute',
+      zIndex: 1,
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      fontSize: '6vw',
+      width: '29%',
+      height: '29%',
+      margin: 'auto',
+      textAlign: 'center',
+      color: tinycolor(themeVariables.colors.canvas).setAlpha(0.7).toString(),
     }
   }
 }
@@ -44,6 +59,7 @@ export default class Calculations extends Component {
 
     return (
       <div>
+        <h1 style={styles.overlay}>calculator</h1>
         {results}
       </div>
     )

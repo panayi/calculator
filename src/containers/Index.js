@@ -31,7 +31,7 @@ const _styles = (themeVariables) => {
   }
 }
 
-export class HomeView extends Component {
+export class Index extends Component {
   static propTypes = {
     calculate: PropTypes.func,
     calculations: PropTypes.array,
@@ -96,4 +96,4 @@ const selector = createStructuredSelector({
 })
 const actions = R.merge(calculateActions, keyEventsActions)
 
-export default connect(selector, actions)(HomeView)
+export default connect(selector, actions)(Index)

@@ -42,7 +42,7 @@ const _styles = (themeVariables) => {
   }
 }
 
-export class CoreLayout extends Component {
+export class App extends Component {
   static propTypes = {
     children: PropTypes.element,
     themeVariables: PropTypes.object
@@ -87,4 +87,4 @@ export class CoreLayout extends Component {
 const selector = createStructuredSelector({
   themeVariables: themeVariablesSelector
 })
-export default connect(selector)(CoreLayout)
+export default connect(selector)(App)

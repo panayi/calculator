@@ -32,5 +32,5 @@ export default {
     small: '12px',
     xlarge: '22px'
   },
-  gutter: 15
+  gutter: 20
 }

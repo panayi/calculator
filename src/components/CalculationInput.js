@@ -10,8 +10,8 @@ const _styles = (themeVariables) => {
       border: 'none',
       boxShadow: 'none',
       outline: 'none',
-      fontSize: '18px',
-      padding: '12px 15px 12px 0',
+      fontSize: '20px',
+      padding: '16px 15px 16px 0',
       width: '100%',
       color: themeVariables.colors.accent
     }

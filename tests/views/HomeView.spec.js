@@ -2,7 +2,7 @@
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
-import { HomeView } from 'views/HomeView'
+import { Index } from 'containers/Index'
 import CalculationInput from 'components/CalculationInput'
 import Calculations from 'components/Calculations'
 import Flex from 'containers/Flex'
@@ -16,11 +16,11 @@ function shallowRender(component) {
 }
 
 function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<HomeView {...props} />)
+  return TestUtils.renderIntoDocument(<Index {...props} />)
 }
 
 function shallowRenderWithProps(props = {}) {
-  return shallowRender(<HomeView {...props} />)
+  return shallowRender(<Index {...props} />)
 }
 
 describe('(View) Home', () => {

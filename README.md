@@ -6,7 +6,7 @@ Calculator web app built with React, Redux, Ramda and point free functional prog
 ### TODO
 * 100% test coverage
 * Sidebar with keyboard buttons (or what else?)
-* Twitter button
+* ~~Twitter button~~
 * Add a light theme
 * Add `<ThemeSelector>` buttons
 * Scroll to bottom *after* inserting a calculation.

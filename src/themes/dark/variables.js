@@ -1,16 +1,27 @@
+import tinycolor from 'tinycolor2'
+
+const primaryColor = '#16a085'
+const accentColor = '#FAAB22'
+const accent2Color = '#EE213D'
+const canvasColor = '#27313E'
+const primaryContrastColor = 'white'
+const accentContrastColor = 'white'
+
 export default {
   fontFamily: '\'Lato\', \'Helvetica\', \'Arial\', sans-serif',
   colors: {
-    primary: '#16a085',
-    primaryDark: '#006A55',
-    accent: '#FAAB22',
-    accent2: '#EE213D',
-    primaryContrast: '#FFF',
-    accentContrast: '#FFF',
-    canvas: '#27313E',
-    canvasDark: '#151D26',
-    text: '#FAAB22',
-    border: '#21262B'
+    primary: primaryColor,
+    primaryDark: tinycolor(primaryColor).saturate(3).darken(17).toString(),
+    accent: accentColor,
+    accent2: accent2Color,
+    primaryContrast: primaryContrastColor,
+    accentContrast: accentContrastColor,
+    canvas: canvasColor,
+    canvasDark: tinycolor(canvasColor).darken(9).toString(),
+    text: primaryColor,
+    fadedText: tinycolor(accentColor).setAlpha(0.3).darken(5).toString(),
+    border: tinycolor(primaryColor).setAlpha(0.35).toString(),
+    lightBorder: tinycolor(canvasColor).darken(3).toString()
   },
   fontSizes: {
     base: '14px',

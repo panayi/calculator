@@ -7,10 +7,8 @@ import CalculationInput from 'components/CalculationInput'
 import Calculations from 'components/Calculations'
 import Flex from 'containers/Flex'
 
-
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
-
   renderer.render(component)
   return renderer.getRenderOutput()
 }
@@ -23,38 +21,36 @@ function shallowRenderWithProps(props = {}) {
   return shallowRender(<Index {...props} />)
 }
 
-describe('(View) Home', () => {
-  let _component
-  let _rendered
-  let _props
-  let _spies
+describe('(Container) Index', () => {
+  let component
+  let rendered
+  let props
+  let spies
 
   beforeEach(() => {
-    _spies = {}
-    _props = {
+    spies = {}
+    props = {
       ...bindActionCreators({
-        handleKeyDown: (_spies.handleKeyDown = sinon.spy()),
-        handleKeyPress: (_spies.handleKeyPress = sinon.spy()),
-        calculate: (_spies.calculate = sinon.spy())
-      }, _spies.dispatch = sinon.spy())
+        handleKeyDown: (spies.handleKeyDown = sinon.spy()),
+        handleKeyPress: (spies.handleKeyPress = sinon.spy()),
+        calculate: (spies.calculate = sinon.spy())
+      }, spies.dispatch = sinon.spy())
     }
-    _component = shallowRenderWithProps(_props)
-    _rendered = renderWithProps(_props)
+    component = shallowRenderWithProps(props)
+    rendered = renderWithProps(props)
   })
 
   it('Should render as a <Flex>.', () => {
-    expect(_component.type).to.equal(Flex)
+    expect(component.type).to.equal(Flex)
   })
 
   it('Should include an instance of Calculations.', () => {
-    const calculations = TestUtils.findRenderedComponentWithType(_rendered, Calculations)
-
+    const calculations = TestUtils.findRenderedComponentWithType(rendered, Calculations)
     expect(calculations).to.exist
   })
 
   it('Should include an instance of CalculationInput.', () => {
-    const calculationInput = TestUtils.findRenderedComponentWithType(_rendered, CalculationInput)
-
+    const calculationInput = TestUtils.findRenderedComponentWithType(rendered, CalculationInput)
     expect(calculationInput).to.exist
   })
 
@@ -63,7 +59,7 @@ describe('(View) Home', () => {
 
     beforeEach(() => {
       input = TestUtils.findRenderedDOMComponentWithClass(
-        renderWithProps({ ..._props }), 'calculator'
+        renderWithProps({ ...props }), 'calculator'
       )
     })
 
@@ -72,15 +68,15 @@ describe('(View) Home', () => {
     })
 
     it('should dispatch an action on keyDown', () => {
-      _spies.handleKeyDown.should.have.not.been.called
+      spies.handleKeyDown.should.have.not.been.called
       TestUtils.Simulate.keyDown(input, { key: 'r', keyCode: 82, which: 82 })
-      _spies.handleKeyDown.should.have.been.called
+      spies.handleKeyDown.should.have.been.called
     })
 
     it('should dispatch an action on keyPress', () => {
-      _spies.handleKeyPress.should.have.not.been.called
+      spies.handleKeyPress.should.have.not.been.called
       TestUtils.Simulate.keyPress(input, { key: 'r', keyCode: 82, which: 82 })
-      _spies.handleKeyPress.should.have.been.called
+      spies.handleKeyPress.should.have.been.called
     })
   })
 
@@ -89,7 +85,7 @@ describe('(View) Home', () => {
 
     beforeEach(() => {
       form = TestUtils.findRenderedDOMComponentWithTag(
-        renderWithProps({ ..._props }), 'form'
+        renderWithProps({ ...props }), 'form'
       )
     })
 
@@ -98,9 +94,9 @@ describe('(View) Home', () => {
     })
 
     it('should dispatch an action on submit', () => {
-      _spies.calculate.should.have.not.been.called
+      spies.calculate.should.have.not.been.called
       TestUtils.Simulate.submit(form)
-      _spies.calculate.should.have.been.called
+      spies.calculate.should.have.been.called
     })
   })
 })

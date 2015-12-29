@@ -1,14 +1,15 @@
 export default function (variables) {
   return {
     body: {
-      fontFamily: variables.fontFamily,
+      fontFamily: variables.fontFamilies.text,
       fontSize: variables.fontSizes.base,
       backgroundColor: variables.colors.canvas,
       color: variables.colors.text
     },
 
-    a: {
-      color: variables.colors.text
+    'h1, h2': {
+      fontFamily: variables.fontFamilies.header,
+      fontWeight: 'normal'
     },
 
     h1: {
@@ -17,6 +18,10 @@ export default function (variables) {
 
     h2: {
       fontSize: variables.fontSizes.large
+    },
+
+    a: {
+      color: variables.colors.text
     },
 
     small: {

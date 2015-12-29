@@ -8,7 +8,6 @@ const primaryContrastColor = 'white'
 const accentContrastColor = 'white'
 
 export default {
-  fontFamily: '\'Lato\', \'Helvetica\', \'Arial\', sans-serif',
   colors: {
     primary: primaryColor,
     primaryDark: tinycolor(primaryColor).saturate(3).darken(17).toString(),
@@ -22,6 +21,10 @@ export default {
     fadedText: tinycolor(accentColor).setAlpha(0.3).darken(5).toString(),
     border: tinycolor(primaryColor).setAlpha(0.35).toString(),
     lightBorder: tinycolor(canvasColor).darken(3).toString()
+  },
+  fontFamilies: {
+    text: '\'Lato\', \'Helvetica\', \'Arial\', sans-serif',
+    header: '\'Lobster\', sans-serif'
   },
   fontSizes: {
     base: '14px',

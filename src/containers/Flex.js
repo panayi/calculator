@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 
 const styles = {
+  alignSelf: R.objOf('alignSelf'),
   boxSizing: R.objOf('boxSizing'),
   center: R.merge(R.objOf('alignItems', 'center'), R.objOf('justifyContent', 'center')),
   flex: R.objOf('display', 'flex'),
@@ -9,11 +10,13 @@ const styles = {
   full: R.merge(R.objOf('width', '100%'), R.objOf('height', '100%')),
   fullHeight: R.objOf('height', '100%'),
   fullWidth: R.objOf('width', '100%'),
-  grow: R.objOf('flexGrow', 1),
+  grow: R.objOf('flexGrow'),
   height: R.objOf('height'),
   horizontal: R.objOf('flexDirection', 'row'),
   horizontalReverse: R.objOf('flexDirection', 'row-reverse'),
   justifyContent: R.objOf('justifyContent'),
+  maxHeight: R.objOf('maxHeight'),
+  maxWidth: R.objOf('maxWidth'),
   nogrow: R.objOf('flexGrow', 0),
   nogutter: R.merge(R.objOf('paddingRight', 0), R.objOf('paddingLeft', 0)),
   noshrink: R.objOf('flexShrink', 0),
@@ -22,7 +25,7 @@ const styles = {
   overflowX: R.objOf('overflowX'),
   overflowY: R.objOf('overflowY'),
   position: R.objOf('position'),
-  shrink: R.objOf('flexShrink', 1),
+  shrink: R.objOf('flexShrink'),
   vertical: R.objOf('flexDirection', 'column'),
   verticalReverse: R.objOf('flexDirection', 'column-reverse'),
   width: R.objOf('width'),
@@ -56,8 +59,8 @@ const presets = {
     styles.overflowX('hidden'),
     styles.overflowY('hidden'),
     styles.flex,
-    styles.grow,
-    styles.shrink,
+    styles.grow(1),
+    styles.shrink(1),
     styles.flexBasis('auto'),
     styles.horizontal,
     styles.nowrap,
@@ -70,8 +73,8 @@ const presets = {
   box: R.mergeAll([
     styles.height('auto'),
     styles.flex,
-    styles.grow,
-    styles.shrink,
+    styles.grow(1),
+    styles.shrink(1),
     styles.flexBasis('auto'),
     styles.horizontal,
     styles.wrap,
@@ -82,8 +85,8 @@ const presets = {
   ]),
 
   content: R.mergeAll([
-    styles.grow,
-    styles.shrink,
+    styles.grow(1),
+    styles.shrink(1),
     styles.flexBasis('auto'),
     styles.boxSizing('border-box')
   ])
@@ -110,6 +113,15 @@ export default class Flex extends Component {
     width: PropTypes.string,
     height: PropTypes.string,
 
+    // align-self: {value}
+    alignSelf: PropTypes.string,
+
+    // max-width: {value}
+    maxWidth: PropTypes.string,
+
+    // max-height: {value}
+    maxHeight: PropTypes.string,
+
     // display: flex
     flex: PropTypes.bool,
 
@@ -131,14 +143,14 @@ export default class Flex extends Component {
     // flex-direction: row-reverse
     horizontalReverse: PropTypes.bool,
 
-    // flex-grow: 1
-    grow: PropTypes.bool,
+    // flex-grow: {value}
+    grow: PropTypes.string,
 
     // flex-grow: 0
     nogrow: PropTypes.bool,
 
-    // flex-shrink: 1
-    shrink: PropTypes.bool,
+    // flex-shrink: {value}
+    shrink: PropTypes.string,
 
     // flex-shrink: 0
     noshrink: PropTypes.bool,
@@ -192,12 +204,12 @@ export default class Flex extends Component {
   }
 
   getStyles() {
-    const props = this.props
     const {
       preset,
       style,
-      theme
-    } = props
+      theme,
+      ...props
+    } = this.props
 
     const propToStyle = R.converge((thisStyle, propValue) =>
         R.is(Function, thisStyle) ? thisStyle(propValue, theme) : thisStyle,

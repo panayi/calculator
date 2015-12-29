@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 
 const styles = {
-  align: R.objOf('justifyContent'),
   boxSizing: R.objOf('boxSizing'),
   center: R.merge(R.objOf('alignItems', 'center'), R.objOf('justifyContent', 'center')),
   flex: R.objOf('display', 'flex'),
@@ -13,8 +12,8 @@ const styles = {
   grow: R.objOf('flexGrow', 1),
   height: R.objOf('height'),
   horizontal: R.objOf('flexDirection', 'row'),
-  horizontalCenter: R.objOf('justifyContent', 'center'),
   horizontalReverse: R.objOf('flexDirection', 'row-reverse'),
+  justifyContent: R.objOf('justifyContent'),
   nogrow: R.objOf('flexGrow', 0),
   nogutter: R.merge(R.objOf('paddingRight', 0), R.objOf('paddingLeft', 0)),
   noshrink: R.objOf('flexShrink', 0),
@@ -25,7 +24,6 @@ const styles = {
   position: R.objOf('position'),
   shrink: R.objOf('flexShrink', 1),
   vertical: R.objOf('flexDirection', 'column'),
-  verticalCenter: R.objOf('alignItems', 'center'),
   verticalReverse: R.objOf('flexDirection', 'column-reverse'),
   width: R.objOf('width'),
   wrap: R.objOf('flexWrap', 'wrap'),
@@ -63,7 +61,7 @@ const presets = {
     styles.flexBasis('auto'),
     styles.horizontal,
     styles.nowrap,
-    styles.align('left'),
+    styles.justifyContent('flex-start'),
     styles.order(0),
     styles.boxSizing('border-box'),
     styles.position('relative')
@@ -77,7 +75,7 @@ const presets = {
     styles.flexBasis('auto'),
     styles.horizontal,
     styles.wrap,
-    styles.align('left'),
+    styles.justifyContent('flex-start'),
     styles.order(0),
     styles.boxSizing('border-box'),
     styles.position('relative'),
@@ -148,9 +146,8 @@ export default class Flex extends Component {
     // flex-basis: {value}
     flexBasis: PropTypes.string,
 
-    // justify-content: left:flex-start|right:flex-end|center:center|
-    //                  justify:space-between|spaced:space-around
-    align: PropTypes.string,
+    // justify-content: {value}
+    justifyContent: PropTypes.string,
 
     // order: {value}
     order: PropTypes.number,
@@ -176,13 +173,7 @@ export default class Flex extends Component {
     // padding-top: {value}; padding-bottom: {value}
     inner: PropTypes.bool,
 
-    // align-items: 'center'
-    verticalCenter: PropTypes.bool,
-
-    // justify-content: 'center'
-    horizontalCenter: PropTypes.bool,
-
-    // verticalCenter && horizontalCenter
+    // align-items: center; justify-content: center;
     center: PropTypes.bool,
 
     // width: 100%

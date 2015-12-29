@@ -24,6 +24,10 @@ export default function (variables) {
       color: variables.colors.text
     },
 
+    'a:hover': {
+      color: variables.colors.accent
+    },
+
     small: {
       fontSize: variables.fontSizes.small
     }

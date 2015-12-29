@@ -14,13 +14,19 @@ import themeVariablesSelector from 'redux/selectors/themeVariables'
 
 const _styles = (themeVariables) => {
   return {
-    resultsBox: {
+    resultsWrapper: {
       overflow: 'auto',
-      backgroundColor: themeVariables.colors.canvasDark
+      backgroundColor: themeVariables.colors.canvasDark,
+    },
+    inputWrapper: {
+      backgroundColor: themeVariables.colors.canvasDark,
+    },
+    margin: {
+      borderRight: `1px solid ${themeVariables.colors.border}`,
+      width: '40px'
     },
     inputBox: {
-      backgroundColor: themeVariables.colors.canvasDark,
-      borderTop: `1px solid ${themeVariables.colors.border}`
+      borderTop: `1px solid ${themeVariables.colors.lightBorder}`
     }
   }
 }
@@ -57,20 +63,26 @@ export class HomeView extends Component {
 
     return (
       <Flex preset="box" theme={themeVariables} vertical inner gutter nowrap>
-        <Flex preset="content" theme={themeVariables} fullWidth gutter inner style={styles.resultsBox}>
-          <Calculations
-            calculations={calculations}
-            themeVariables={themeVariables}
-          />
+        <Flex preset="box" theme={themeVariables} fullWidth gutter style={styles.resultsWrapper}>
+          <Flex preset="content" theme={themeVariables} inner nogrow style={styles.margin} />
+          <Flex preset="content" theme={themeVariables} gutter inner style={styles.resultsBox}>
+            <Calculations
+              calculations={calculations}
+              themeVariables={themeVariables}
+            />
+          </Flex>
         </Flex>
-        <Flex preset="box" theme={themeVariables} fullWidth gutter nogrow style={styles.inputBox}>
-          <CalculationInput
-            input={input}
-            onKeyDown={handleKeyDown}
-            onKeyPress={handleKeyPress}
-            onSubmit={this.handleSubmit.bind(this)}
-            themeVariables={themeVariables}
-          />
+        <Flex preset="box" theme={themeVariables} fullWidth gutterLeft nogrow style={styles.inputWrapper}>
+          <Flex preset="content" nogrow style={styles.margin} />
+          <Flex preset="content" theme={themeVariables} gutter style={styles.inputBox}>
+            <CalculationInput
+              input={input}
+              onKeyDown={handleKeyDown}
+              onKeyPress={handleKeyPress}
+              onSubmit={this.handleSubmit.bind(this)}
+              themeVariables={themeVariables}
+            />
+          </Flex>
         </Flex>
       </Flex>
     )

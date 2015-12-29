@@ -9,11 +9,11 @@ const _styles = (theme) => {
     },
     resultOutput: {
       fontSize: theme.fontSizes.xlarge,
-      color: theme.colors.primaryDark
     },
     resultInput: {
       fontSize: theme.fontSizes.small,
-      marginTop: '-3px'
+      color: theme.colors.accent,
+      marginTop: '-2px'
     }
   }
 }

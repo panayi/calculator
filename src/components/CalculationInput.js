@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-const _styles = (theme) => {
+const _styles = (themeVariables) => {
   return {
     form: {
       width: '100%'
@@ -11,8 +11,9 @@ const _styles = (theme) => {
       boxShadow: 'none',
       outline: 'none',
       fontSize: '18px',
-      padding: '8px 15px 8px 0',
-      width: '100%'
+      padding: '12px 15px 12px 0',
+      width: '100%',
+      color: themeVariables.colors.accent
     }
   }
 }

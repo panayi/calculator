@@ -1,16 +1,13 @@
 import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
 import { actions as calculateActions } from 'redux/modules/calculate'
 import { actions as keyEventsActions } from 'redux/modules/keyEvents'
-import baseThemeVariables from 'themes/_base/variables'
+import { Theme, connect } from 'helpers/connectAndTheme'
 import CalculationInput from 'components/CalculationInput'
 import Calculations from 'components/Calculations'
 import calculationsSelector from 'redux/selectors/calculations'
 import Flex from 'containers/Flex'
 import inputSelector from 'redux/selectors/input'
-import themeVariablesSelector from 'redux/selectors/themeVariables'
 
 const _styles = (theme) => {
   return {
@@ -32,7 +29,7 @@ const _styles = (theme) => {
   }
 }
 
-export class Index extends Component {
+class Index extends Component {
   static propTypes = {
     calculate: PropTypes.func,
     calculations: PropTypes.array,
@@ -40,10 +37,6 @@ export class Index extends Component {
     handleKeyPress: PropTypes.func,
     input: PropTypes.string,
     theme: PropTypes.object
-  }
-
-  static defaultProps = {
-    theme: baseThemeVariables
   }
 
   handleSubmit(event) {
@@ -90,11 +83,16 @@ export class Index extends Component {
   }
 }
 
-const selector = createStructuredSelector({
+Index = Theme(Index)
+
+const selectors = {
   calculations: calculationsSelector,
-  input: inputSelector,
-  theme: themeVariablesSelector
-})
+  input: inputSelector
+}
 const actions = R.merge(calculateActions, keyEventsActions)
 
-export default connect(selector, actions)(Index)
+export default connect(selectors, actions)(Index)
+
+export {
+  Index
+}

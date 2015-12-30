@@ -1,19 +1,12 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
-import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'containers/Flex'
-import themeVariablesSelector from 'redux/selectors/themeVariables'
+import { Theme, connect } from 'helpers/connectAndTheme'
 
-export class App extends Component {
+class App extends Component {
   static propTypes = {
     main: PropTypes.element,
     sidebar: PropTypes.element,
     theme: PropTypes.object
-  }
-
-  static defaultProps = {
-    theme: baseThemeVariables
   }
 
   render() {
@@ -32,7 +25,10 @@ export class App extends Component {
   }
 }
 
-const selector = createStructuredSelector({
-  theme: themeVariablesSelector
-})
-export default connect(selector)(App)
+App = Theme(App)
+
+export default connect()(App)
+
+export {
+  App
+}

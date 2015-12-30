@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
 import Octicon from 'react-octicon'
 import tinycolor from 'tinycolor2'
-import baseThemeVariables from 'themes/_base/variables'
+import { Theme, connect } from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
-import themeVariablesSelector from 'redux/selectors/themeVariables'
 
 const _styles = (themeVariables) => {
   return {
@@ -53,33 +50,29 @@ const config = {
   }
 }
 
-export class IndexSidebar extends Component {
+class IndexSidebar extends Component {
   static propTypes = {
-    themeVariables: PropTypes.object
-  }
-
-  static defaultProps = {
-    themeVariables: baseThemeVariables
+    theme: PropTypes.object
   }
 
   render() {
-    const { themeVariables } = this.props
-    const styles = _styles(themeVariables)
+    const { theme } = this.props
+    const styles = _styles(theme)
 
     return (
-      <Flex preset="box" theme={themeVariables} vertical inner>
-        <Flex preset="content" theme={themeVariables} grow="4" gutter />
-        <Flex preset="content" theme={themeVariables} nogrow alignSelf="center" gutter>
+      <Flex preset="box" theme={theme} vertical inner>
+        <Flex preset="content" theme={theme} grow="4" gutter />
+        <Flex preset="content" theme={theme} nogrow alignSelf="center" gutter>
           <h1 style={styles.logo}>3R</h1>
         </Flex>
-        <Flex preset="box" theme={themeVariables} nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
-          <Flex preset="column" theme={themeVariables} inner="tiny" style={styles.author}>
+        <Flex preset="box" theme={theme} nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
+          <Flex preset="column" theme={theme} inner="tiny" style={styles.author}>
             <a href={config.author.url}>{config.author.name}</a>
           </Flex>
-          <Flex preset="column" theme={themeVariables} inner="tiny">
+          <Flex preset="column" theme={theme} inner="tiny">
             <a href={config.repo.url}><Octicon name="mark-github"/></a>
           </Flex>
-          <Flex preset="column" theme={themeVariables} inner="tiny">
+          <Flex preset="column" theme={theme} inner="tiny">
             <a href="https://twitter.com/share"
               className="twitter-share-button"
               data-text={config.tweet.text}
@@ -93,7 +86,10 @@ export class IndexSidebar extends Component {
   }
 }
 
-const selector = createStructuredSelector({
-  themeVariables: themeVariablesSelector
-})
-export default connect(selector)(IndexSidebar)
+IndexSidebar = Theme(IndexSidebar)
+
+export default connect()(IndexSidebar)
+
+export {
+  IndexSidebar
+}

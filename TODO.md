@@ -15,3 +15,4 @@ TODO
 * Refactor configuration settings (such as author, repo URL) into an easy to edit file. Store the settings into Redux store for easy access within the components.
 * Add a help modal.
 * Arrow up/down: scroll through previous inputs.
+* Use PureRenderMixin

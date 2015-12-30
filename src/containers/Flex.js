@@ -119,7 +119,7 @@ const createPresets = (themeVariables) => {
  * @see https://css-tricks.com/snippets/css/a-guide-to-flexbox/
  * @extends {Component}
  */
-class Flex extends Component {
+export class Flex extends Component {
   static propTypes = {
     theme: PropTypes.object,
     preset: PropTypes.oneOf([
@@ -265,12 +265,7 @@ class Flex extends Component {
   }
 }
 
-Flex = Radium(Flex)
-export {
-  Flex
-}
-
 const selector = createStructuredSelector({
   theme: themeVariablesSelector
 })
-export default connect(selector)(Flex)
+export default connect(selector)(Radium(Flex))

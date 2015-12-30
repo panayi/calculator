@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import App from 'containers/App'
+import { App } from 'containers/App'
 import Flex from 'containers/Flex'
 
 function shallowRender(component) {

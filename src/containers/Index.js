@@ -12,22 +12,22 @@ import Flex from 'containers/Flex'
 import inputSelector from 'redux/selectors/input'
 import themeVariablesSelector from 'redux/selectors/themeVariables'
 
-const _styles = (themeVariables) => {
+const _styles = (theme) => {
   return {
     resultsWrapper: {
       overflow: 'auto',
-      backgroundColor: themeVariables.colors.canvasDark,
+      backgroundColor: theme.colors.canvasDark,
     },
     inputWrapper: {
-      backgroundColor: themeVariables.colors.canvasDark,
+      backgroundColor: theme.colors.canvasDark,
     },
     margin: {
-      borderRight: `1px solid ${themeVariables.colors.border}`,
+      borderRight: `1px solid ${theme.colors.border}`,
       width: '40px',
       minWidth: '40px'
     },
     inputBox: {
-      borderTop: `1px solid ${themeVariables.colors.lightBorder}`
+      borderTop: `1px solid ${theme.colors.lightBorder}`
     }
   }
 }
@@ -39,11 +39,11 @@ export class Index extends Component {
     handleKeyDown: PropTypes.func,
     handleKeyPress: PropTypes.func,
     input: PropTypes.string,
-    themeVariables: PropTypes.object
+    theme: PropTypes.object
   }
 
   static defaultProps = {
-    themeVariables: baseThemeVariables
+    theme: baseThemeVariables
   }
 
   handleSubmit(event) {
@@ -58,30 +58,30 @@ export class Index extends Component {
       handleKeyDown,
       handleKeyPress,
       input,
-      themeVariables
+      theme
     } = this.props
-    const styles = _styles(themeVariables)
+    const styles = _styles(theme)
 
     return (
-      <Flex preset="box" vertical inner gutterRight nowrap>
-        <Flex preset="box" fullWidth gutter style={styles.resultsWrapper}>
-          <Flex preset="content" inner nogrow style={styles.margin} />
-          <Flex preset="content" gutter inner style={styles.resultsBox}>
+      <Flex preset="box" theme={theme} vertical inner gutterRight nowrap>
+        <Flex preset="box" theme={theme} fullWidth gutter style={styles.resultsWrapper}>
+          <Flex preset="content" theme={theme} inner nogrow style={styles.margin} />
+          <Flex preset="content" theme={theme} gutter inner style={styles.resultsBox}>
             <Calculations
               calculations={calculations}
-              themeVariables={themeVariables}
+              theme={theme}
             />
           </Flex>
         </Flex>
-        <Flex preset="box" fullWidth gutterLeft nogrow style={styles.inputWrapper}>
-          <Flex preset="content" nogrow style={styles.margin} />
-          <Flex preset="content" gutter style={styles.inputBox}>
+        <Flex preset="box" theme={theme} fullWidth gutterLeft nogrow style={styles.inputWrapper}>
+          <Flex preset="content" theme={theme} nogrow style={styles.margin} />
+          <Flex preset="content" theme={theme} gutter style={styles.inputBox}>
             <CalculationInput
               input={input}
               onKeyDown={handleKeyDown}
               onKeyPress={handleKeyPress}
               onSubmit={this.handleSubmit.bind(this)}
-              themeVariables={themeVariables}
+              theme={theme}
             />
           </Flex>
         </Flex>
@@ -93,7 +93,7 @@ export class Index extends Component {
 const selector = createStructuredSelector({
   calculations: calculationsSelector,
   input: inputSelector,
-  themeVariables: themeVariablesSelector
+  theme: themeVariablesSelector
 })
 const actions = R.merge(calculateActions, keyEventsActions)
 

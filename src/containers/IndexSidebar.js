@@ -67,19 +67,19 @@ export class IndexSidebar extends Component {
     const styles = _styles(themeVariables)
 
     return (
-      <Flex preset="box" vertical inner>
-        <Flex preset="content" grow="4" gutter />
-        <Flex preset="content" nogrow alignSelf="center" gutter>
+      <Flex preset="box" theme={themeVariables} vertical inner>
+        <Flex preset="content" theme={themeVariables} grow="4" gutter />
+        <Flex preset="content" theme={themeVariables} nogrow alignSelf="center" gutter>
           <h1 style={styles.logo}>3R</h1>
         </Flex>
-        <Flex preset="box" nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
-          <Flex preset="column" inner="tiny" style={styles.author}>
+        <Flex preset="box" theme={themeVariables} nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
+          <Flex preset="column" theme={themeVariables} inner="tiny" style={styles.author}>
             <a href={config.author.url}>{config.author.name}</a>
           </Flex>
-          <Flex preset="column" inner="tiny">
+          <Flex preset="column" theme={themeVariables} inner="tiny">
             <a href={config.repo.url}><Octicon name="mark-github"/></a>
           </Flex>
-          <Flex preset="column" inner="tiny">
+          <Flex preset="column" theme={themeVariables} inner="tiny">
             <a href="https://twitter.com/share"
               className="twitter-share-button"
               data-text={config.tweet.text}

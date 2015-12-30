@@ -18,7 +18,7 @@ function shallowRenderWithProps(props = {}) {
   return shallowRender(<IndexSidebar {...props} />)
 }
 
-describe('(Container) IndexSidebar', () => {
+describe('(Container) IndexSidebar', function () {
   let component
   let rendered
   let props
@@ -29,11 +29,11 @@ describe('(Container) IndexSidebar', () => {
     rendered = renderWithProps(props)
   })
 
-  it('Should render as a <Flex>.', () => {
+  it('Should render as a <Flex>.', function () {
     expect(component.type).to.equal(Flex)
   })
 
-  it('Should render the logo.', () => {
+  it('Should render the logo.', function () {
     const h1Logo = TestUtils.findRenderedDOMComponentWithTag(rendered, 'h1')
     expect(h1Logo).to.exist
     expect(h1Logo.textContent).to.match(/3R/)

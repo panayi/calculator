@@ -2,18 +2,18 @@ import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 import tinycolor from 'tinycolor2'
 
-const _styles = (themeVariables) => {
+const _styles = (theme) => {
   return {
     result: {
-      paddingTop: themeVariables.gutter * 0.65,
-      paddingBottom: themeVariables.gutter * 0.65
+      paddingTop: theme.gutter * 0.65,
+      paddingBottom: theme.gutter * 0.65
     },
     resultOutput: {
-      fontSize: themeVariables.fontSizes.xlarge,
+      fontSize: theme.fontSizes.xlarge,
     },
     resultInput: {
-      fontSize: themeVariables.fontSizes.small,
-      color: themeVariables.colors.accent,
+      fontSize: theme.fontSizes.small,
+      color: theme.colors.accent,
       marginTop: '-2px'
     },
     overlay: {
@@ -28,7 +28,7 @@ const _styles = (themeVariables) => {
       height: '29%',
       margin: 'auto',
       textAlign: 'center',
-      color: tinycolor(themeVariables.colors.canvas).setAlpha(0.7).toString(),
+      color: tinycolor(theme.colors.canvas).setAlpha(0.7).toString(),
     }
   }
 }
@@ -36,7 +36,7 @@ const _styles = (themeVariables) => {
 export default class Calculations extends Component {
   static propTypes = {
     calculations: PropTypes.array,
-    themeVariables: PropTypes.object
+    theme: PropTypes.object
   }
 
   static defaultProps = {
@@ -44,8 +44,8 @@ export default class Calculations extends Component {
   }
 
   render() {
-    const { calculations, themeVariables } = this.props
-    const styles = _styles(themeVariables)
+    const { calculations, theme } = this.props
+    const styles = _styles(theme)
 
     const mapIndexed = R.addIndex(R.map)
     const results = mapIndexed((calculation, index) => {

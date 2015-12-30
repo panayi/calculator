@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
 import R from 'ramda'
 import Radium from 'radium'
-import themeVariablesSelector from 'redux/selectors/themeVariables'
 
 const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 
@@ -60,7 +57,7 @@ const styles = {
   }
 }
 
-const createPresets = (themeVariables) => {
+const createPresets = (theme) => {
   return {
     base: {
     },
@@ -107,19 +104,12 @@ const createPresets = (themeVariables) => {
       styles.shrink(0),
       styles.flexBasis('auto'),
       styles.boxSizing('border-box'),
-      styles.gutter('tiny', themeVariables)
+      styles.gutter('tiny', theme)
     ])
   }
 }
 
-/**
- * Base component for implementing CSS Flex.
- * Avoid using <Flex> component directly whenever possible.
- * Instead use {@link Box}, {@link Column}, {@link Content}, and {@link Frame}.
- * @see https://css-tricks.com/snippets/css/a-guide-to-flexbox/
- * @extends {Component}
- */
-export class Flex extends Component {
+class Flex extends Component {
   static propTypes = {
     theme: PropTypes.object,
     preset: PropTypes.oneOf([
@@ -265,7 +255,4 @@ export class Flex extends Component {
   }
 }
 
-const selector = createStructuredSelector({
-  theme: themeVariablesSelector
-})
-export default connect(selector)(Radium(Flex))
+export default Radium(Flex)

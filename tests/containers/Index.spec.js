@@ -21,7 +21,7 @@ function shallowRenderWithProps(props = {}) {
   return shallowRender(<Index {...props} />)
 }
 
-describe('(Container) Index', () => {
+describe('(Container) Index', function () {
   let component
   let rendered
   let props
@@ -40,21 +40,21 @@ describe('(Container) Index', () => {
     rendered = renderWithProps(props)
   })
 
-  it('Should render as a <Flex>.', () => {
+  it('Should render as a <Flex>.', function () {
     expect(component.type).to.equal(Flex)
   })
 
-  it('Should include an instance of Calculations.', () => {
+  it('Should include an instance of Calculations.', function () {
     const calculations = TestUtils.findRenderedComponentWithType(rendered, Calculations)
     expect(calculations).to.exist
   })
 
-  it('Should include an instance of CalculationInput.', () => {
+  it('Should include an instance of CalculationInput.', function () {
     const calculationInput = TestUtils.findRenderedComponentWithType(rendered, CalculationInput)
     expect(calculationInput).to.exist
   })
 
-  describe('Calculator input', () => {
+  describe('Calculator input', function () {
     let input
 
     beforeEach(() => {
@@ -63,24 +63,24 @@ describe('(Container) Index', () => {
       )
     })
 
-    it('should be rendered', () => {
+    it('should be rendered', function () {
       expect(input).to.exist
     })
 
-    it('should dispatch an action on keyDown', () => {
+    it('should dispatch an action on keyDown', function () {
       spies.handleKeyDown.should.have.not.been.called
       TestUtils.Simulate.keyDown(input, { key: 'r', keyCode: 82, which: 82 })
       spies.handleKeyDown.should.have.been.called
     })
 
-    it('should dispatch an action on keyPress', () => {
+    it('should dispatch an action on keyPress', function () {
       spies.handleKeyPress.should.have.not.been.called
       TestUtils.Simulate.keyPress(input, { key: 'r', keyCode: 82, which: 82 })
       spies.handleKeyPress.should.have.been.called
     })
   })
 
-  describe('Calculator submit', () => {
+  describe('Calculator submit', function () {
     let form
 
     beforeEach(() => {
@@ -89,11 +89,11 @@ describe('(Container) Index', () => {
       )
     })
 
-    it('should be rendered', () => {
+    it('should be rendered', function () {
       expect(form).to.exist
     })
 
-    it('should dispatch an action on submit', () => {
+    it('should dispatch an action on submit', function () {
       spies.calculate.should.have.not.been.called
       TestUtils.Simulate.submit(form)
       spies.calculate.should.have.been.called

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-const _styles = (themeVariables) => {
+const _styles = (theme) => {
   return {
     input: {
       background: 'none',
@@ -10,7 +10,7 @@ const _styles = (themeVariables) => {
       fontSize: '20px',
       padding: '16px 15px 16px 0',
       width: '100%',
-      color: themeVariables.colors.accent
+      color: theme.colors.accent
     }
   }
 }
@@ -21,12 +21,12 @@ export default class CalculationInput extends Component {
     onKeyDown: PropTypes.func,
     onKeyPress: PropTypes.func,
     input: PropTypes.string,
-    themeVariables: PropTypes.object
+    theme: PropTypes.object
   }
 
   render() {
-    const { input, onKeyDown, onKeyPress, onSubmit, themeVariables } = this.props
-    const styles = _styles(themeVariables)
+    const { input, onKeyDown, onKeyPress, onSubmit, theme } = this.props
+    const styles = _styles(theme)
 
     return (
       <form onSubmit={onSubmit}>

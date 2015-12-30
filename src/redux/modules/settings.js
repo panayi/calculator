@@ -29,6 +29,10 @@ const initialState = {
   tweetVia: 'ppanagi'
 }
 
+export {
+  initialState
+}
+
 // ------------------------------------
 // Reducer
 // ------------------------------------

@@ -29,10 +29,10 @@ const controlCharacters = {
 }
 
 // *log :: String -> String
-const log = (xyz) => {
-  console.log(xyz)
-  return xyz
-}
+// const log = (xyz) => {
+//   console.log(xyz)
+//   return xyz
+// }
 
 // ------------------------------------
 // Pure Functions
@@ -77,6 +77,5 @@ export {
   actionType,
   character,
   isControl,
-  keyCode,
-  log
+  keyCode
 }

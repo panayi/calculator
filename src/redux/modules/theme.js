@@ -17,10 +17,19 @@ export const actions = {
 }
 
 // ------------------------------------
+// Initial State
+// ------------------------------------
+const initialState = 'dark'
+
+export {
+  initialState
+}
+
+// ------------------------------------
 // Reducer
 // ------------------------------------
 export default handleActions({
   [actionTypes.SET_THEME]: (state, { payload }) => {
     return payload
   }
-}, 'dark')
+}, initialState)

@@ -2,9 +2,6 @@ import React, { Component, PropTypes } from 'react'
 
 const _styles = (themeVariables) => {
   return {
-    form: {
-      width: '100%'
-    },
     input: {
       background: 'none',
       border: 'none',
@@ -32,7 +29,7 @@ export default class CalculationInput extends Component {
     const styles = _styles(themeVariables)
 
     return (
-      <form onSubmit={onSubmit} style={styles.form}>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           className="calculator"

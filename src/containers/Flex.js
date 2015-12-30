@@ -1,5 +1,11 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import R from 'ramda'
+import Radium from 'radium'
+import themeVariablesSelector from 'redux/selectors/themeVariables'
+
+const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 
 const styles = {
   alignSelf: R.objOf('alignSelf'),
@@ -30,66 +36,80 @@ const styles = {
   verticalReverse: R.objOf('flexDirection', 'column-reverse'),
   width: R.objOf('width'),
   wrap: R.objOf('flexWrap', 'wrap'),
-  gutterLeft: (value, theme) => {
-    return { paddingLeft: `${theme.gutter}px` }
-  },
-  gutterRight: (value, theme) => {
-    return { paddingRight: `${theme.gutter}px` }
-  },
   gutter: (value, theme) => {
+    const key = getGutterKey(value)
     return {
-      paddingRight: `${theme.gutter}px`,
-      paddingLeft: `${theme.gutter}px`
+      paddingRight: `${theme.gutters[key]}px`,
+      paddingLeft: `${theme.gutters[key]}px`
     }
   },
+  gutterLeft: (value, theme) => {
+    const key = getGutterKey(value)
+    return { paddingLeft: `${theme.gutters[key]}px` }
+  },
+  gutterRight: (value, theme) => {
+    const key = getGutterKey(value)
+    return { paddingRight: `${theme.gutters[key]}px` }
+  },
   inner: (value, theme) => {
+    const key = getGutterKey(value)
     return {
-      paddingTop: `${theme.gutter}px`,
-      paddingBottom: `${theme.gutter}px`
+      paddingTop: `${theme.gutters[key]}px`,
+      paddingBottom: `${theme.gutters[key]}px`
     }
   }
 }
 
-const presets = {
-  base: {
-  },
+const createPresets = (themeVariables) => {
+  return {
+    base: {
+    },
 
-  frame: R.mergeAll([
-    styles.height('100vh'),
-    styles.overflowX('hidden'),
-    styles.overflowY('hidden'),
-    styles.flex,
-    styles.grow(1),
-    styles.shrink(1),
-    styles.flexBasis('auto'),
-    styles.horizontal,
-    styles.nowrap,
-    styles.justifyContent('flex-start'),
-    styles.order(0),
-    styles.boxSizing('border-box'),
-    styles.position('relative')
-  ]),
+    frame: R.mergeAll([
+      styles.height('100vh'),
+      styles.overflowX('hidden'),
+      styles.overflowY('hidden'),
+      styles.flex,
+      styles.grow(1),
+      styles.shrink(1),
+      styles.flexBasis('auto'),
+      styles.horizontal,
+      styles.nowrap,
+      styles.justifyContent('flex-start'),
+      styles.order(0),
+      styles.boxSizing('border-box'),
+      styles.position('relative')
+    ]),
 
-  box: R.mergeAll([
-    styles.height('auto'),
-    styles.flex,
-    styles.grow(1),
-    styles.shrink(1),
-    styles.flexBasis('auto'),
-    styles.horizontal,
-    styles.wrap,
-    styles.justifyContent('flex-start'),
-    styles.order(0),
-    styles.boxSizing('border-box'),
-    styles.position('relative'),
-  ]),
+    box: R.mergeAll([
+      styles.height('auto'),
+      styles.flex,
+      styles.grow(1),
+      styles.shrink(1),
+      styles.flexBasis('auto'),
+      styles.horizontal,
+      styles.wrap,
+      styles.justifyContent('flex-start'),
+      styles.order(0),
+      styles.boxSizing('border-box'),
+      styles.position('relative'),
+    ]),
 
-  content: R.mergeAll([
-    styles.grow(1),
-    styles.shrink(1),
-    styles.flexBasis('auto'),
-    styles.boxSizing('border-box')
-  ])
+    content: R.mergeAll([
+      styles.grow(1),
+      styles.shrink(1),
+      styles.flexBasis('auto'),
+      styles.boxSizing('border-box')
+    ]),
+
+    column: R.mergeAll([
+      styles.grow(0),
+      styles.shrink(0),
+      styles.flexBasis('auto'),
+      styles.boxSizing('border-box'),
+      styles.gutter('tiny', themeVariables)
+    ])
+  }
 }
 
 /**
@@ -99,7 +119,7 @@ const presets = {
  * @see https://css-tricks.com/snippets/css/a-guide-to-flexbox/
  * @extends {Component}
  */
-export default class Flex extends Component {
+class Flex extends Component {
   static propTypes = {
     theme: PropTypes.object,
     preset: PropTypes.oneOf([
@@ -173,19 +193,33 @@ export default class Flex extends Component {
     // overflow-y: {value}
     overflowY: PropTypes.object,
 
-    // padding-left: {value}
-    gutterLeft: PropTypes.bool,
+    // padding-left: theme.gutters[{value}]
+    gutterLeft: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
 
-    // padding-right: {value}
-    gutterRight: PropTypes.bool,
+    // padding-right: theme.gutters[{value}]
+    gutterRight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
 
     // gutterLeft && gutterRight
-    gutter: PropTypes.bool,
+    gutter: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
 
-    // padding-top: {value}; padding-bottom: {value}
-    inner: PropTypes.bool,
+    // padding-top: theme.gutters[{value}]
+    // padding-bottom: theme.gutters[{value}]
+    inner: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
 
-    // align-items: center; justify-content: center;
+    // align-items: center;
+    // justify-content: center;
     center: PropTypes.bool,
 
     // width: 100%
@@ -210,6 +244,7 @@ export default class Flex extends Component {
       theme,
       ...props
     } = this.props
+    const presets = createPresets(theme)
 
     const propToStyle = R.converge((thisStyle, propValue) =>
         R.is(Function, thisStyle) ? thisStyle(propValue, theme) : thisStyle,
@@ -229,3 +264,13 @@ export default class Flex extends Component {
     )
   }
 }
+
+Flex = Radium(Flex)
+export {
+  Flex
+}
+
+const selector = createStructuredSelector({
+  theme: themeVariablesSelector
+})
+export default connect(selector)(Flex)

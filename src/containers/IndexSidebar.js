@@ -11,14 +11,24 @@ const _styles = (themeVariables) => {
   return {
     logo: {
       margin: 0,
-      fontSize: '150px',
+      fontSize: '11.7vw',
+      lineHeight: '11.7vw',
       color: tinycolor(themeVariables.colors.text).desaturate(30).setAlpha(0.5).toString(),
+      '@media (max-width: 645px)': {
+        fontSize: '75.465px',
+        lineHeight: '75.465px'
+      }
+    },
+    itemsWrapper: {
+      margin: '0 -3px',
+      '@media (max-width: 645px)': {
+        flexWrap: 'nowrap'
+      }
     },
     author: {
-      paddingRight: '8px'
-    },
-    icon: {
-      paddingRight: '16px'
+      '@media (max-width: 645px)': {
+        display: 'none'
+      }
     },
     tweet: {
       display: 'inline-block',
@@ -57,28 +67,31 @@ export class IndexSidebar extends Component {
     const styles = _styles(themeVariables)
 
     return (
-      <Flex preset="box" theme={themeVariables} vertical inner>
-        <Flex preset="content" theme={themeVariables} grow="4" gutter />
-        <Flex preset="content" nogrow alignSelf="center">
+      <Flex preset="box" vertical inner>
+        <Flex preset="content" grow="4" gutter />
+        <Flex preset="content" nogrow alignSelf="center" gutter>
           <h1 style={styles.logo}>3R</h1>
         </Flex>
-        <Flex preset="content" nogrow alignSelf="center">
-          <a href={config.author.url} style={styles.author}>{config.author.name}</a>
-          <a href={config.repo.url} style={styles.icon}><Octicon name="mark-github"/></a>
-          <span style={styles.tweet}>
+        <Flex preset="box" nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
+          <Flex preset="column" inner="tiny" style={styles.author}>
+            <a href={config.author.url}>{config.author.name}</a>
+          </Flex>
+          <Flex preset="column" inner="tiny">
+            <a href={config.repo.url}><Octicon name="mark-github"/></a>
+          </Flex>
+          <Flex preset="column" inner="tiny">
             <a href="https://twitter.com/share"
               className="twitter-share-button"
               data-text={config.tweet.text}
               data-via={config.tweet.via}
             >
             </a>
-          </span>
+          </Flex>
         </Flex>
       </Flex>
     )
   }
 }
-
 
 const selector = createStructuredSelector({
   themeVariables: themeVariablesSelector

@@ -23,7 +23,8 @@ const _styles = (themeVariables) => {
     },
     margin: {
       borderRight: `1px solid ${themeVariables.colors.border}`,
-      width: '40px'
+      width: '40px',
+      minWidth: '40px'
     },
     inputBox: {
       borderTop: `1px solid ${themeVariables.colors.lightBorder}`
@@ -62,19 +63,19 @@ export class Index extends Component {
     const styles = _styles(themeVariables)
 
     return (
-      <Flex preset="box" theme={themeVariables} vertical inner gutter nowrap>
-        <Flex preset="box" theme={themeVariables} fullWidth gutter style={styles.resultsWrapper}>
-          <Flex preset="content" theme={themeVariables} inner nogrow style={styles.margin} />
-          <Flex preset="content" theme={themeVariables} gutter inner style={styles.resultsBox}>
+      <Flex preset="box" vertical inner gutterRight nowrap>
+        <Flex preset="box" fullWidth gutter style={styles.resultsWrapper}>
+          <Flex preset="content" inner nogrow style={styles.margin} />
+          <Flex preset="content" gutter inner style={styles.resultsBox}>
             <Calculations
               calculations={calculations}
               themeVariables={themeVariables}
             />
           </Flex>
         </Flex>
-        <Flex preset="box" theme={themeVariables} fullWidth gutterLeft nogrow style={styles.inputWrapper}>
+        <Flex preset="box" fullWidth gutterLeft nogrow style={styles.inputWrapper}>
           <Flex preset="content" nogrow style={styles.margin} />
-          <Flex preset="content" theme={themeVariables} gutter style={styles.inputBox}>
+          <Flex preset="content" gutter style={styles.inputBox}>
             <CalculationInput
               input={input}
               onKeyDown={handleKeyDown}

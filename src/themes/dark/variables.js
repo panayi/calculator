@@ -32,5 +32,9 @@ export default {
     small: '12px',
     xlarge: '22px'
   },
-  gutter: 20
+  gutters: {
+    base: 20,
+    small: 10,
+    tiny: 3
+  }
 }

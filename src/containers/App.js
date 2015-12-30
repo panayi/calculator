@@ -12,7 +12,7 @@ export default class App extends Component {
 
     return (
       <Flex preset="frame">
-        <Flex preset="box" fullHeight nogrow width="250px">
+        <Flex preset="box" fullHeight nogrow noshrink width="min-content">
           {sidebar}
         </Flex>
         <Flex preset="box" fullHeight>

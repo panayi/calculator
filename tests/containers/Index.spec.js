@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { Index } from 'containers/Index'
 import CalculationInput from 'components/CalculationInput'
-import Calculations from 'components/Calculations'
+import CalculationsList from 'components/CalculationsList'
 import Flex from 'containers/Flex'
 
 function shallowRender(component) {
@@ -45,7 +45,7 @@ describe('(Container) Index', function () {
   })
 
   it('Should include an instance of Calculations.', function () {
-    const calculations = TestUtils.findRenderedComponentWithType(rendered, Calculations)
+    const calculations = TestUtils.findRenderedComponentWithType(rendered, CalculationsList)
     expect(calculations).to.exist
   })
 

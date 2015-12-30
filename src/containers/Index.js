@@ -4,7 +4,7 @@ import { actions as calculateActions } from 'redux/modules/calculate'
 import { actions as keyEventsActions } from 'redux/modules/keyEvents'
 import { Theme, connect } from 'helpers/connectAndTheme'
 import CalculationInput from 'components/CalculationInput'
-import Calculations from 'components/Calculations'
+import CalculationsList from 'components/CalculationsList'
 import calculationsSelector from 'redux/selectors/calculations'
 import Flex from 'containers/Flex'
 import inputSelector from 'redux/selectors/input'
@@ -60,10 +60,7 @@ class Index extends Component {
         <Flex preset="box" theme={theme} fullWidth gutter style={styles.resultsWrapper}>
           <Flex preset="content" theme={theme} inner nogrow style={styles.margin} />
           <Flex preset="content" theme={theme} gutter inner style={styles.resultsBox}>
-            <Calculations
-              calculations={calculations}
-              theme={theme}
-            />
+            <CalculationsList calculations={calculations} theme={theme} />
           </Flex>
         </Flex>
         <Flex preset="box" theme={theme} fullWidth gutterLeft nogrow style={styles.inputWrapper}>

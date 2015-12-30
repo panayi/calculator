@@ -1,21 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 import tinycolor from 'tinycolor2'
+import Calculation from 'components/Calculation'
 
 const _styles = (theme) => {
   return {
-    result: {
-      paddingTop: theme.gutter * 0.65,
-      paddingBottom: theme.gutter * 0.65
-    },
-    resultOutput: {
-      fontSize: theme.fontSizes.xlarge,
-    },
-    resultInput: {
-      fontSize: theme.fontSizes.small,
-      color: theme.colors.accent,
-      marginTop: '-2px'
-    },
     overlay: {
       position: 'absolute',
       zIndex: 1,
@@ -33,7 +22,7 @@ const _styles = (theme) => {
   }
 }
 
-export default class Calculations extends Component {
+export default class CalculationsList extends Component {
   static propTypes = {
     calculations: PropTypes.array,
     theme: PropTypes.object
@@ -46,15 +35,9 @@ export default class Calculations extends Component {
   render() {
     const { calculations, theme } = this.props
     const styles = _styles(theme)
-
     const mapIndexed = R.addIndex(R.map)
     const results = mapIndexed((calculation, index) => {
-      return (
-        <div key={index} style={styles.result}>
-          <div style={styles.resultOutput}>{calculation.output}</div>
-          <div style={styles.resultInput}>= {calculation.input}</div>
-        </div>
-      )
+      return <Calculation key={index} calculation={calculation} theme={theme} />
     }, calculations)
 
     return (

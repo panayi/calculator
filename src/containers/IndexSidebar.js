@@ -3,6 +3,7 @@ import Octicon from 'react-octicon'
 import tinycolor from 'tinycolor2'
 import { Theme, connect } from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
+import settingsSelector from 'redux/selectors/settings'
 
 const _styles = (themeVariables) => {
   return {
@@ -36,27 +37,18 @@ const _styles = (themeVariables) => {
   }
 }
 
-const config = {
-  author: {
-    name: 'Panagiotis Panagi',
-    url: 'https://github.com/panayi'
-  },
-  repo: {
-    url: 'https://github.com/panayi/calculator'
-  },
-  tweet: {
-    text: '3R Calculator build with React Redux and Ramda',
-    via: 'ppanagi'
-  }
-}
-
 class IndexSidebar extends Component {
   static propTypes = {
+    settings: PropTypes.object,
     theme: PropTypes.object
   }
 
+  static defaultProps = {
+    settings: {}
+  }
+
   render() {
-    const { theme } = this.props
+    const { settings, theme } = this.props
     const styles = _styles(theme)
 
     return (
@@ -67,16 +59,16 @@ class IndexSidebar extends Component {
         </Flex>
         <Flex preset="box" theme={theme} nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
           <Flex preset="column" theme={theme} inner="tiny" style={styles.author}>
-            <a href={config.author.url}>{config.author.name}</a>
+            <a href={settings.authorUrl}>{settings.authorName}</a>
           </Flex>
           <Flex preset="column" theme={theme} inner="tiny">
-            <a href={config.repo.url}><Octicon name="mark-github"/></a>
+            <a href={settings.repoUrl}><Octicon name="mark-github"/></a>
           </Flex>
           <Flex preset="column" theme={theme} inner="tiny">
             <a href="https://twitter.com/share"
               className="twitter-share-button"
-              data-text={config.tweet.text}
-              data-via={config.tweet.via}
+              data-text={settings.tweetText}
+              data-via={settings.tweetVia}
             >
             </a>
           </Flex>
@@ -88,7 +80,11 @@ class IndexSidebar extends Component {
 
 IndexSidebar = Theme(IndexSidebar)
 
-export default connect()(IndexSidebar)
+const selectors = {
+  settings: settingsSelector
+}
+
+export default connect(selectors)(IndexSidebar)
 
 export {
   IndexSidebar

@@ -3,5 +3,7 @@ export default {
   colors: {
   },
   fontSizes: {
+  },
+  gutters: {
   }
 }

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import reducer from 'redux/modules/input'
-import { actionTypes } from 'redux/modules'
+import reducer, { actionTypes as inputActionTypes } from 'redux/modules/input'
+import { actionTypes as calculationsActionTypes } from 'redux/modules/calculations'
 
 describe('(Redux Module) input', () => {
   describe('reducer', () => {
@@ -8,24 +8,20 @@ describe('(Redux Module) input', () => {
       expect(reducer(undefined, {})).to.equal('')
     })
 
-    it('should handle allowed PRINTABLE characters', () => {
+    it('should SET_INPUT', () => {
+      const input = '402+30'
+
       expect(reducer('9', {
-        type: actionTypes.PRINTABLE,
-        payload: '4'
-      })).to.equal('94')
+        type: inputActionTypes.SET_INPUT,
+        payload: input
+      })).to.equal(input)
     })
 
-    it('should handle BACKSPACE', () => {
-      expect(reducer('1*3', {
-        type: actionTypes.BACKSPACE
-      })).to.equal('1*')
-    })
-
-    it('should empty the input on ADD_CALCULATION without error', () => {
-      const state = '566*390'
+    it('should empty the input with error-free ADD_CALCULATION', () => {
+      const state = '1+1'
 
       expect(reducer(state, {
-        type: actionTypes.ADD_CALCULATION,
+        type: calculationsActionTypes.ADD_CALCULATION,
         payload: {
           input: state,
           output: 2
@@ -33,11 +29,11 @@ describe('(Redux Module) input', () => {
       })).to.equal('')
     })
 
-    it('should not change state on ADD_CALCULATION with error', () => {
+    it('should not change state with erroneous ADD_CALCULATION', () => {
       const state = '1+1'
 
       expect(reducer(state, {
-        type: actionTypes.ADD_CALCULATION,
+        type: calculationsActionTypes.ADD_CALCULATION,
         payload: {
           input: state,
           output: 2

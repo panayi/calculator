@@ -1,17 +1,16 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import rootReducer, { actionTypes, actions } from './modules'
+import rootReducer from './modules'
 import calculateMiddleware from './middleware/calculate'
-import handleKeyEventsMiddleware from './middleware/handleKeyEvents'
+import handleKeyPressEventMiddleware from './middleware/handleKeyPressEvent'
+import createToggleButtonMiddleware from './middleware/toggleButton'
 
 export default function configureStore(initialState: ?Object) {
   let createStoreWithMiddleware
 
   const middleware = applyMiddleware(
-    handleKeyEventsMiddleware(actionTypes),
-    calculateMiddleware({
-      calculateActionType: actionTypes.CALCULATE,
-      addCalculation: actions.addCalculation
-    })
+    handleKeyPressEventMiddleware,
+    calculateMiddleware,
+    createToggleButtonMiddleware()
   )
 
   if (__DEBUG__) {
@@ -35,5 +34,6 @@ export default function configureStore(initialState: ?Object) {
       store.replaceReducer(nextRootReducer)
     })
   }
+
   return store
 }

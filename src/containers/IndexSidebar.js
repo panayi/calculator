@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react'
+import R from 'ramda'
 import Octicon from 'react-octicon'
 import tinycolor from 'tinycolor2'
-import { Theme, connect } from 'helpers/connectAndTheme'
+import { buttonClicked as _buttonClicked } from 'redux/modules/events'
+import CalculatorButton from 'components/CalculatorButton'
+import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
-import settingsSelector from 'redux/selectors/settings'
+import { keysSelector, settingsSelector } from 'redux/selectors'
+import pureRender from 'helpers/pureRender'
 
 const _styles = (themeVariables) => {
   return {
@@ -37,23 +41,30 @@ const _styles = (themeVariables) => {
   }
 }
 
-class IndexSidebar extends Component {
+export class IndexSidebar extends Component {
   static propTypes = {
-    settings: PropTypes.object,
-    theme: PropTypes.object
-  }
-
-  static defaultProps = {
-    settings: {}
+    keys: PropTypes.array.isRequired,
+    buttonClicked: PropTypes.func.isRequired,
+    settings: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   render() {
-    const { settings, theme } = this.props
+    const { buttonClicked, keys, settings, theme } = this.props
     const styles = _styles(theme)
+    const mapIndexed = R.addIndex(R.map)
+    const buttons = mapIndexed((key, index) =>
+      <CalculatorButton
+        key={index}
+        onClick={buttonClicked}
+        theKey={key}
+        theme={theme}
+      />
+    , keys)
 
     return (
       <Flex preset="box" theme={theme} vertical inner>
-        <Flex preset="content" theme={theme} grow="4" gutter />
+        <Flex preset="content" theme={theme} grow="4" gutter>{buttons}</Flex>
         <Flex preset="content" theme={theme} nogrow alignSelf="center" gutter>
           <h1 style={styles.logo}>3R</h1>
         </Flex>
@@ -78,14 +89,12 @@ class IndexSidebar extends Component {
   }
 }
 
-IndexSidebar = Theme(IndexSidebar)
-
 const selectors = {
-  settings: settingsSelector
+  settings: settingsSelector,
+  keys: keysSelector
 }
 
-export default connect(selectors)(IndexSidebar)
-
-export {
-  IndexSidebar
-}
+export default connect(
+  selectors,
+  { buttonClicked: _buttonClicked }
+)(pureRender(IndexSidebar))

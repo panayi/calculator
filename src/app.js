@@ -5,9 +5,10 @@ import { syncReduxAndRouter } from 'redux-simple-router'
 import routes from './routes'
 import Root from './containers/Root'
 import configureStore from './redux/configureStore'
+import initialState from 'initialState'
 
 const history = createBrowserHistory()
-const store = configureStore(window.__INITIAL_STATE__)
+const store = configureStore(initialState)
 
 syncReduxAndRouter(history, store, (state) => state.router)
 

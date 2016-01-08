@@ -1,22 +1,23 @@
-import R from 'ramda'
 import React, { Component, PropTypes } from 'react'
-import { actions as calculateActions } from 'redux/modules/calculate'
-import { actions as keyEventsActions } from 'redux/modules/keyEvents'
-import { Theme, connect } from 'helpers/connectAndTheme'
+import { setInput as _setInput } from 'redux/modules/input'
+import { keyPressed as _keyPressed } from 'redux/modules/events'
+import connect from 'helpers/connectAndTheme'
 import CalculationInput from 'components/CalculationInput'
 import CalculationsList from 'components/CalculationsList'
-import calculationsSelector from 'redux/selectors/calculations'
+import { calculationsSelector, inputSelector } from 'redux/selectors'
 import Flex from 'containers/Flex'
-import inputSelector from 'redux/selectors/input'
+import pureRender from 'helpers/pureRender'
 
 const _styles = (theme) => {
   return {
     resultsWrapper: {
       overflow: 'auto',
       backgroundColor: theme.colors.canvasDark,
+      borderRadius: '2px 2px 0 0'
     },
     inputWrapper: {
       backgroundColor: theme.colors.canvasDark,
+      borderRadius: '0 0 2px 2px'
     },
     margin: {
       borderRight: `1px solid ${theme.colors.border}`,
@@ -29,28 +30,21 @@ const _styles = (theme) => {
   }
 }
 
-class Index extends Component {
+export class Index extends Component {
   static propTypes = {
-    calculate: PropTypes.func,
-    calculations: PropTypes.array,
-    handleKeyDown: PropTypes.func,
-    handleKeyPress: PropTypes.func,
-    input: PropTypes.string,
-    theme: PropTypes.object
-  }
-
-  handleSubmit(event) {
-    const { calculate, input } = this.props
-    event.preventDefault()
-    calculate(input)
+    calculations: PropTypes.array.isRequired,
+    input: PropTypes.string.isRequired,
+    keyPressed: PropTypes.func.isRequired,
+    setInput: PropTypes.func.isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   render() {
     const {
       calculations,
-      handleKeyDown,
-      handleKeyPress,
+      keyPressed,
       input,
+      setInput,
       theme
     } = this.props
     const styles = _styles(theme)
@@ -68,9 +62,9 @@ class Index extends Component {
           <Flex preset="content" theme={theme} gutter style={styles.inputBox}>
             <CalculationInput
               input={input}
-              onKeyDown={handleKeyDown}
-              onKeyPress={handleKeyPress}
-              onSubmit={this.handleSubmit.bind(this)}
+              onChange={setInput}
+              onKeyPress={keyPressed}
+              onPaste={(event) => event.preventDefault()}
               theme={theme}
             />
           </Flex>
@@ -80,16 +74,12 @@ class Index extends Component {
   }
 }
 
-Index = Theme(Index)
-
 const selectors = {
   calculations: calculationsSelector,
   input: inputSelector
 }
-const actions = R.merge(calculateActions, keyEventsActions)
 
-export default connect(selectors, actions)(Index)
-
-export {
-  Index
-}
+export default connect(
+  selectors,
+  { keyPressed: _keyPressed, setInput: _setInput }
+)(pureRender(Index))

@@ -17,31 +17,30 @@ const _styles = (theme) => {
 
 export default class CalculationInput extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onKeyPress: PropTypes.func,
-    input: PropTypes.string,
-    theme: PropTypes.object
+    input: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    onKeyPress: PropTypes.func.isRequired,
+    onPaste: PropTypes.func.isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   render() {
-    const { input, onKeyDown, onKeyPress, onSubmit, theme } = this.props
+    const { input, onChange, onKeyPress, onPaste, theme } = this.props
     const styles = _styles(theme)
 
     return (
-      <form onSubmit={onSubmit}>
+      <div>
         <input
           type="text"
-          className="calculator"
+          className="calculator-input"
           value={input}
-          onKeyDown={onKeyDown}
           onKeyPress={onKeyPress}
-          onChange={() => { /* silence React warning */ }}
+          onChange={(event) => { onChange(event.target.value) }}
+          onPaste={onPaste}
           placeholder="Enter an expression to calculate"
           style={styles.input}
         />
-        <input type="submit" style={{ display: 'none' }} />
-      </form>
+      </div>
     )
   }
 }

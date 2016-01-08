@@ -2,6 +2,7 @@
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { IndexSidebar } from 'containers/IndexSidebar'
+import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'containers/Flex'
 
 function shallowRender(component) {
@@ -21,10 +22,14 @@ function shallowRenderWithProps(props = {}) {
 describe('(Container) IndexSidebar', function () {
   let component
   let rendered
-  let props
 
-  beforeEach(() => {
-    props = {}
+  beforeEach(function () {
+    const props = {
+      theme: baseThemeVariables,
+      keys: [],
+      settings: {},
+      buttonClicked: () => {}
+    }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
   })
@@ -39,7 +44,6 @@ describe('(Container) IndexSidebar', function () {
     expect(h1Logo.textContent).to.match(/3R/)
   })
 
-  // TODO: extract config into a passing prop (from redux or some other way)
   it('Should render a link to the author')
   it('Should render a link to the repo')
   it('Should render a tweet button')

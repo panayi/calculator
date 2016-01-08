@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 import Radium from 'radium'
+import pureRender from 'helpers/pureRender'
 
 const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 
@@ -111,7 +112,7 @@ const createPresets = (theme) => {
 
 class Flex extends Component {
   static propTypes = {
-    theme: PropTypes.object,
+    theme: PropTypes.object.isRequired,
     preset: PropTypes.oneOf([
       'frame',
       'box',
@@ -255,4 +256,4 @@ class Flex extends Component {
   }
 }
 
-export default Radium(Flex)
+export default Radium(pureRender(Flex))

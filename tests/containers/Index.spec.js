@@ -3,6 +3,7 @@ import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { Index } from 'containers/Index'
+import baseThemeVariables from 'themes/_base/variables'
 import CalculationInput from 'components/CalculationInput'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'containers/Flex'
@@ -23,17 +24,31 @@ function shallowRenderWithProps(props = {}) {
 
 describe('(Container) Index', function () {
   let component
-  let rendered
   let props
+  let rendered
   let spies
 
   beforeEach(() => {
+    const calculations = [
+      {
+        input: 'gibberish input string expression',
+        output: 293840391
+      },
+      {
+        input: 'another gibberish input',
+        output: 8953094759
+      }
+    ]
+    const input = 'enter something'
     spies = {}
     props = {
+      calculations,
+      input,
+      theme: baseThemeVariables,
       ...bindActionCreators({
-        handleKeyDown: (spies.handleKeyDown = sinon.spy()),
-        handleKeyPress: (spies.handleKeyPress = sinon.spy()),
-        calculate: (spies.calculate = sinon.spy())
+        calculate: (spies.calculate = sinon.spy()),
+        keyPressed: (spies.keyPressed = sinon.spy()),
+        setInput: (spies.setInput = sinon.spy())
       }, spies.dispatch = sinon.spy())
     }
     component = shallowRenderWithProps(props)
@@ -44,59 +59,44 @@ describe('(Container) Index', function () {
     expect(component.type).to.equal(Flex)
   })
 
-  it('Should include an instance of Calculations.', function () {
-    const calculations = TestUtils.findRenderedComponentWithType(rendered, CalculationsList)
-    expect(calculations).to.exist
+  it('Should render an instance of Calculations.', function () {
+    const calculationsList = TestUtils.findRenderedComponentWithType(
+      rendered,
+      CalculationsList
+    )
+
+    expect(calculationsList).to.exist
   })
 
-  it('Should include an instance of CalculationInput.', function () {
-    const calculationInput = TestUtils.findRenderedComponentWithType(rendered, CalculationInput)
+  it('Should render an instance of CalculationInput.', function () {
+    const calculationInput = TestUtils.findRenderedComponentWithType(
+      rendered,
+      CalculationInput
+    )
+
     expect(calculationInput).to.exist
   })
 
   describe('Calculator input', function () {
-    let input
+    let inputComponent
 
     beforeEach(() => {
-      input = TestUtils.findRenderedDOMComponentWithClass(
-        renderWithProps({ ...props }), 'calculator'
+      inputComponent = TestUtils.findRenderedDOMComponentWithClass(
+        renderWithProps({ ...props }), 'calculator-input'
       )
     })
 
     it('should be rendered', function () {
-      expect(input).to.exist
+      expect(inputComponent).to.exist
     })
 
-    it('should dispatch an action on keyDown', function () {
-      spies.handleKeyDown.should.have.not.been.called
-      TestUtils.Simulate.keyDown(input, { key: 'r', keyCode: 82, which: 82 })
-      spies.handleKeyDown.should.have.been.called
-    })
-
-    it('should dispatch an action on keyPress', function () {
-      spies.handleKeyPress.should.have.not.been.called
-      TestUtils.Simulate.keyPress(input, { key: 'r', keyCode: 82, which: 82 })
-      spies.handleKeyPress.should.have.been.called
-    })
-  })
-
-  describe('Calculator submit', function () {
-    let form
-
-    beforeEach(() => {
-      form = TestUtils.findRenderedDOMComponentWithTag(
-        renderWithProps({ ...props }), 'form'
+    it('should dispatch "keyPressed" action on keyPress', function () {
+      spies.keyPressed.should.have.not.been.called
+      TestUtils.Simulate.keyPress(
+        inputComponent,
+        { key: 'r', keyCode: 82, which: 82 }
       )
-    })
-
-    it('should be rendered', function () {
-      expect(form).to.exist
-    })
-
-    it('should dispatch an action on submit', function () {
-      spies.calculate.should.have.not.been.called
-      TestUtils.Simulate.submit(form)
-      spies.calculate.should.have.been.called
+      spies.keyPressed.should.have.been.called
     })
   })
 })

@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import reducer from 'redux/modules/calculations'
-import { actionTypes } from 'redux/modules'
+import reducer, { actionTypes } from 'redux/modules/calculations'
 
 describe('(Redux Module) calculations', () => {
   describe('reducer', () => {

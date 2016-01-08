@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { actions as themeActions } from 'redux/modules/theme'
+import { setTheme as _setTheme } from 'redux/modules/theme'
+import pureRender from 'helpers/pureRender'
 
 export class ThemeSelector extends Component {
   static propTypes = {
     children: PropTypes.node,
-    setTheme: PropTypes.func,
+    setTheme: PropTypes.func.isRequired,
     theme: PropTypes.string.isRequired
   }
 
@@ -20,4 +21,7 @@ export class ThemeSelector extends Component {
   }
 }
 
-export default connect(null, themeActions)(ThemeSelector)
+export default connect(
+  null,
+  { setTheme: _setTheme }
+)(pureRender(ThemeSelector))

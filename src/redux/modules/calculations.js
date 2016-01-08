@@ -11,11 +11,8 @@ export const actionTypes = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-const addCalculation = createAction(actionTypes.ADD_CALCULATION)
+export const addCalculation = createAction(actionTypes.ADD_CALCULATION)
 
-export const actions = {
-  addCalculation
-}
 
 // ------------------------------------
 // Reducer

@@ -2,6 +2,7 @@
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { App } from 'containers/App'
+import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'containers/Flex'
 
 function shallowRender(component) {
@@ -19,18 +20,18 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Container) App', function () {
+  const mainClassName = 'main-component'
+  const sidebarClassName = 'sidebar-component'
   let component
   let rendered
-  let props
-  let main
-  let sidebar
 
   beforeEach(function () {
-    main = <article className="main">Main Component</article>
-    sidebar = <aside className="sidebar">Sidebar Component</aside>
-    props = {
+    const main = <article className={mainClassName}>Main Component</article>
+    const sidebar = <aside className={sidebarClassName}>Sidebar Component</aside>
+    const props = {
       main,
-      sidebar
+      sidebar,
+      theme: baseThemeVariables
     }
 
     component = shallowRenderWithProps(props)
@@ -41,13 +42,21 @@ describe('(Container) App', function () {
     expect(component.type).to.equal(Flex)
   })
 
-  it('Should render {main}.', function () {
-    const mainComponent = TestUtils.findRenderedDOMComponentWithTag(rendered, 'article')
+  it('Should render main component.', function () {
+    const mainComponent = TestUtils.findRenderedDOMComponentWithClass(
+      rendered,
+      mainClassName
+    )
+
     expect(mainComponent).to.exist
   })
 
-  it('Should render {sidebar}.', function () {
-    const sidebarComponent = TestUtils.findRenderedDOMComponentWithTag(rendered, 'aside')
+  it('Should render sidebar component.', function () {
+    const sidebarComponent = TestUtils.findRenderedDOMComponentWithClass(
+      rendered,
+      sidebarClassName
+    )
+
     expect(sidebarComponent).to.exist
   })
 })

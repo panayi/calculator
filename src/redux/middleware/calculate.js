@@ -1,32 +1,42 @@
 import R from 'ramda'
 import math from 'mathjs'
+import { actionTypes as eventsActionTypes } from 'redux/modules/events'
+import { addCalculation } from 'redux/modules/calculations'
+import { keyCode } from 'redux/helpers/pureFunctions'
+import { inputSelector } from 'redux/selectors'
 
-export default function createMiddleware({ calculateActionType, addCalculation }) {
+const isKeyEventAction = R.compose(
+  R.contains(R.__, R.keys(eventsActionTypes)),
+  R.prop('type')
+)
 
-  // isKeyDownAction :: Action -> Boolean
-  const isCalculateAction = R.compose(R.equals(calculateActionType), R.prop('type'))
+const isEnterKeyCode = R.compose(R.equals(13), keyCode, R.prop('payload'))
 
-  // input :: Action -> String
-  const input = R.prop('payload')
+// isEnterEvent :: Action -> Boolean
+const isEnterEvent = R.both(isKeyEventAction, isEnterKeyCode)
 
-  // output :: Action -> Number
-  const output = R.compose(math.eval, input)
+// input :: Store -> String
+const input = R.compose(inputSelector, R.invoker(0, 'getState'))
 
-  // createAction :: Action -> Object
-  const createAction = R.converge(
-      R.compose(addCalculation, R.zipObj(['input', 'output']), R.pair),
-      [input, output]
-  )
+// output :: Store -> Number
+const output = R.compose(math.eval, input)
 
-  return R.curry((store, next, action) => {
-    if (isCalculateAction(action)) {
-      try {
-        return store.dispatch(createAction(action))
-      } catch (error) {
-        return store.dispatch(addCalculation(error))
-      }
-    } else {
-      return next(action)
+
+// createAction :: Action -> Object
+const createAction = R.converge(
+  R.compose(addCalculation, R.zipObj(['input', 'output']), R.pair),
+  [input, output]
+)
+
+// calculate :: Store -> Function -> Action -> Action
+export default R.curry((store, next, action) => {
+  if (isEnterEvent(action)) {
+    try {
+      store.dispatch(createAction(store))
+    } catch (error) {
+      store.dispatch(addCalculation(error))
     }
-  })
-}
+  }
+
+  return next(action)
+})

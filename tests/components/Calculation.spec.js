@@ -3,7 +3,6 @@ import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import R from 'ramda'
 import Calculation from 'components/Calculation'
-import CalculationsList from 'components/CalculationsList'
 import baseThemeVariables from 'themes/_base/variables'
 
 function shallowRender(component) {
@@ -13,36 +12,25 @@ function shallowRender(component) {
 }
 
 function shallowRenderWithProps(props = {}) {
-  return shallowRender(<CalculationsList {...props} />)
+  return shallowRender(<Calculation {...props} />)
 }
 
 function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<CalculationsList {...props} />)
+  return TestUtils.renderIntoDocument(<Calculation {...props} />)
 }
 
 describe('(Component) Calculation', function () {
-  let calculations
+  let calculation
   let component
-  let props
   let rendered
-  let theme
 
   beforeEach(function () {
-    calculations = [
-      {
-        input: 'gibberish input string expression',
-        output: 293840391
-      },
-      {
-        input: 'another gibberish input',
-        output: 8953094759
-      }
-    ]
-    theme = baseThemeVariables
-    props = {
-      calculations,
-      theme
+    calculation = {
+      input: 'gibberish input expression',
+      output: 293840391
     }
+    const theme = baseThemeVariables
+    const props = { calculation, theme }
 
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
@@ -52,9 +40,18 @@ describe('(Component) Calculation', function () {
     expect(component.type).to.equal('div')
   })
 
-  it('should render the right number of <Calculation>', function () {
-    const calculationComponents = TestUtils.scryRenderedComponentsWithType(rendered, Calculation)
+  it('should render calculation.input and calculation.output', function () {
+    const divs = TestUtils.scryRenderedDOMComponentsWithTag(rendered, 'div')
+    const inputDiv = R.find(
+      (div) => div.textContent.indexOf(calculation.input) > -1,
+      divs
+    )
+    const outputDiv = R.find(
+      (div) => div.textContent.indexOf(calculation.output) > -1,
+      divs
+    )
 
-    expect(calculationComponents.length).to.equal(2)
+    expect(inputDiv).to.exist
+    expect(outputDiv).to.exist
   })
 })

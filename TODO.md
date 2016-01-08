@@ -1,18 +1,21 @@
 TODO
 =======================
 
-* 100% test coverage
-* Sidebar with calculator buttons
+* ~~Extract calculation item into Calculation component~~
+* ~~Refactor configuration settings (such as author, repo URL) into an easy to edit file. Store the settings into Redux store for easy access within the components.~~
+* ~~Refactor the application of styles. Currently styles are in multiple places. Consider moving to a single place, or modularize everywhere. Remove Radium if not used.~~
+* ~~Test on smaller screens.~~
 * ~~Twitter button~~
-* Add a light theme
+* ~~Sidebar with calculator buttons~~
+
+* 100% test coverage
 * Add `<ThemeSelector>` buttons
-* Scroll to bottom *after* inserting a calculation.
-* Refactor the application of styles. Currently styles are in multiple places. Consider moving to a single place, or modularize everywhere. Remove Radium if not used.
-* Finalize styles and layout.
-* Test on smaller screens.
-* Calculate and show the result while typing.
-* Numbers next to each calculation (within the margin).
-* Refactor configuration settings (such as author, repo URL) into an easy to edit file. Store the settings into Redux store for easy access within the components.
 * Add a help modal.
+* Add a light theme
 * Arrow up/down: scroll through previous inputs.
+* Calculate and show the result while typing.
+* Finalize styles and layout.
+* Numbers next to each calculation (within the margin).
+* Scroll to bottom *after* inserting a calculation.
 * Use PureRenderMixin
+* Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html

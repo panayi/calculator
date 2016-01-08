@@ -12,19 +12,6 @@ export const actionTypes = {
 // ------------------------------------
 export const setTheme = createAction(actionTypes.SET_THEME)
 
-export const actions = {
-  setTheme
-}
-
-// ------------------------------------
-// Initial State
-// ------------------------------------
-const initialState = 'dark'
-
-export {
-  initialState
-}
-
 // ------------------------------------
 // Reducer
 // ------------------------------------
@@ -32,4 +19,4 @@ export default handleActions({
   [actionTypes.SET_THEME]: (state, { payload }) => {
     return payload
   }
-}, initialState)
+}, '')

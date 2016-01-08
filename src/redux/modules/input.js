@@ -1,37 +1,42 @@
+import { createAction, handleActions } from 'redux-actions'
 import R from 'ramda'
-import { handleActions } from 'redux-actions'
 import { actionTypes as calculationsActionTypes } from './calculations'
+import { actionTypes as eventsActionTypes } from './events'
+import { characterFromKeyCode } from 'redux/helpers/pureFunctions'
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const actionTypes = {
-  // keyCode = 32 is SPACE
-  PRINTABLE: '0,1,2,3,4,5,6,7,8,9,+,-,*,/,#32',
-  BACKSPACE: '#8'
+  SET_INPUT: 'SET_INPUT'
 }
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-
-// No actions are defined in this module.
-// Actions for this module are dispatched internally
-// in '../middlewares/keyHandler'.
+export const addCharacter = createAction(actionTypes.ADD_CHARACTER)
+export const setInput = createAction(actionTypes.SET_INPUT)
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 export default handleActions({
-  [actionTypes.PRINTABLE]: (state, { payload }) => {
-    return state + payload
-  },
-
-  [actionTypes.BACKSPACE]: (state) => {
-    return R.compose(R.join(''), R.dropLast(1), R.split(''))(state)
+  [actionTypes.SET_INPUT]: (state, { payload }) => {
+    return payload
   },
 
   [calculationsActionTypes.ADD_CALCULATION]: (state, { error }) => {
     return error ? state : ''
-  }
+  },
+
+  [eventsActionTypes.BUTTON_CLICKED]:
+    R.useWith(R.concat, [
+      R.identity,
+      R.compose(
+        R.defaultTo(''),
+        characterFromKeyCode,
+        R.prop('keyCode'),
+        R.prop('payload')
+      )
+    ])
 }, '')

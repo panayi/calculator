@@ -22,8 +22,8 @@ export default class Calculation extends Component {
     calculation: PropTypes.shape({
       input: PropTypes.string,
       output: PropTypes.number
-    }),
-    theme: PropTypes.object
+    }).isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   render() {

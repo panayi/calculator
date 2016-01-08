@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import Flex from 'containers/Flex'
-import { Theme, connect } from 'helpers/connectAndTheme'
+import connect from 'helpers/connectAndTheme'
+import pureRender from 'helpers/pureRender'
 
-class App extends Component {
+export class App extends Component {
   static propTypes = {
-    main: PropTypes.element,
+    main: PropTypes.element.isRequired,
     sidebar: PropTypes.element,
-    theme: PropTypes.object
+    theme: PropTypes.object.isRequired
   }
 
   render() {
@@ -25,10 +26,4 @@ class App extends Component {
   }
 }
 
-App = Theme(App)
-
-export default connect()(App)
-
-export {
-  App
-}
+export default connect()(pureRender(App))

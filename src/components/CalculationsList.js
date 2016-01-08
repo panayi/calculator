@@ -24,8 +24,8 @@ const _styles = (theme) => {
 
 export default class CalculationsList extends Component {
   static propTypes = {
-    calculations: PropTypes.array,
-    theme: PropTypes.object
+    calculations: PropTypes.array.isRequired,
+    theme: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -36,9 +36,9 @@ export default class CalculationsList extends Component {
     const { calculations, theme } = this.props
     const styles = _styles(theme)
     const mapIndexed = R.addIndex(R.map)
-    const results = mapIndexed((calculation, index) => {
-      return <Calculation key={index} calculation={calculation} theme={theme} />
-    }, calculations)
+    const results = mapIndexed((calculation, index) =>
+      <Calculation key={index} calculation={calculation} theme={theme} />
+    , calculations)
 
     return (
       <div>

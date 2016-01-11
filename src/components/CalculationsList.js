@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import R from 'ramda'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import tinycolor from 'tinycolor2'
+import { mapIndexed } from 'helpers/pureFunctions'
 import Calculation from 'components/Calculation'
 
 const _styles = (theme) => {
@@ -32,10 +33,11 @@ export default class CalculationsList extends Component {
     calculations: []
   }
 
+  shouldPureComponentUpdate = shouldPureComponentUpdate
+
   render() {
     const { calculations, theme } = this.props
     const styles = _styles(theme)
-    const mapIndexed = R.addIndex(R.map)
     const results = mapIndexed((calculation, index) =>
       <Calculation key={index} calculation={calculation} theme={theme} />
     , calculations)

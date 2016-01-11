@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 
 const _styles = (theme) => {
   return {
@@ -25,6 +26,8 @@ export default class Calculation extends Component {
     }).isRequired,
     theme: PropTypes.object.isRequired
   }
+
+  shouldPureComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { calculation, theme } = this.props

@@ -1,16 +1,14 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import rootReducer from './modules'
-import calculateMiddleware from './middleware/calculate'
-import handleKeyPressEventMiddleware from './middleware/handleKeyPressEvent'
-import createToggleButtonMiddleware from './middleware/toggleButton'
+import handleEventsMiddleware from './middleware/handleEvents'
+import toggleButtonMiddleware from './middleware/toggleButton'
 
 export default function configureStore(initialState: ?Object) {
   let createStoreWithMiddleware
 
   const middleware = applyMiddleware(
-    handleKeyPressEventMiddleware,
-    calculateMiddleware,
-    createToggleButtonMiddleware()
+    handleEventsMiddleware,
+    toggleButtonMiddleware
   )
 
   if (__DEBUG__) {

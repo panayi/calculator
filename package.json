@@ -35,6 +35,7 @@
     "react-addons-shallow-compare": "^0.14.5",
     "react-dom": "^0.14.0",
     "react-octicon": "^2.0.0",
+    "react-pure-render": "^1.0.2",
     "react-redux": "^4.0.0",
     "react-router": "1.0.1",
     "redux": "^3.0.0",

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import Radium from 'radium'
-import pureRender from 'helpers/pureRender'
 
 const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 
@@ -228,6 +228,8 @@ class Flex extends Component {
     style: {}
   }
 
+  shouldPureComponentUpdate = shouldPureComponentUpdate
+
   getStyles() {
     const {
       preset,
@@ -256,4 +258,4 @@ class Flex extends Component {
   }
 }
 
-export default Radium(pureRender(Flex))
+export default Radium(Flex)

@@ -1,6 +1,7 @@
 import R from 'ramda'
-import { keyCode } from 'redux/helpers/pureFunctions'
+import { dispatch, isActionOfType, keyCode } from 'helpers/pureFunctions'
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
+import { doneCalculation } from 'redux/modules/calculations'
 import { keysSelector } from 'redux/selectors'
 
 // ------------------------------------
@@ -8,7 +9,19 @@ import { keysSelector } from 'redux/selectors'
 // ------------------------------------
 
 // event :: Action -> Event
-const event = R.prop('payload')
+const event = R.compose(R.defaultTo({}), R.prop('payload'))
+
+// isEventsAction :: Action :: Boolean
+const isEventsAction = R.either(
+  isActionOfType(eventsActionTypes.BUTTON_CLICKED),
+  isActionOfType(eventsActionTypes.KEY_PRESSED)
+)
+
+// isEnterKey :: Action :: Boolean
+const isEnterKey = R.compose(R.equals(13), keyCode, event)
+
+// isEnterKeyAction :: Action -> Boolean
+const isEnterKeyAction = R.both(isEventsAction, isEnterKey)
 
 // isKeyPressEvent :: Action -> Boolean
 const isKeyPressEvent = R.converge(R.and, [
@@ -39,8 +52,12 @@ const isKeyAllowed = R.curry((store, action) => {
   )(event(action))
 })
 
-// handleKeyPressEvent :: Store -> Function -> Action -> Action|undefined
+// handleEvents :: Store -> Function -> Action -> Action|undefined
 export default R.curry((store, next, action) => {
+  if (isEnterKeyAction(action)) {
+    dispatch(doneCalculation(), store)
+  }
+
   if (!isKeyPressEvent(action) || isKeyAllowed(store)(action)) {
     return next(action)
   }

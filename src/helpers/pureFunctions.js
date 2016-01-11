@@ -1,14 +1,14 @@
 import R from 'ramda'
 
 // ------------------------------------
-// Helpers
+// General
 // ------------------------------------
 
-// dispatch -> Action -> Store -> ?
-const dispatch = R.useWith(R.flip(R.call), [
-  R.identity,
-  R.prop('dispatch')
-])
+// *log :: String -> String
+// const log = (xyz) => {
+//   console.log(xyz)
+//   return xyz
+// }
 
 // invokeLater :: Number -> Number -> Function -> Function
 const invokeLater = (arity, delay, callback) => {
@@ -20,18 +20,24 @@ const invokeLater = (arity, delay, callback) => {
   return arity > 0 ? R.curryN(arity, invoker) : invoker()
 }
 
+// mapIndexed :: Function -> List -> List
+const mapIndexed = R.addIndex(R.map)
+
+// ------------------------------------
+// Redux
+// ------------------------------------
+
+// dispatch -> Action -> Store -> ?
+const dispatch = R.useWith(R.flip(R.call), [
+  R.identity,
+  R.prop('dispatch')
+])
+
 // isActionOfType -> ActionType -> Action -> Boolean
 const isActionOfType = R.useWith(R.equals, [
   R.identity,
   R.prop('type')
 ])
-
-
-// *log :: String -> String
-// const log = R.curry((debugMsg, xyz) => {
-//   console.log(debugMsg + ': ', xyz)
-//   return xyz
-// })
 
 // state -> Selector -> Store -> *
 const state = R.useWith(R.call, [
@@ -64,6 +70,7 @@ export {
   dispatch,
   isActionOfType,
   keyCode,
+  mapIndexed,
   state,
   invokeLater
 }

@@ -1,13 +1,13 @@
 import React, { Component, PropTypes } from 'react'
-import R from 'ramda'
 import Octicon from 'react-octicon'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import tinycolor from 'tinycolor2'
 import { buttonClicked as _buttonClicked } from 'redux/modules/events'
+import { keysSelector, settingsSelector } from 'redux/selectors'
+import { mapIndexed } from 'helpers/pureFunctions'
 import CalculatorButton from 'components/CalculatorButton'
 import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
-import { keysSelector, settingsSelector } from 'redux/selectors'
-import pureRender from 'helpers/pureRender'
 
 const _styles = (themeVariables) => {
   return {
@@ -49,10 +49,11 @@ export class IndexSidebar extends Component {
     theme: PropTypes.object.isRequired
   }
 
+  shouldPureComponentUpdate = shouldPureComponentUpdate
+
   render() {
     const { buttonClicked, keys, settings, theme } = this.props
     const styles = _styles(theme)
-    const mapIndexed = R.addIndex(R.map)
     const buttons = mapIndexed((key, index) =>
       <CalculatorButton
         key={index}
@@ -68,12 +69,18 @@ export class IndexSidebar extends Component {
         <Flex preset="content" theme={theme} nogrow alignSelf="center" gutter>
           <h1 style={styles.logo}>3R</h1>
         </Flex>
-        <Flex preset="box" theme={theme} nogrow gutter="tiny" justifyContent="center" style={styles.itemsWrapper}>
+        <Flex preset="box" theme={theme} nogrow gutter="tiny"
+          justifyContent="center" style={styles.itemsWrapper}
+        >
           <Flex preset="column" theme={theme} inner="tiny" style={styles.author}>
-            <a href={settings.authorUrl}>{settings.authorName}</a>
+            <a className="author-name" href={settings.authorUrl}>
+              {settings.authorName}
+            </a>
           </Flex>
           <Flex preset="column" theme={theme} inner="tiny">
-            <a href={settings.repoUrl}><Octicon name="mark-github"/></a>
+            <a className="repo-url" href={settings.repoUrl}>
+              <Octicon name="mark-github"/>
+            </a>
           </Flex>
           <Flex preset="column" theme={theme} inner="tiny">
             <a href="https://twitter.com/share"
@@ -97,4 +104,4 @@ const selectors = {
 export default connect(
   selectors,
   { buttonClicked: _buttonClicked }
-)(pureRender(IndexSidebar))
+)(IndexSidebar)

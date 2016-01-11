@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { Index } from 'containers/Index'
 import baseThemeVariables from 'themes/_base/variables'
-import CalculationInput from 'components/CalculationInput'
+import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'containers/Flex'
 
@@ -23,32 +23,29 @@ function shallowRenderWithProps(props = {}) {
 }
 
 describe('(Container) Index', function () {
+  const calculation = () => {
+    return {
+      input: '1+1',
+      output: 2,
+      isError: false
+    }
+  }
   let component
   let props
   let rendered
   let spies
 
   beforeEach(() => {
-    const calculations = [
-      {
-        input: 'gibberish input string expression',
-        output: 293840391
-      },
-      {
-        input: 'another gibberish input',
-        output: 8953094759
-      }
-    ]
-    const input = 'enter something'
+    const currentCalculation = calculation()
+    const previousCalculations = [calculation(), calculation()]
     spies = {}
     props = {
-      calculations,
-      input,
+      currentCalculation,
+      previousCalculations,
       theme: baseThemeVariables,
       ...bindActionCreators({
-        calculate: (spies.calculate = sinon.spy()),
         keyPressed: (spies.keyPressed = sinon.spy()),
-        setInput: (spies.setInput = sinon.spy())
+        updateCalculation: (spies.updateCalculation = sinon.spy())
       }, spies.dispatch = sinon.spy())
     }
     component = shallowRenderWithProps(props)
@@ -68,10 +65,10 @@ describe('(Container) Index', function () {
     expect(calculationsList).to.exist
   })
 
-  it('Should render an instance of CalculationInput.', function () {
+  it('Should render an instance of Calculate.', function () {
     const calculationInput = TestUtils.findRenderedComponentWithType(
       rendered,
-      CalculationInput
+      Calculate
     )
 
     expect(calculationInput).to.exist
@@ -97,6 +94,12 @@ describe('(Container) Index', function () {
         { key: 'r', keyCode: 82, which: 82 }
       )
       spies.keyPressed.should.have.been.called
+    })
+
+    it('should prevent paste in calculate input', function () {
+      const spy = sinon.spy()
+      TestUtils.Simulate.paste(inputComponent, { preventDefault: spy })
+      spy.should.have.been.called
     })
   })
 })

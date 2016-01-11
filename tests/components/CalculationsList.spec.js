@@ -46,7 +46,9 @@ describe('(Component) Calculation', function () {
   })
 
   it('should render a list of <Calculation>', function () {
-    const calculationComponents = TestUtils.scryRenderedComponentsWithType(rendered, Calculation)
+    const calculationComponents = TestUtils.scryRenderedComponentsWithType(
+      rendered, Calculation
+    )
 
     expect(calculationComponents.length).to.equal(2)
   })

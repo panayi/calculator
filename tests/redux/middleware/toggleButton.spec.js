@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import configureStore from 'redux-mock-store'
-import createToggleButttonMiddleware from 'redux/middleware/toggleButton'
+import toggleButttonMiddleware from 'redux/middleware/toggleButton'
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 import { actionTypes as keysActionTypes } from 'redux/modules/keys'
 
@@ -24,7 +24,7 @@ describe('(Redux Middleware) toggleButton', () => {
   let store
 
   beforeEach(function () {
-    mockStore = configureStore([createToggleButttonMiddleware(1)])
+    mockStore = configureStore([toggleButttonMiddleware])
   })
 
   it('should dispatch ACTIVATE_KEY and then DEACTIVATE_KEY on BUTTON_CLICKED',

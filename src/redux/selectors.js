@@ -4,10 +4,16 @@ import R from 'ramda'
 // ------------------------------------
 // Selectors
 // ------------------------------------
+const allCalculationsSelector = R.prop('calculations')
 
-export const calculationsSelector = R.prop('calculations')
-
-export const inputSelector = R.prop('input')
+export const previousCalculationsSelector = createSelector(
+  allCalculationsSelector,
+  R.compose(R.reverse, R.tail, R.reverse)
+)
+export const currentCalculationSelector = createSelector(
+  allCalculationsSelector,
+  R.compose(R.head, R.reverse)
+)
 
 export const keysSelector = R.prop('keys')
 

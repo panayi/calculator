@@ -1,36 +1,105 @@
 /* eslint-disable no-unused-expressions */
-import reducer, { actionTypes } from 'redux/modules/calculations'
+import reducer, { actionTypes, updateCalculation } from 'redux/modules/calculations'
+import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 
-describe('(Redux Module) calculations', () => {
-  describe('reducer', () => {
-    it('should return the initial state', () => {
-      expect(reducer(undefined, {})).to.deep.equal([])
+describe('(Redux Module) calculations', function () {
+  describe('reducer', function () {
+    it('should return the initial state', function () {
+      expect(reducer(undefined, {})).to.deep.equal([{}])
     })
 
-    it('should add the calculation on ADD_CALCULATION without error', () => {
-      const newCalculation = {
-        input: '6+16',
-        output: 22
-      }
+    describe(':: DONE_CALCULATION', function () {
+      it('should append an empty calculation when is valid', () => {
+        const calculation = {
+          input: '6+16',
+          output: 22
+        }
 
-      expect(reducer([], {
-        type: actionTypes.ADD_CALCULATION,
-        payload: newCalculation
-      })).to.deep.equal([newCalculation])
+        expect(reducer([calculation], {
+          type: actionTypes.DONE_CALCULATION
+        })).to.deep.equal([calculation, {}])
+      })
+
+      it('should not append an empty calculation when "isError"', () => {
+        const calculation = {
+          input: '6+',
+          isError: true
+        }
+
+        expect(reducer([calculation], {
+          type: actionTypes.DONE_CALCULATION
+        })).to.deep.equal([calculation])
+      })
+
+      it('should not append an empty calculation when "input" is empty', () => {
+        const calculation = {
+          input: '  ',
+          output: ''
+        }
+
+        expect(reducer([calculation], {
+          type: actionTypes.DONE_CALCULATION
+        })).to.deep.equal([calculation])
+      })
     })
 
-    it('should add the error on ADD_CALCULATION with error', () => {
-      const payload = new TypeError('invalid input')
+    describe(':: UPDATE_CALCULATION', function () {
+      it('should update the "input" and "output" when is valid', function () {
+        const calculation = {
+          input: '6+1',
+          output: 7
+        }
+        const input = '6+16'
+        const action = updateCalculation(input)
+        const newCalculation = {
+          input,
+          output: 22
+        }
 
-      const expected = {
-        error: payload.toString()
-      }
+        expect(reducer([calculation], action)).to.deep.equal([newCalculation])
+      })
 
-      expect(reducer([], {
-        type: actionTypes.ADD_CALCULATION,
-        payload,
-        error: true
-      })).to.deep.equal([expected])
+      it('should update the "input" and "error" when is not valid',
+        function () {
+          const calculation = {
+            input: '6+1',
+            output: 7
+          }
+          const input = '6+1+'
+          const action = updateCalculation(input)
+          const newCalculation = {
+            input,
+            isError: true
+          }
+
+          expect(reducer([calculation], action)).to.deep.equal([newCalculation])
+        }
+      )
+    })
+
+    describe(':: BUTTON_CLICKED', function () {
+      const input = '1'
+      const character = '5'
+      const keyCode = 53
+
+      it('should add the character of the pressed key to the end of input',
+        function () {
+          const calculation = {
+            input,
+            output: parseInt(input, 10)
+          }
+          const newInput = `${calculation.input}${character}`
+          const newCalculation = {
+            input: newInput,
+            output: parseInt(newInput, 10)
+          }
+
+          expect(reducer([calculation, calculation], {
+            type: eventsActionTypes.BUTTON_CLICKED,
+            payload: { keyCode, display: character }
+          })).to.deep.equal([calculation, newCalculation])
+        }
+      )
     })
   })
 })

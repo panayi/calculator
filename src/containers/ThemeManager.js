@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Style } from 'radium'
 import { createStructuredSelector } from 'reselect'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import { themeStylesSelector } from 'redux/selectors'
-import pureRender from 'helpers/pureRender'
 import 'styles/normalize.css'
 
 export class ThemeManager extends Component {
@@ -11,6 +11,8 @@ export class ThemeManager extends Component {
     styles: PropTypes.object.isRequired,
     children: PropTypes.node
   }
+
+  shouldPureComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { styles } = this.props
@@ -27,4 +29,4 @@ export class ThemeManager extends Component {
 const selector = createStructuredSelector({
   styles: themeStylesSelector
 })
-export default connect(selector)(pureRender(ThemeManager))
+export default connect(selector)(ThemeManager)

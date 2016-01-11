@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+import shouldPureComponentUpdate from 'react-pure-render/function'
 import Flex from 'containers/Flex'
 import connect from 'helpers/connectAndTheme'
-import pureRender from 'helpers/pureRender'
 
 export class App extends Component {
   static propTypes = {
@@ -9,6 +9,8 @@ export class App extends Component {
     sidebar: PropTypes.element,
     theme: PropTypes.object.isRequired
   }
+
+  shouldPureComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { main, sidebar, theme } = this.props
@@ -26,4 +28,4 @@ export class App extends Component {
   }
 }
 
-export default connect()(pureRender(App))
+export default connect()(App)

@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import { setInput as _setInput } from 'redux/modules/input'
+import shouldPureComponentUpdate from 'react-pure-render/function'
+import {
+  currentCalculationSelector,
+  previousCalculationsSelector
+} from 'redux/selectors'
 import { keyPressed as _keyPressed } from 'redux/modules/events'
-import connect from 'helpers/connectAndTheme'
-import CalculationInput from 'components/CalculationInput'
+import { updateCalculation as _updateCalculation } from 'redux/modules/calculations'
+import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
-import { calculationsSelector, inputSelector } from 'redux/selectors'
+import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
-import pureRender from 'helpers/pureRender'
 
 const _styles = (theme) => {
   return {
@@ -32,19 +35,21 @@ const _styles = (theme) => {
 
 export class Index extends Component {
   static propTypes = {
-    calculations: PropTypes.array.isRequired,
-    input: PropTypes.string.isRequired,
+    currentCalculation: PropTypes.object.isRequired,
     keyPressed: PropTypes.func.isRequired,
-    setInput: PropTypes.func.isRequired,
-    theme: PropTypes.object.isRequired
+    previousCalculations: PropTypes.array.isRequired,
+    theme: PropTypes.object.isRequired,
+    updateCalculation: PropTypes.func.isRequired
   }
+
+  shouldPureComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const {
-      calculations,
+      previousCalculations,
       keyPressed,
-      input,
-      setInput,
+      currentCalculation,
+      updateCalculation,
       theme
     } = this.props
     const styles = _styles(theme)
@@ -54,15 +59,15 @@ export class Index extends Component {
         <Flex preset="box" theme={theme} fullWidth gutter style={styles.resultsWrapper}>
           <Flex preset="content" theme={theme} inner nogrow style={styles.margin} />
           <Flex preset="content" theme={theme} gutter inner style={styles.resultsBox}>
-            <CalculationsList calculations={calculations} theme={theme} />
+            <CalculationsList calculations={previousCalculations} theme={theme} />
           </Flex>
         </Flex>
         <Flex preset="box" theme={theme} fullWidth gutterLeft nogrow style={styles.inputWrapper}>
           <Flex preset="content" theme={theme} nogrow style={styles.margin} />
           <Flex preset="content" theme={theme} gutter style={styles.inputBox}>
-            <CalculationInput
-              input={input}
-              onChange={setInput}
+            <Calculate
+              calculation={currentCalculation}
+              onChange={updateCalculation}
               onKeyPress={keyPressed}
               onPaste={(event) => event.preventDefault()}
               theme={theme}
@@ -75,11 +80,11 @@ export class Index extends Component {
 }
 
 const selectors = {
-  calculations: calculationsSelector,
-  input: inputSelector
+  currentCalculation: currentCalculationSelector,
+  previousCalculations: previousCalculationsSelector
 }
-
-export default connect(
-  selectors,
-  { keyPressed: _keyPressed, setInput: _setInput }
-)(pureRender(Index))
+const actions = {
+  keyPressed: _keyPressed,
+  updateCalculation: _updateCalculation
+}
+export default connect(selectors, actions)(Index)

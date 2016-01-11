@@ -22,16 +22,14 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) CalculationList', function () {
-  const calculations = [
-    {
-      input: 'gibberish input string expression',
-      output: 293840391
-    },
-    {
-      input: 'another gibberish input',
-      output: 8953094759
+  const calculation = (input = '1+1', output = 2) => {
+    return {
+      input,
+      output,
+      isError: false
     }
-  ]
+  }
+  const calculations = [calculation(), calculation()]
   const deleteCalculation = sinon.spy()
   const theme = baseThemeVariables
   let calculationComponents

@@ -5,7 +5,10 @@ import {
   previousCalculationsSelector
 } from 'redux/selectors'
 import { keyPressed as _keyPressed } from 'redux/modules/events'
-import { updateCalculation as _updateCalculation } from 'redux/modules/calculations'
+import {
+  deleteCalculation as _deleteCalculation,
+  updateCalculation as _updateCalculation
+} from 'redux/modules/calculations'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import connect from 'helpers/connectAndTheme'
@@ -39,6 +42,7 @@ const _styles = (theme) => {
 export class Index extends Component {
   static propTypes = {
     currentCalculation: PropTypes.object.isRequired,
+    deleteCalculation: PropTypes.func.isRequired,
     keyPressed: PropTypes.func.isRequired,
     previousCalculations: PropTypes.array.isRequired,
     theme: PropTypes.object.isRequired,
@@ -49,9 +53,10 @@ export class Index extends Component {
 
   render() {
     const {
-      previousCalculations,
-      keyPressed,
       currentCalculation,
+      deleteCalculation,
+      keyPressed,
+      previousCalculations,
       updateCalculation,
       theme
     } = this.props
@@ -61,7 +66,11 @@ export class Index extends Component {
       <Flex preset="box" theme={theme} vertical innerMargin gutterRight nowrap>
         <div style={styles.margin} />
         <Flex preset="box" theme={theme} fullWidth style={styles.resultsWrapper}>
-          <CalculationsList calculations={previousCalculations} theme={theme} />
+          <CalculationsList
+            calculations={previousCalculations}
+            deleteCalculation={deleteCalculation}
+            theme={theme}
+          />
         </Flex>
         <Flex preset="box" theme={theme} fullWidth justifyContent="flex-end" nogrow style={styles.inputWrapper}>
           <Flex preset="content" theme={theme} gutter nogrow style={styles.inputBox}>
@@ -84,6 +93,7 @@ const selectors = {
   previousCalculations: previousCalculationsSelector
 }
 const actions = {
+  deleteCalculation: _deleteCalculation,
   keyPressed: _keyPressed,
   updateCalculation: _updateCalculation
 }

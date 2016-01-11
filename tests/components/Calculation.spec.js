@@ -21,8 +21,10 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) Calculation', function () {
+  const onPointerClick = sinon.spy()
   let calculation
   let component
+  let pointer
   let rendered
 
   beforeEach(function () {
@@ -31,10 +33,15 @@ describe('(Component) Calculation', function () {
       output: 293840391
     }
     const theme = baseThemeVariables
-    const props = { calculation, theme }
+    const props = { calculation, onPointerClick, theme }
 
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
+
+    pointer = TestUtils.findRenderedDOMComponentWithTag(
+      rendered,
+      'span'
+    )
   })
 
   it('should render as a <Flex>.', function () {
@@ -54,5 +61,15 @@ describe('(Component) Calculation', function () {
 
     expect(inputDiv).to.exist
     expect(outputDiv).to.exist
+  })
+
+  it('should render pointer', function () {
+    expect(pointer).to.exist
+  })
+
+  it('should dispatch onPointerClick on clicking pointer', function () {
+    onPointerClick.should.not.have.been.called
+    TestUtils.Simulate.click(pointer)
+    onPointerClick.should.have.been.called
   })
 })

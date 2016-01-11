@@ -14,7 +14,12 @@ const _styles = (theme) => {
     },
     pointer: {
       textAlign: 'right',
-      color: theme.colors.fadedText
+      width: `${theme.gutters.xlarge}px`,
+      cursor: 'pointer',
+      color: theme.colors.fadedText,
+      ':hover': {
+        color: theme.colors.text
+      }
     }
   }
 }
@@ -25,20 +30,23 @@ export default class Calculation extends Component {
       input: PropTypes.string,
       output: PropTypes.number
     }).isRequired,
+    onPointerClick: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired
   }
 
   shouldPureComponentUpdate = shouldPureComponentUpdate
 
   render() {
-    const { calculation, theme } = this.props
+    const { calculation, onPointerClick, theme } = this.props
     const styles = _styles(theme)
 
     return (
       <Flex preset="box" theme={theme} inner="small">
-        <Flex preset="content" theme={theme} gutter="small" inner="small" width={theme.gutters.xlarge}
+        <Flex preset="content" theme={theme} gutter="small" inner="small"
           nogrow style={styles.pointer}
-        >—</Flex>
+        >
+          <span onClick={onPointerClick}>—</span>
+        </Flex>
         <Flex preset="content" theme={theme} gutter>
           <div>
             <div style={styles.output}>{calculation.output}</div>

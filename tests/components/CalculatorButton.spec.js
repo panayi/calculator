@@ -93,7 +93,7 @@ describe('(Component) CalculatorButton', function () {
     expect(anchor.props.style).to.deep.equal(expectedStyles)
   })
 
-  describe(':: _getStyles', function () {
+  describe('_getStyles', function () {
     it('should return a valid object', function () {
       const styles = _getStyles(theme)
       expect(styles.base).to.be.an('object')

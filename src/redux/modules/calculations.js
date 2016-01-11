@@ -8,6 +8,7 @@ import { characterFromKeyCode } from 'helpers/pureFunctions'
 // Constants
 // ------------------------------------
 export const actionTypes = {
+  DELETE_CALCULATION: 'DELETE_CALCULATION',
   DONE_CALCULATION: 'DONE_CALCULATION',
   UPDATE_CALCULATION: 'UPDATE_CALCULATION'
 }
@@ -62,6 +63,9 @@ const lastCalculationInput = R.compose(
 // Actions
 // ------------------------------------
 
+// doneCalculation :: Index -> Action
+export const deleteCalculation = createAction(actionTypes.DELETE_CALCULATION)
+
 // doneCalculation :: undefined -> Action
 export const doneCalculation = createAction(actionTypes.DONE_CALCULATION)
 
@@ -75,6 +79,10 @@ export const updateCalculation = createAction(
 // Reducer
 // ------------------------------------
 export default handleActions({
+  [actionTypes.DELETE_CALCULATION]: (state, { payload }) => {
+    return R.remove(payload, 1, state)
+  },
+
   [actionTypes.DONE_CALCULATION]: R.ifElse(
     R.compose(isValidCalculation, R.last),
     R.append({}),

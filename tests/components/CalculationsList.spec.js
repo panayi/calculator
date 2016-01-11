@@ -21,6 +21,8 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) CalculationList', function () {
+  const deleteCalculation = sinon.spy()
+  let calculationComponents
   let component
   let rendered
 
@@ -36,10 +38,14 @@ describe('(Component) CalculationList', function () {
       }
     ]
     const theme = baseThemeVariables
-    const props = { calculations, theme }
+    const props = { calculations, deleteCalculation, theme }
 
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
+
+    calculationComponents = TestUtils.scryRenderedComponentsWithType(
+      rendered, Calculation
+    )
   })
 
   it('should render as a <Flex>.', function () {
@@ -47,10 +53,21 @@ describe('(Component) CalculationList', function () {
   })
 
   it('should render a list of <Calculation>', function () {
-    const calculationComponents = TestUtils.scryRenderedComponentsWithType(
-      rendered, Calculation
-    )
-
     expect(calculationComponents.length).to.equal(2)
   })
+
+  it('should dispatch deleteCalculation with index of clicked calculation',
+    function () {
+      const index = 1
+      const pointer = TestUtils.findRenderedDOMComponentWithTag(
+        calculationComponents[index],
+        'span'
+      )
+
+      deleteCalculation.should.not.have.been.called
+      TestUtils.Simulate.click(pointer)
+      deleteCalculation.should.have.been.called
+      expect(deleteCalculation.getCall(0).args[0]).to.equal(index)
+    }
+  )
 })

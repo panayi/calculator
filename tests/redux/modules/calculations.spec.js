@@ -8,7 +8,22 @@ describe('(Redux Module) calculations', function () {
       expect(reducer(undefined, {})).to.deep.equal([{}])
     })
 
-    describe(':: DONE_CALCULATION', function () {
+    describe('DELETE_CALCULATION', function () {
+      it('should remove calculation at the provided index', function () {
+        const calculations = [
+          { input: '1+1', output: 2 },
+          { input: '1+2', output: 3 },
+          { input: '1+3', output: 4 }
+        ]
+
+        expect(reducer(calculations, {
+          type: actionTypes.DELETE_CALCULATION,
+          payload: 1
+        })).to.deep.equal([calculations[0], calculations[2]])
+      })
+    })
+
+    describe('DONE_CALCULATION', function () {
       it('should append an empty calculation when is valid', () => {
         const calculation = {
           input: '6+16',
@@ -43,7 +58,7 @@ describe('(Redux Module) calculations', function () {
       })
     })
 
-    describe(':: UPDATE_CALCULATION', function () {
+    describe('UPDATE_CALCULATION', function () {
       it('should update the "input" and "output" when is valid', function () {
         const calculation = {
           input: '6+1',
@@ -77,7 +92,7 @@ describe('(Redux Module) calculations', function () {
       )
     })
 
-    describe(':: BUTTON_CLICKED', function () {
+    describe('BUTTON_CLICKED', function () {
       const input = '1'
       const character = '5'
       const keyCode = 53

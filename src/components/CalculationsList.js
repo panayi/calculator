@@ -31,6 +31,7 @@ const _styles = (theme) => {
 export default class CalculationsList extends Component {
   static propTypes = {
     calculations: PropTypes.array.isRequired,
+    deleteCalculation: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired
   }
 
@@ -41,10 +42,15 @@ export default class CalculationsList extends Component {
   shouldPureComponentUpdate = shouldPureComponentUpdate
 
   render() {
-    const { calculations, theme } = this.props
+    const { calculations, deleteCalculation, theme } = this.props
     const styles = _styles(theme)
     const results = mapIndexed((calculation, index) =>
-      <Calculation key={index} calculation={calculation} theme={theme} />
+      <Calculation
+        calculation={calculation}
+        key={index}
+        onPointerClick={() => deleteCalculation(index)}
+        theme={theme}
+      />
     , calculations)
 
     return (

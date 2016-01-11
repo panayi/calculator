@@ -61,7 +61,11 @@ const lastCalculationInput = R.compose(
 // ------------------------------------
 // Actions
 // ------------------------------------
+
+// doneCalculation :: undefined -> Action
 export const doneCalculation = createAction(actionTypes.DONE_CALCULATION)
+
+// updateCalculation :: Input -> Action
 export const updateCalculation = createAction(
   actionTypes.UPDATE_CALCULATION,
   tryCalculation

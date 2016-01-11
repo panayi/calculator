@@ -13,8 +13,14 @@ export const actionTypes = {
 // ------------------------------------
 // Actions
 // ------------------------------------
+
+// activateKey :: Key -> Action
 export const activateKey = createAction(actionTypes.ACTIVATE_KEY)
+
+// deactivateKey :: Key -> Action
 export const deactivateKey = createAction(actionTypes.DEACTIVATE_KEY)
+
+// setKeys :: Keys -> Actions
 export const setKeys = createAction(actionTypes.SET_KEYS)
 
 // ------------------------------------

@@ -11,5 +11,9 @@ export const actionTypes = {
 // ------------------------------------
 // Actions
 // ------------------------------------
+
+// buttonClicked :: Key -> Action
 export const buttonClicked = createAction(actionTypes.BUTTON_CLICKED)
+
+// keyPressed :: Event -> Action
 export const keyPressed = createAction(actionTypes.KEY_PRESSED)

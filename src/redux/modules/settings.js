@@ -11,6 +11,8 @@ export const actionTypes = {
 // ------------------------------------
 // Actions
 // ------------------------------------
+
+// setSetting :: Object -> Action
 export const setSetting = createAction(actionTypes.SET_SETTING)
 
 // ------------------------------------

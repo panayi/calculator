@@ -10,6 +10,8 @@ export const actionTypes = {
 // ------------------------------------
 // Actions
 // ------------------------------------
+
+// setTheme :: String -> Action
 export const setTheme = createAction(actionTypes.SET_THEME)
 
 // ------------------------------------

@@ -10,7 +10,7 @@ export class ThemeSelector extends Component {
     theme: PropTypes.string.isRequired
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { children, theme, setTheme } = this.props

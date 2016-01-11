@@ -242,7 +242,7 @@ class Flex extends Component {
     style: {}
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   getStyles() {
     const {

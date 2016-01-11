@@ -49,7 +49,7 @@ export class IndexSidebar extends Component {
     theme: PropTypes.object.isRequired
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { buttonClicked, keys, settings, theme } = this.props

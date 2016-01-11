@@ -47,7 +47,7 @@ class CalculatorButton extends Component {
     getStyles: _getStyles
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const {

@@ -39,7 +39,7 @@ export default class CalculationsList extends Component {
     calculations: []
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { calculations, deleteCalculation, theme } = this.props

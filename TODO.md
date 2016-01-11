@@ -10,6 +10,7 @@ TODO
 * ~~100% test coverage~~
 * ~~Calculate and show the result while typing.~~
 * ~~Use PureRenderMixin~~
+* ~~Dashes next to each calculation; onClick, delete the calculation ~~
 
 * Show error when input is invalid.
 * Add `<ThemeSelector>` buttons
@@ -17,6 +18,5 @@ TODO
 * Add a light theme.
 * Arrow up/down: scroll through previous inputs.
 * Finalize styles and layout.
-* Numbers next to each calculation (within the margin).
 * Scroll to bottom *after* inserting a calculation.
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html

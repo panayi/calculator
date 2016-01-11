@@ -10,7 +10,7 @@ export class App extends Component {
     theme: PropTypes.object.isRequired
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { main, sidebar, theme } = this.props

@@ -49,7 +49,7 @@ export class Index extends Component {
     updateCalculation: PropTypes.func.isRequired
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const {

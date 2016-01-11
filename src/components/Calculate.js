@@ -37,7 +37,7 @@ export default class Calculate extends Component {
     theme: PropTypes.object.isRequired
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { calculation, onChange, onKeyPress, onPaste, theme } = this.props

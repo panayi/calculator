@@ -12,7 +12,7 @@ export class ThemeManager extends Component {
     children: PropTypes.node
   }
 
-  shouldPureComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate = shouldPureComponentUpdate
 
   render() {
     const { styles } = this.props

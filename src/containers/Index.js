@@ -20,15 +20,18 @@ const _styles = (theme) => {
     },
     inputWrapper: {
       backgroundColor: theme.colors.canvasDark,
+      borderTop: `1px solid ${theme.colors.lightBorder}`,
       borderRadius: '0 0 2px 2px'
     },
-    margin: {
-      borderRight: `1px solid ${theme.colors.border}`,
-      width: '40px',
-      minWidth: '40px'
-    },
     inputBox: {
-      borderTop: `1px solid ${theme.colors.lightBorder}`
+      width: `calc(100% - ${theme.gutters.xlarge}px)`
+    },
+    margin: {
+      position: 'absolute',
+      left: theme.gutters.xlarge,
+      height: '100%',
+      zIndex: 1,
+      borderRight: `1px solid ${theme.colors.border}`
     }
   }
 }
@@ -55,16 +58,13 @@ export class Index extends Component {
     const styles = _styles(theme)
 
     return (
-      <Flex preset="box" theme={theme} vertical inner gutterRight nowrap>
-        <Flex preset="box" theme={theme} fullWidth gutter style={styles.resultsWrapper}>
-          <Flex preset="content" theme={theme} inner nogrow style={styles.margin} />
-          <Flex preset="content" theme={theme} gutter inner style={styles.resultsBox}>
-            <CalculationsList calculations={previousCalculations} theme={theme} />
-          </Flex>
+      <Flex preset="box" theme={theme} vertical innerMargin gutterRight nowrap>
+        <div style={styles.margin} />
+        <Flex preset="box" theme={theme} fullWidth style={styles.resultsWrapper}>
+          <CalculationsList calculations={previousCalculations} theme={theme} />
         </Flex>
-        <Flex preset="box" theme={theme} fullWidth gutterLeft nogrow style={styles.inputWrapper}>
-          <Flex preset="content" theme={theme} nogrow style={styles.margin} />
-          <Flex preset="content" theme={theme} gutter style={styles.inputBox}>
+        <Flex preset="box" theme={theme} fullWidth justifyContent="flex-end" nogrow style={styles.inputWrapper}>
+          <Flex preset="content" theme={theme} gutter nogrow style={styles.inputBox}>
             <Calculate
               calculation={currentCalculation}
               onChange={updateCalculation}

@@ -4,6 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculation from 'components/Calculation'
 import CalculationsList from 'components/CalculationsList'
+import Flex from 'containers/Flex'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
@@ -19,7 +20,7 @@ function renderWithProps(props = {}) {
   return TestUtils.renderIntoDocument(<CalculationsList {...props} />)
 }
 
-describe('(Component) Calculation', function () {
+describe('(Component) CalculationList', function () {
   let component
   let rendered
 
@@ -41,8 +42,8 @@ describe('(Component) Calculation', function () {
     rendered = renderWithProps(props)
   })
 
-  it('should render as a <div>.', function () {
-    expect(component.type).to.equal('div')
+  it('should render as a <Flex>.', function () {
+    expect(component.type).to.equal(Flex)
   })
 
   it('should render a list of <Calculation>', function () {

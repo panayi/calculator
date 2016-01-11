@@ -18,7 +18,7 @@ export default {
     canvas: canvasColor,
     canvasDark: tinycolor(canvasColor).darken(9).toString(),
     text: primaryColor,
-    fadedText: tinycolor(accentColor).setAlpha(0.3).darken(5).toString(),
+    fadedText: tinycolor(canvasColor).setAlpha(0.7).toString(),
     border: tinycolor(primaryColor).setAlpha(0.35).toString(),
     lightBorder: tinycolor(canvasColor).darken(3).toString()
   },
@@ -33,6 +33,8 @@ export default {
     xlarge: '22px'
   },
   gutters: {
+    xlarge: 50,
+    large: 40,
     base: 20,
     small: 10,
     tiny: 3

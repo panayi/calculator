@@ -1,19 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
+import Flex from 'containers/Flex'
 
 const _styles = (theme) => {
   return {
-    result: {
-      paddingTop: theme.gutters.small,
-      paddingBottom: theme.gutters.small
-    },
-    resultOutput: {
+    output: {
       fontSize: theme.fontSizes.xlarge,
+      color: theme.colors.accent
     },
-    resultInput: {
+    input: {
       fontSize: theme.fontSizes.small,
-      color: theme.colors.accent,
-      marginTop: '-2px'
+      marginTop: - theme.gutters.tiny
+    },
+    pointer: {
+      textAlign: 'right',
+      color: theme.colors.fadedText
     }
   }
 }
@@ -34,10 +35,17 @@ export default class Calculation extends Component {
     const styles = _styles(theme)
 
     return (
-      <div style={styles.result}>
-        <div style={styles.resultOutput}>{calculation.output}</div>
-        <div style={styles.resultInput}>= {calculation.input}</div>
-      </div>
+      <Flex preset="box" theme={theme} inner="small">
+        <Flex preset="content" theme={theme} gutter="small" inner="small" width={theme.gutters.xlarge}
+          nogrow style={styles.pointer}
+        >—</Flex>
+        <Flex preset="content" theme={theme} gutter>
+          <div>
+            <div style={styles.output}>{calculation.output}</div>
+            <div style={styles.input}>= {calculation.input}</div>
+          </div>
+        </Flex>
+      </Flex>
     )
   }
 }

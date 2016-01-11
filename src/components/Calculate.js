@@ -10,7 +10,7 @@ const _styles = (theme) => {
       boxShadow: 'none',
       outline: 'none',
       fontSize: '20px',
-      padding: '16px 15px 11px 0',
+      padding: '16px 0 11px 0',
       width: '100%',
       color: theme.colors.accent
     },

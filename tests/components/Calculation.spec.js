@@ -4,6 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 import R from 'ramda'
 import Calculation from 'components/Calculation'
 import baseThemeVariables from 'themes/_base/variables'
+import Flex from 'containers/Flex'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
@@ -36,8 +37,8 @@ describe('(Component) Calculation', function () {
     rendered = renderWithProps(props)
   })
 
-  it('should render as a <div>.', function () {
-    expect(component.type).to.equal('div')
+  it('should render as a <Flex>.', function () {
+    expect(component.type).to.equal(Flex)
   })
 
   it('should render calculation.input and calculation.output', function () {

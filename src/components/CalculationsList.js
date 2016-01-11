@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import shouldPureComponentUpdate from 'react-pure-render/function'
-import tinycolor from 'tinycolor2'
 import { mapIndexed } from 'helpers/pureFunctions'
 import Calculation from 'components/Calculation'
+import Flex from 'containers/Flex'
 
 const _styles = (theme) => {
   return {
@@ -18,7 +18,12 @@ const _styles = (theme) => {
       height: '29%',
       margin: 'auto',
       textAlign: 'center',
-      color: tinycolor(theme.colors.canvas).setAlpha(0.7).toString(),
+      color: theme.colors.fadedText,
+    },
+    wrapper: {
+      height: '100%',
+      overflow: 'auto',
+      marginBottom: - theme.gutters.small
     }
   }
 }
@@ -43,10 +48,12 @@ export default class CalculationsList extends Component {
     , calculations)
 
     return (
-      <div>
-        <h1 style={styles.overlay}>calculator</h1>
-        {results}
-      </div>
+      <Flex preset="box" theme={theme} vertical justifyContent="flex-end" inner>
+        <div style={styles.wrapper}>
+          <h1 style={styles.overlay}>calculator</h1>
+          {results}
+        </div>
+      </Flex>
     )
   }
 }

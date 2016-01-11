@@ -55,6 +55,13 @@ const styles = {
       paddingTop: `${theme.gutters[key]}px`,
       paddingBottom: `${theme.gutters[key]}px`
     }
+  },
+  innerMargin: (value, theme) => {
+    const key = getGutterKey(value)
+    return {
+      marginTop: `${theme.gutters[key]}px`,
+      marginBottom: `${theme.gutters[key]}px`
+    }
   }
 }
 
@@ -205,6 +212,13 @@ class Flex extends Component {
     // padding-top: theme.gutters[{value}]
     // padding-bottom: theme.gutters[{value}]
     inner: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
+
+    // margin-top: theme.gutters[{value}]
+    // margin-bottom: theme.gutters[{value}]
+    innerMargin: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.bool
     ]),

@@ -26,16 +26,19 @@ const calculation = R.converge(
   [R.identity, calculate]
 )
 
+// formatInput :: Input -> Input
+const formatInput = R.compose(R.trim, R.defaultTo(''), R.concat(''))
+
 // isValidCalculation :: Calculation -> Boolean
 const isValidCalculation = R.converge(R.and, [
-  R.compose(R.not, R.isEmpty, R.trim, R.defaultTo(''), R.prop('input')),
+  R.compose(R.not, R.isEmpty, formatInput, R.prop('input')),
   R.compose(R.not, R.defaultTo(false), R.prop('isError'))
 ])
 
 // tryCalculation :: Input -> Calculation
 const tryCalculation = (input) => {
   try {
-    return calculation(input)
+    return R.compose(calculation, formatInput)(input)
   } catch (error) {
     return {
       input,

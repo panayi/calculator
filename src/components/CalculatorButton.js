@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Radium from 'radium'
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import tinycolor from 'tinycolor2'
+import { propsChanged } from 'helpers/pureFunctions'
 
 export const _getStyles = function (theme) {
   return {
@@ -35,8 +35,9 @@ export const _getStyles = function (theme) {
 class CalculatorButton extends Component {
   static propTypes = {
     theKey: PropTypes.shape({
-      keyCode: PropTypes.number.isRequired,
-      display: PropTypes.string.isRequired
+      active: PropTypes.bool,
+      display: PropTypes.string.isRequired,
+      keyCode: PropTypes.number.isRequired
     }).isRequired,
     getStyles: PropTypes.func,
     theme: PropTypes.object,
@@ -47,7 +48,9 @@ class CalculatorButton extends Component {
     getStyles: _getStyles
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['theKey', 'theme'], this.props, nextProps)
+  }
 
   render() {
     const {

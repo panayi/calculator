@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import Radium from 'radium'
 
 const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
@@ -241,8 +240,6 @@ class Flex extends Component {
     preset: 'base',
     style: {}
   }
-
-  shouldComponentUpdate = shouldPureComponentUpdate
 
   getStyles() {
     const {

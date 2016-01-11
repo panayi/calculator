@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import {
   currentCalculationSelector,
   previousCalculationsSelector
@@ -9,6 +8,7 @@ import {
   deleteCalculation as _deleteCalculation,
   updateCalculation as _updateCalculation
 } from 'redux/modules/calculations'
+import { propsChanged } from 'helpers/pureFunctions'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import connect from 'helpers/connectAndTheme'
@@ -49,7 +49,10 @@ export class Index extends Component {
     updateCalculation: PropTypes.func.isRequired
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['currentCalculation', 'previousCalculations', 'theme'],
+      this.props, nextProps)
+  }
 
   render() {
     const {

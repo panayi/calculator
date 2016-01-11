@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import shouldPureComponentUpdate from 'react-pure-render/function'
+import { propsChanged } from 'helpers/pureFunctions'
 import Flex from 'containers/Flex'
 
 const _styles = (theme) => {
@@ -34,7 +34,9 @@ export default class Calculation extends Component {
     theme: PropTypes.object.isRequired
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['calculation', 'theme'], this.props, nextProps)
+  }
 
   render() {
     const { calculation, onPointerClick, theme } = this.props

@@ -23,6 +23,14 @@ const invokeLater = (arity, delay, callback) => {
 // mapIndexed :: Function -> List -> List
 const mapIndexed = R.addIndex(R.map)
 
+// propsChanged :: String[] -> Object -> Object -> Boolean
+const propsChanged = (propsArray, props, nextProps) => {
+  return R.useWith(R.compose(R.not, R.equals), [
+    R.pick(propsArray),
+    R.pick(propsArray)
+  ])(props, nextProps)
+}
+
 // ------------------------------------
 // Redux
 // ------------------------------------
@@ -71,6 +79,7 @@ export {
   isActionOfType,
   keyCode,
   mapIndexed,
+  propsChanged,
   state,
   invokeLater
 }

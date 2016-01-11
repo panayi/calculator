@@ -1,12 +1,39 @@
 /* eslint-disable no-unused-expressions */
 import configureStore from 'redux-mock-store'
-import { character, dispatch, invokeLater, isActionOfType, state } from 'helpers/pureFunctions'
+import {
+  character,
+  dispatch,
+  invokeLater,
+  isActionOfType,
+  propsChanged,
+  state
+} from 'helpers/pureFunctions'
 
 describe('(Helpers) pureFunctions', function () {
   describe('general helpers', function () {
     it('should return the character of a given key event', function () {
       const tildeKeyPressEvent = $.Event('keypress', { which: 126 })
       expect(character(tildeKeyPressEvent)).to.equal('~')
+    })
+
+    it('should return false when picked props are equal', function () {
+      expect(propsChanged(['a'], {
+        a: 1,
+        b: 2,
+      }, {
+        a: 1,
+        b: 3,
+      })).to.be.false
+    })
+
+    it('should return true when picked props are not equal', function () {
+      expect(propsChanged(['b'], {
+        a: 1,
+        b: 2,
+      }, {
+        a: 1,
+        b: 3,
+      })).to.be.true
     })
   })
 

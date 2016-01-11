@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Style } from 'radium'
 import { createStructuredSelector } from 'reselect'
-import shouldPureComponentUpdate from 'react-pure-render/function'
+import { propsChanged } from 'helpers/pureFunctions'
 import { themeStylesSelector } from 'redux/selectors'
 import 'styles/normalize.css'
 
@@ -12,7 +12,9 @@ export class ThemeManager extends Component {
     children: PropTypes.node
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['styles', 'children'], this.props, nextProps)
+  }
 
   render() {
     const { styles } = this.props

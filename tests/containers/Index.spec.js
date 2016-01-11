@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
+import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { Index } from 'containers/Index'
@@ -23,28 +24,31 @@ function shallowRenderWithProps(props = {}) {
 }
 
 describe('(Container) Index', function () {
-  const calculation = () => {
+  const calculation = (input = '1+1', output = 2) => {
     return {
-      input: '1+1',
-      output: 2,
+      input,
+      output,
       isError: false
     }
   }
+  const currentCalculation = calculation()
+  const previousCalculations = [calculation(), calculation()]
+  const theme = baseThemeVariables
   let component
+  let nextProps
   let props
   let rendered
   let spies
 
   beforeEach(() => {
-    const currentCalculation = calculation()
-    const previousCalculations = [calculation(), calculation()]
     spies = {}
     props = {
       currentCalculation,
       previousCalculations,
-      theme: baseThemeVariables,
+      theme,
       ...bindActionCreators({
         keyPressed: (spies.keyPressed = sinon.spy()),
+        deleteCalculation: (spies.deleteCalculation = sinon.spy()),
         updateCalculation: (spies.updateCalculation = sinon.spy())
       }, spies.dispatch = sinon.spy())
     }
@@ -100,6 +104,42 @@ describe('(Container) Index', function () {
       const spy = sinon.spy()
       TestUtils.Simulate.paste(inputComponent, { preventDefault: spy })
       spy.should.have.been.called
+    })
+  })
+
+  describe('shouldComponentUpdate', function () {
+    it('should not update if currentCalculation, previousCalculations and theme is the same',
+      function () {
+        nextProps = { currentCalculation, previousCalculations, theme }
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if currentCalculation changes', function () {
+      nextProps = R.merge(props, {
+        currentCalculation: calculation('1+2', 3),
+        previousCalculations,
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if previousCalculations change', function () {
+      nextProps = R.merge(props, {
+        currentCalculation,
+        previousCalculations: R.append(calculation(), previousCalculations),
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if theme change', function () {
+      nextProps = R.merge(props, {
+        currentCalculation,
+        previousCalculations,
+        theme: R.merge(theme, { foo: 'bar' })
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
   })
 })

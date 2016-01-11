@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import shouldPureComponentUpdate from 'react-pure-render/function'
-import { mapIndexed } from 'helpers/pureFunctions'
+import { mapIndexed, propsChanged } from 'helpers/pureFunctions'
 import Calculation from 'components/Calculation'
 import Flex from 'containers/Flex'
 
@@ -39,7 +38,9 @@ export default class CalculationsList extends Component {
     calculations: []
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['calculations', 'theme'], this.props, nextProps)
+  }
 
   render() {
     const { calculations, deleteCalculation, theme } = this.props

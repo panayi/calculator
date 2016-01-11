@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
+import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculation from 'components/Calculation'
@@ -21,25 +22,26 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) CalculationList', function () {
+  const calculations = [
+    {
+      input: 'gibberish input string expression',
+      output: 293840391
+    },
+    {
+      input: 'another gibberish input',
+      output: 8953094759
+    }
+  ]
   const deleteCalculation = sinon.spy()
+  const theme = baseThemeVariables
   let calculationComponents
   let component
+  let nextProps
+  let props
   let rendered
 
   beforeEach(function () {
-    const calculations = [
-      {
-        input: 'gibberish input string expression',
-        output: 293840391
-      },
-      {
-        input: 'another gibberish input',
-        output: 8953094759
-      }
-    ]
-    const theme = baseThemeVariables
-    const props = { calculations, deleteCalculation, theme }
-
+    props = { calculations, deleteCalculation, theme }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
 
@@ -70,4 +72,27 @@ describe('(Component) CalculationList', function () {
       expect(deleteCalculation.getCall(0).args[0]).to.equal(index)
     }
   )
+
+  describe('shouldComponentUpdate', function () {
+    it('should not update if calculations and theme are the same', function () {
+      nextProps = { calculations, theme }
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+    })
+
+    it('should update if calculations change', function () {
+      nextProps = R.merge(props, {
+        calculations: R.tail(calculations),
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if theme changes', function () {
+      nextProps = R.merge(props, {
+        calculations,
+        theme: R.merge(theme, { foo: 'bar' })
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+  })
 })

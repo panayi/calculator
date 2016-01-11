@@ -21,20 +21,20 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) Calculation', function () {
+  const calculation = {
+    input: '12+12',
+    output: 24
+  }
   const onPointerClick = sinon.spy()
-  let calculation
+  const theme = baseThemeVariables
   let component
+  let nextProps
   let pointer
+  let props
   let rendered
 
   beforeEach(function () {
-    calculation = {
-      input: 'gibberish input expression',
-      output: 293840391
-    }
-    const theme = baseThemeVariables
-    const props = { calculation, onPointerClick, theme }
-
+    props = { calculation, onPointerClick, theme }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
 
@@ -71,5 +71,32 @@ describe('(Component) Calculation', function () {
     onPointerClick.should.not.have.been.called
     TestUtils.Simulate.click(pointer)
     onPointerClick.should.have.been.called
+  })
+
+  describe('shouldComponentUpdate', function () {
+    it('should not update if calculation and theme are the same', function () {
+      nextProps = { calculation, theme }
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+    })
+
+    it('should update if calculation changes', function () {
+      nextProps = R.merge(props, {
+        calculation: {
+          input: '12+120',
+          output: 132,
+          isError: false
+        },
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if theme changes', function () {
+      nextProps = R.merge(props, {
+        calculation,
+        theme: R.merge(theme, { foo: 'bar' })
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
   })
 })

@@ -20,6 +20,7 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) Calculate', function () {
+  const theme = baseThemeVariables
   let calculation = {
     input: '1+1',
     output: 2,
@@ -27,6 +28,7 @@ describe('(Component) Calculate', function () {
   }
   let component
   let input
+  let nextProps
   let props
   let rendered
   let spies
@@ -39,7 +41,7 @@ describe('(Component) Calculate', function () {
       onKeyPress: (spies.onKeyPress = sinon.spy()),
       onPaste: (spies.onPaste = sinon.spy()),
       onSubmit: (spies.onSubmit = sinon.spy()),
-      theme: baseThemeVariables
+      theme
     }
     component = shallowRenderWithProps(props)
   })
@@ -99,5 +101,29 @@ describe('(Component) Calculate', function () {
     )
     TestUtils.Simulate.paste(input)
     spies.onPaste.should.have.been.called
+  })
+
+  describe('shouldComponentUpdate', function () {
+    it('should not update if calculation and theme are the same', function () {
+      nextProps = { calculation, theme }
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+    })
+
+    it('should update if calculation changes', function () {
+      nextProps = R.merge(props, { calculation: {
+        input: '1+12',
+        output: 13,
+        isError: false
+      }, theme })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if theme changes', function () {
+      nextProps = R.merge(props, {
+        calculation,
+        theme: R.merge(theme, { foo: 'bar' })
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
   })
 })

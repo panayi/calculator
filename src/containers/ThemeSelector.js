@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import shouldPureComponentUpdate from 'react-pure-render/function'
+import { propsChanged } from 'helpers/pureFunctions'
 import { setTheme as _setTheme } from 'redux/modules/theme'
 
 export class ThemeSelector extends Component {
@@ -10,7 +10,9 @@ export class ThemeSelector extends Component {
     theme: PropTypes.string.isRequired
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['children', 'theme'], this.props, nextProps)
+  }
 
   render() {
     const { children, theme, setTheme } = this.props

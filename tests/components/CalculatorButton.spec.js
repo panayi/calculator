@@ -40,6 +40,7 @@ describe('(Component) CalculatorButton', function () {
   const theme = baseThemeVariables
   let anchor
   let component
+  let nextProps
   let props
   let rendered
   let spies
@@ -91,6 +92,32 @@ describe('(Component) CalculatorButton', function () {
     )
 
     expect(anchor.props.style).to.deep.equal(expectedStyles)
+  })
+
+  describe('shouldComponentUpdate', function () {
+    it('should not update if theKey and theme are the same', function () {
+      nextProps = { theKey, theme }
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+    })
+
+    it('should update if theKey changes', function () {
+      nextProps = R.merge(props, {
+        theKey: {
+          keyCode: 48,
+          display: '0'
+        },
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if theme changes', function () {
+      nextProps = R.merge(props, {
+        theKey,
+        theme: R.merge(theme, { foo: 'bar' })
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
   })
 
   describe('_getStyles', function () {

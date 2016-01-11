@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
+import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import { IndexSidebar } from 'containers/IndexSidebar'
 import baseThemeVariables from 'themes/_base/variables'
@@ -21,8 +22,6 @@ function shallowRenderWithProps(props = {}) {
 }
 
 describe('(Container) IndexSidebar', function () {
-  let component
-  let rendered
   const keys = [
     { keyCode: 49, display: '1' },
     { keyCode: 13, display: '=' }
@@ -34,13 +33,18 @@ describe('(Container) IndexSidebar', function () {
     tweetText: 'Lorem ipsum dolor sit amet',
     tweetVia: 'johndoe'
   }
+  const theme = baseThemeVariables
+  let component
+  let nextProps
+  let props
+  let rendered
 
   beforeEach(function () {
-    const props = {
+    props = {
       buttonClicked: () => {},
       keys,
       settings,
-      theme: baseThemeVariables
+      theme
     }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
@@ -82,5 +86,41 @@ describe('(Container) IndexSidebar', function () {
       rendered, 'twitter-share-button'
     )
     expect(tweetAnchor).to.exist
+  })
+
+  describe('shouldComponentUpdate', function () {
+    it('should not update if keys, settings and theme is the same',
+      function () {
+        nextProps = { keys, settings, theme }
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if keys changes', function () {
+      nextProps = R.merge(props, {
+        keys: R.tail(keys),
+        settings,
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if previousCalculations change', function () {
+      nextProps = R.merge(props, {
+        keys,
+        settings: R.merge(settings, { foo: 'bar' }),
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if theme change', function () {
+      nextProps = R.merge(props, {
+        keys,
+        settings,
+        theme: R.merge(theme, { foo: 'bar' })
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
   })
 })

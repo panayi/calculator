@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Octicon from 'react-octicon'
-import shouldPureComponentUpdate from 'react-pure-render/function'
 import tinycolor from 'tinycolor2'
 import { buttonClicked as _buttonClicked } from 'redux/modules/events'
 import { keysSelector, settingsSelector } from 'redux/selectors'
-import { mapIndexed } from 'helpers/pureFunctions'
+import { mapIndexed, propsChanged } from 'helpers/pureFunctions'
 import CalculatorButton from 'components/CalculatorButton'
 import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
@@ -49,7 +48,9 @@ export class IndexSidebar extends Component {
     theme: PropTypes.object.isRequired
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['keys', 'settings', 'theme'], this.props, nextProps)
+  }
 
   render() {
     const { buttonClicked, keys, settings, theme } = this.props

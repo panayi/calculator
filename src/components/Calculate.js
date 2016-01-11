@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
-import shouldPureComponentUpdate from 'react-pure-render/function'
+import { propsChanged } from 'helpers/pureFunctions'
 
 const _styles = (theme) => {
   return {
@@ -37,7 +37,9 @@ export default class Calculate extends Component {
     theme: PropTypes.object.isRequired
   }
 
-  shouldComponentUpdate = shouldPureComponentUpdate
+  shouldComponentUpdate(nextProps) {
+    return propsChanged(['calculation', 'theme'], this.props, nextProps)
+  }
 
   render() {
     const { calculation, onChange, onKeyPress, onPaste, theme } = this.props

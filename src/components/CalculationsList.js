@@ -42,6 +42,11 @@ export default class CalculationsList extends Component {
     return propsChanged(['calculations', 'theme'], this.props, nextProps)
   }
 
+  componentDidUpdate() {
+    const node = this.refs.wrapper
+    node.scrollTop = node.scrollHeight
+  }
+
   render() {
     const { calculations, deleteCalculation, theme } = this.props
     const styles = _styles(theme)
@@ -56,7 +61,7 @@ export default class CalculationsList extends Component {
 
     return (
       <Flex preset="box" theme={theme} vertical justifyContent="flex-end" inner>
-        <div style={styles.wrapper}>
+        <div ref="wrapper" style={styles.wrapper}>
           <h1 style={styles.overlay}>calculator</h1>
           {results}
         </div>

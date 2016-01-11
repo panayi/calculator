@@ -66,14 +66,18 @@ export class IndexSidebar extends Component {
 
     return (
       <Flex preset="box" theme={theme} vertical inner>
-        <Flex preset="content" theme={theme} grow="4" gutter>{buttons}</Flex>
+        <Flex preset="content" theme={theme} grow="4" gutter>
+          {buttons}
+        </Flex>
         <Flex preset="content" theme={theme} nogrow alignSelf="center" gutter>
           <h1 style={styles.logo}>3R</h1>
         </Flex>
         <Flex preset="box" theme={theme} nogrow gutter="tiny"
           justifyContent="center" style={styles.itemsWrapper}
         >
-          <Flex preset="column" theme={theme} inner="tiny" style={styles.author}>
+          <Flex preset="column" theme={theme} inner="tiny"
+            style={styles.author}
+          >
             <a className="author-name" href={settings.authorUrl}>
               {settings.authorName}
             </a>

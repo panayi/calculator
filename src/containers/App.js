@@ -28,7 +28,7 @@ export class App extends Component {
   render() {
     const { main, sidebar, theme } = this.props
     const styles = getStyles(theme)
-    console.log(styles)
+
     return (
       <Flex preset="frame" theme={theme}>
         <Flex preset="box" theme={theme} fullHeight nogrow noshrink

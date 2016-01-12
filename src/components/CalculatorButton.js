@@ -11,7 +11,6 @@ export const _getStyles = function (theme) {
       padding: '1px 0',
       textAlign: 'center',
       display: 'inline-block',
-      textDecoration: 'none',
       cursor: 'pointer',
       userSelect: 'none',
       borderBottom: `5px solid ${theme.colors.canvasDarker}`

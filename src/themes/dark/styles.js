@@ -21,7 +21,8 @@ export default function (variables) {
     },
 
     a: {
-      color: variables.colors.text
+      color: variables.colors.text,
+      textDecoration: 'none'
     },
 
     'a:hover': {

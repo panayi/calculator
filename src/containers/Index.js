@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import {
   currentCalculationSelector,
-  previousCalculationsSelector
+  previousCalculationsSelector,
+  settingsSelector
 } from 'redux/selectors'
 import { keyPressed as _keyPressed } from 'redux/modules/events'
 import {
@@ -9,6 +10,7 @@ import {
   updateCalculation as _updateCalculation
 } from 'redux/modules/calculations'
 import { propsChanged } from 'helpers/pureFunctions'
+import Author from 'components/Author'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import connect from 'helpers/connectAndTheme'
@@ -16,10 +18,13 @@ import Flex from 'containers/Flex'
 
 const _styles = (theme) => {
   return {
-    resultsWrapper: {
-      overflow: 'auto',
-      backgroundColor: theme.colors.canvasDark,
-      borderRadius: '2px 2px 0 0'
+    authorWrapper: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      padding: '3px 9px 2px',
+      backgroundColor: theme.colors.canvas,
+      borderBottomLeftRadius: '3px'
     },
     inputWrapper: {
       backgroundColor: theme.colors.canvasDark,
@@ -35,6 +40,11 @@ const _styles = (theme) => {
       height: '100%',
       zIndex: 1,
       borderRight: `1px solid ${theme.colors.border}`
+    },
+    resultsWrapper: {
+      overflow: 'auto',
+      backgroundColor: theme.colors.canvasDark,
+      borderRadius: '2px 2px 0 0'
     }
   }
 }
@@ -45,6 +55,7 @@ export class Index extends Component {
     deleteCalculation: PropTypes.func.isRequired,
     keyPressed: PropTypes.func.isRequired,
     previousCalculations: PropTypes.array.isRequired,
+    settings: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     updateCalculation: PropTypes.func.isRequired
   }
@@ -61,6 +72,7 @@ export class Index extends Component {
       keyPressed,
       previousCalculations,
       updateCalculation,
+      settings,
       theme
     } = this.props
     const styles = _styles(theme)
@@ -74,8 +86,13 @@ export class Index extends Component {
             deleteCalculation={deleteCalculation}
             theme={theme}
           />
+          <div style={styles.authorWrapper}>
+            <Author settings={settings} theme={theme} />
+          </div>
         </Flex>
-        <Flex preset="box" theme={theme} fullWidth justifyContent="flex-end" nogrow style={styles.inputWrapper}>
+        <Flex preset="box" theme={theme} fullWidth justifyContent="flex-end"
+          nogrow style={styles.inputWrapper}
+        >
           <Flex preset="content" theme={theme} gutter nogrow style={styles.inputBox}>
             <Calculate
               calculation={currentCalculation}
@@ -93,7 +110,8 @@ export class Index extends Component {
 
 const selectors = {
   currentCalculation: currentCalculationSelector,
-  previousCalculations: previousCalculationsSelector
+  previousCalculations: previousCalculationsSelector,
+  settings: settingsSelector
 }
 const actions = {
   deleteCalculation: _deleteCalculation,

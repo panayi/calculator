@@ -41,6 +41,10 @@ export default class Calculate extends Component {
     return propsChanged(['calculation', 'theme'], this.props, nextProps)
   }
 
+  componentDidUpdate() {
+    this.refs.input.getDOMNode().focus()
+  }
+
   render() {
     const { calculation, onChange, onKeyPress, onPaste, theme } = this.props
     const styles = _styles(theme)
@@ -56,6 +60,7 @@ export default class Calculate extends Component {
         <input
           type="text"
           className="calculator-input"
+          ref="input"
           value={calculation.input}
           onKeyPress={onKeyPress}
           onChange={(event) => { onChange(event.target.value) }}

@@ -52,8 +52,8 @@ export default class CalculationsList extends Component {
   }
 
   componentDidUpdate() {
-    const node = this.refs.wrapper
-    node.scrollTop = node.scrollHeight
+    const wrapperNode = this.refs.wrapper
+    wrapperNode.scrollTop = wrapperNode.scrollHeight
   }
 
   render() {

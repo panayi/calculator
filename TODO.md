@@ -15,8 +15,7 @@ TODO
 * ~~Show error when input is invalid.~~
 
 * Add `<ThemeSelector>` buttons
-* Add a help modal.
 * Add a light theme.
-* Arrow up/down: scroll through previous inputs.
+* Should focus input on Calculate.componentDidUpdate
 * Finalize styles and layout.
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html

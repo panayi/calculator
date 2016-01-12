@@ -10,7 +10,7 @@ const _styles = (theme) => {
     },
     input: {
       fontSize: theme.fontSizes.small,
-      marginTop: - theme.gutters.tiny + 1
+      marginTop: - theme.gutters.tiny
     },
     pointer: {
       textAlign: 'right',

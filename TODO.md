@@ -13,9 +13,9 @@ TODO
 * ~~Dashes next to each calculation; onClick, delete the calculation.~~
 * ~~Scroll to bottom after inserting a calculation.~~
 * ~~Show error when input is invalid.~~
+* ~~Finalize styles and layout.~~
 
 * Add `<ThemeSelector>` buttons
 * Add a light theme.
 * Should focus input on Calculate.componentDidUpdate
-* Finalize styles and layout.
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html

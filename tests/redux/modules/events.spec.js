@@ -17,7 +17,6 @@ describe('(Redux Module) events', () => {
         type: actionTypes.KEY_PRESSED,
         payload: event
       }
-
       expect(keyPressed(event)).to.deep.equal(expectedAction)
     })
   })

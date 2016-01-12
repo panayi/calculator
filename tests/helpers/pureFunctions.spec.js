@@ -53,7 +53,6 @@ describe('(Helpers) pureFunctions', function () {
           type: actionType,
           payload: 1
         }
-
         expect(isActionOfType(actionType, action)).to.equal(true)
       }
     )
@@ -64,7 +63,6 @@ describe('(Helpers) pureFunctions', function () {
           type: 'SOME_OTHER_TYPE',
           payload: 1
         }
-
         expect(isActionOfType(actionType, action)).to.equal(false)
       }
     )
@@ -73,7 +71,6 @@ describe('(Helpers) pureFunctions', function () {
       const stateObj = { foo: 'bar' }
       store = mockStore(stateObj, [])
       const selector = _state => _state.foo
-
       expect(state(selector, store)).to.equal(selector(stateObj))
     })
 

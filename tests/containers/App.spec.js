@@ -53,7 +53,6 @@ describe('(Container) App', function () {
       rendered,
       mainClassName
     )
-
     expect(mainComponent).to.exist
   })
 
@@ -62,7 +61,6 @@ describe('(Container) App', function () {
       rendered,
       sidebarClassName
     )
-
     expect(sidebarComponent).to.exist
   })
 

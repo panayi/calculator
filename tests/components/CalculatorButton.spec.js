@@ -38,7 +38,7 @@ describe('(Component) CalculatorButton', function () {
     display: '='
   }
   const theme = baseThemeVariables
-  let anchor
+  let button
   let component
   let nextProps
   let props
@@ -55,30 +55,29 @@ describe('(Component) CalculatorButton', function () {
     }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
-    anchor = TestUtils.findRenderedDOMComponentWithTag(
+    button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
-      'a'
+      'span'
     )
   })
 
-  it('should render as a <a>.', function () {
-    expect(component.type).to.equal('a')
+  it('should render as a <span>.', function () {
+    expect(component.type).to.equal('span')
   })
 
   it('should render "display"', function () {
-    expect(anchor.textContent).to.equal(theKey.display)
+    expect(button.textContent).to.equal(theKey.display)
   })
 
   it('should dispatch onClick', function () {
-    TestUtils.Simulate.click(anchor)
+    TestUtils.Simulate.click(button)
     spies.onClick.should.have.been.called
   })
 
   it('should use inactive styles when "active" is false', function () {
     const styles = getStyles(theme)
     const expectedStyles = R.merge(styles.base, styles.inactive)
-
-    expect(anchor.props.style).to.deep.equal(expectedStyles)
+    expect(button.props.style).to.deep.equal(expectedStyles)
   })
 
   it('should use inactive styles when "active" is false', function () {
@@ -86,12 +85,11 @@ describe('(Component) CalculatorButton', function () {
     const expectedStyles = R.merge(styles.base, styles.active)
     const activeKey = R.merge(theKey, { active: true })
     rendered = renderWithProps(R.merge(props, { theKey: activeKey }))
-    anchor = TestUtils.findRenderedDOMComponentWithTag(
+    button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
-      'a'
+      'span'
     )
-
-    expect(anchor.props.style).to.deep.equal(expectedStyles)
+    expect(button.props.style).to.deep.equal(expectedStyles)
   })
 
   describe('shouldComponentUpdate', function () {

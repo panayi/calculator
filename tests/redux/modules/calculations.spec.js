@@ -70,7 +70,6 @@ describe('(Redux Module) calculations', function () {
           input,
           output: 22
         }
-
         expect(reducer([calculation], action)).to.deep.equal([newCalculation])
       })
 
@@ -86,7 +85,6 @@ describe('(Redux Module) calculations', function () {
             input,
             isError: true
           }
-
           expect(reducer([calculation], action)).to.deep.equal([newCalculation])
         }
       )

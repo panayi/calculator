@@ -4,6 +4,7 @@ import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { Index } from 'containers/Index'
+import Author from 'components/Author'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
@@ -33,6 +34,7 @@ describe('(Container) Index', function () {
   }
   const currentCalculation = calculation()
   const previousCalculations = [calculation(), calculation()]
+  const settings = {}
   const theme = baseThemeVariables
   let component
   let nextProps
@@ -45,6 +47,7 @@ describe('(Container) Index', function () {
     props = {
       currentCalculation,
       previousCalculations,
+      settings,
       theme,
       ...bindActionCreators({
         keyPressed: (spies.keyPressed = sinon.spy()),
@@ -65,7 +68,6 @@ describe('(Container) Index', function () {
       rendered,
       CalculationsList
     )
-
     expect(calculationsList).to.exist
   })
 
@@ -74,8 +76,15 @@ describe('(Container) Index', function () {
       rendered,
       Calculate
     )
-
     expect(calculationInput).to.exist
+  })
+
+  it('Should render an instance of Author.', function () {
+    const author = TestUtils.findRenderedComponentWithType(
+      rendered,
+      Author
+    )
+    expect(author).to.exist
   })
 
   describe('Calculator input', function () {
@@ -108,7 +117,7 @@ describe('(Container) Index', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if currentCalculation, previousCalculations and theme is the same',
+    it('should not update if currentCalculation, previousCalculations, settings and theme are the same',
       function () {
         nextProps = { currentCalculation, previousCalculations, theme }
         expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
@@ -119,6 +128,7 @@ describe('(Container) Index', function () {
       nextProps = R.merge(props, {
         currentCalculation: calculation('1+2', 3),
         previousCalculations,
+        settings,
         theme
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
@@ -128,6 +138,17 @@ describe('(Container) Index', function () {
       nextProps = R.merge(props, {
         currentCalculation,
         previousCalculations: R.append(calculation(), previousCalculations),
+        settings,
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if settings change', function () {
+      nextProps = R.merge(props, {
+        currentCalculation,
+        previousCalculations: R.append(calculation(), previousCalculations),
+        settings: R.merge(settings, { foo: 'bar' }),
         theme
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
@@ -137,6 +158,7 @@ describe('(Container) Index', function () {
       nextProps = R.merge(props, {
         currentCalculation,
         previousCalculations,
+        settings,
         theme: R.merge(theme, { foo: 'bar' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true

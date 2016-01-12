@@ -41,7 +41,6 @@ describe('(Redux Selector) ', function () {
   describe('keys', function () {
     it('should return the keys state', () => {
       const keys = 'a,b,c'
-
       expect(keysSelector({ keys })).to.deep.equal(keys)
     })
   })
@@ -52,7 +51,6 @@ describe('(Redux Selector) ', function () {
         foo: 1,
         bar: 2
       }
-
       expect(settingsSelector({ settings })).to.deep.equal(settings)
     })
   })

@@ -7,7 +7,7 @@ const _styles = (theme) => {
   return {
     overlay: {
       position: 'absolute',
-      zIndex: 1,
+      zIndex: 0,
       top: 0,
       bottom: 0,
       left: 0,

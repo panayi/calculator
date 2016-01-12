@@ -16,7 +16,7 @@ import CalculationsList from 'components/CalculationsList'
 import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
 
-const _styles = (theme) => {
+const getStyles = function (theme) {
   return {
     authorWrapper: {
       position: 'absolute',
@@ -75,7 +75,7 @@ export class Index extends Component {
       settings,
       theme
     } = this.props
-    const styles = _styles(theme)
+    const styles = getStyles(theme)
 
     return (
       <Flex preset="box" theme={theme} vertical innerMargin gutterRight nowrap>

@@ -14,8 +14,8 @@ TODO
 * ~~Scroll to bottom after inserting a calculation.~~
 * ~~Show error when input is invalid.~~
 * ~~Finalize styles and layout.~~
+* ~~Should focus input on Calculate.componentDidUpdate.~~
 
 * Add `<ThemeSelector>` buttons
 * Add a light theme.
-* Should focus input on Calculate.componentDidUpdate
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html

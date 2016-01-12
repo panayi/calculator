@@ -31,6 +31,22 @@ const propsChanged = (propsArray, props, nextProps) => {
   ])(props, nextProps)
 }
 
+// stylesChanged :: Function -> Object -> Object -> Boolean
+const stylesChanged = (getStyles, props, nextProps) => {
+  return R.useWith(R.compose(R.not, R.equals), [
+    R.compose(getStyles, R.prop('theme')),
+    R.compose(getStyles, R.prop('theme'))
+  ])(props, nextProps)
+}
+
+// propsOrStylesChanged :: String[] -> Function -> Object -> Object -> Boolean
+const propsOrStylesChanged = (propsArray, getStyles, props, nextProps) => {
+  return R.or(
+    propsChanged(propsArray, props, nextProps),
+    stylesChanged(getStyles, props, nextProps)
+  )
+}
+
 // ------------------------------------
 // Redux
 // ------------------------------------
@@ -80,6 +96,8 @@ export {
   keyCode,
   mapIndexed,
   propsChanged,
+  propsOrStylesChanged,
+  stylesChanged,
   state,
   invokeLater
 }

@@ -21,6 +21,11 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) Author', function () {
+  const getStyles = (theme) => {
+    return {
+      color: theme.dark
+    }
+  }
   const settings = {
     authorName: 'John Doe',
     authorUrl: 'https://john-doe.com',
@@ -35,7 +40,7 @@ describe('(Component) Author', function () {
   let rendered
 
   beforeEach(function () {
-    props = { settings, theme }
+    props = { getStyles, settings, theme }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
   })
@@ -79,10 +84,20 @@ describe('(Component) Author', function () {
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
 
-    it('should update if theme changes', function () {
+    it('should not update if theme changes but styles stay the same',
+      function () {
+        nextProps = R.merge(props, {
+          settings,
+          theme: R.merge(theme, { light: '#EEE' })
+        })
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if styles change', function () {
       nextProps = R.merge(props, {
         settings,
-        theme: R.merge(theme, { foo: 'bar' })
+        theme: R.merge(theme, { dark: '#444' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })

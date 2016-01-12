@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
-import { propsChanged } from 'helpers/pureFunctions'
+import { propsOrStylesChanged } from 'helpers/pureFunctions'
 
-const _styles = (theme) => {
+const _getStyles = function (theme) {
   return {
     input: {
       background: 'none',
@@ -31,23 +31,30 @@ export default class Calculate extends Component {
       output: PropTypes.number,
       isError: PropTypes.boolean
     }).isRequired,
+    getStyles: PropTypes.func,
     onChange: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired
   }
 
+  static defaultProps = {
+    getStyles: _getStyles
+  }
+
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['calculation', 'theme'], this.props, nextProps)
+    return propsOrStylesChanged(['calculation'], this.props.getStyles,
+      this.props, nextProps)
   }
 
   componentDidUpdate() {
-    this.refs.input.getDOMNode().focus()
+    this.refs.input.focus()
   }
 
   render() {
-    const { calculation, onChange, onKeyPress, onPaste, theme } = this.props
-    const styles = _styles(theme)
+    const { calculation, getStyles, onChange, onKeyPress, onPaste,
+      theme } = this.props
+    const styles = getStyles(theme)
     const renderedOutput = R.cond([
       [R.prop('isError'), R.always('Ans = ERROR')],
       [R.compose(R.isEmpty, R.defaultTo(''), R.prop('output')), R.always('')],

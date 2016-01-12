@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Radium from 'radium'
-import { propsChanged } from 'helpers/pureFunctions'
+import { propsOrStylesChanged } from 'helpers/pureFunctions'
 
 export const _getStyles = function (theme) {
   return {
@@ -42,7 +42,8 @@ class CalculatorButton extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['theKey', 'theme'], this.props, nextProps)
+    return propsOrStylesChanged(['theKey'], this.props.getStyles,
+      this.props, nextProps)
   }
 
   render() {

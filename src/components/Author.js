@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Octicon from 'react-octicon'
-import { propsChanged } from 'helpers/pureFunctions'
+import { propsOrStylesChanged } from 'helpers/pureFunctions'
 import Flex from 'containers/Flex'
 
-const getStyles = (theme) => {
+const _getStyles = function (theme) {
   return {
     author: {
       [theme.screens.mediumWidth]: {
@@ -26,16 +26,22 @@ const getStyles = (theme) => {
 
 export default class Calculate extends Component {
   static propTypes = {
+    getStyles: PropTypes.func,
     settings: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired
   }
 
+  static defaultProps = {
+    getStyles: _getStyles
+  }
+
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['settings', 'theme'], this.props, nextProps)
+    return propsOrStylesChanged(['settings'], this.props.getStyles,
+      this.props, nextProps)
   }
 
   render() {
-    const { settings, theme } = this.props
+    const { getStyles, settings, theme } = this.props
     const styles = getStyles(theme)
 
     return (

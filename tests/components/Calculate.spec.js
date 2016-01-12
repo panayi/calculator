@@ -20,6 +20,11 @@ function renderWithProps(props = {}) {
 }
 
 describe('(Component) Calculate', function () {
+  const getStyles = (theme) => {
+    return {
+      color: theme.dark
+    }
+  }
   const theme = baseThemeVariables
   let calculation = {
     input: '1+1',
@@ -37,6 +42,7 @@ describe('(Component) Calculate', function () {
     spies = {}
     props = {
       calculation,
+      getStyles,
       onChange: (spies.onChange = sinon.spy()),
       onKeyPress: (spies.onKeyPress = sinon.spy()),
       onPaste: (spies.onPaste = sinon.spy()),
@@ -103,6 +109,18 @@ describe('(Component) Calculate', function () {
     spies.onPaste.should.have.been.called
   })
 
+  it('should focus on componentDidUpdate', function () {
+    rendered = renderWithProps(props)
+    input = TestUtils.findRenderedDOMComponentWithClass(
+      rendered,
+      'calculator-input'
+    )
+    input.focus = sinon.spy()
+    input.focus.should.not.have.been.called
+    rendered.componentDidUpdate()
+    input.focus.should.have.been.called
+  })
+
   describe('shouldComponentUpdate', function () {
     it('should not update if calculation and theme are the same', function () {
       nextProps = { calculation, theme }
@@ -118,10 +136,20 @@ describe('(Component) Calculate', function () {
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
 
-    it('should update if theme changes', function () {
+    it('should not update if theme changes but styles stay the same',
+      function () {
+        nextProps = R.merge(props, {
+          calculation,
+          theme: R.merge(theme, { light: '#EEE' })
+        })
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if styles change', function () {
       nextProps = R.merge(props, {
         calculation,
-        theme: R.merge(theme, { foo: 'bar' })
+        theme: R.merge(theme, { dark: '#444' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })

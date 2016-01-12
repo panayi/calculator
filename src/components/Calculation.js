@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { propsChanged } from 'helpers/pureFunctions'
+import { propsOrStylesChanged } from 'helpers/pureFunctions'
 import Flex from 'containers/Flex'
 
-const _styles = (theme) => {
+const _getStyles = function (theme) {
   return {
     output: {
       fontSize: theme.fontSizes.xlarge,
@@ -30,17 +30,23 @@ export default class Calculation extends Component {
       input: PropTypes.string,
       output: PropTypes.number
     }).isRequired,
+    getStyles: PropTypes.func,
     onPointerClick: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired
   }
 
+  static defaultProps = {
+    getStyles: _getStyles
+  }
+
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['calculation', 'theme'], this.props, nextProps)
+    return propsOrStylesChanged(['calculation'], this.props.getStyles,
+      this.props, nextProps)
   }
 
   render() {
-    const { calculation, onPointerClick, theme } = this.props
-    const styles = _styles(theme)
+    const { calculation, getStyles, onPointerClick, theme } = this.props
+    const styles = getStyles(theme)
 
     return (
       <Flex preset="box" theme={theme} inner="small" nowrap>

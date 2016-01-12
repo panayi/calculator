@@ -25,6 +25,11 @@ describe('(Component) Calculation', function () {
     input: '12+12',
     output: 24
   }
+  const getStyles = (theme) => {
+    return {
+      color: theme.dark
+    }
+  }
   const onPointerClick = sinon.spy()
   const theme = baseThemeVariables
   let component
@@ -34,7 +39,7 @@ describe('(Component) Calculation', function () {
   let rendered
 
   beforeEach(function () {
-    props = { calculation, onPointerClick, theme }
+    props = { calculation, getStyles, onPointerClick, theme }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
 
@@ -91,10 +96,20 @@ describe('(Component) Calculation', function () {
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
 
-    it('should update if theme changes', function () {
+    it('should not update if theme changes but styles stay the same',
+      function () {
+        nextProps = R.merge(props, {
+          calculation,
+          theme: R.merge(theme, { light: '#EEE' })
+        })
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if styles change', function () {
       nextProps = R.merge(props, {
         calculation,
-        theme: R.merge(theme, { foo: 'bar' })
+        theme: R.merge(theme, { dark: '#444' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })

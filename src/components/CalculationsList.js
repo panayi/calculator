@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import { mapIndexed, propsChanged } from 'helpers/pureFunctions'
+import { mapIndexed, propsOrStylesChanged } from 'helpers/pureFunctions'
 import Calculation from 'components/Calculation'
 import Flex from 'containers/Flex'
 
-const _styles = (theme) => {
+const _getStyles = function (theme) {
   return {
     overlay: {
       position: 'absolute',
@@ -40,15 +40,18 @@ export default class CalculationsList extends Component {
   static propTypes = {
     calculations: PropTypes.array.isRequired,
     deleteCalculation: PropTypes.func.isRequired,
+    getStyles: PropTypes.func,
     theme: PropTypes.object.isRequired
   }
 
   static defaultProps = {
-    calculations: []
+    calculations: [],
+    getStyles: _getStyles
   }
 
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['calculations', 'theme'], this.props, nextProps)
+    return propsOrStylesChanged(['calculations'], this.props.getStyles,
+      this.props, nextProps)
   }
 
   componentDidUpdate() {
@@ -57,8 +60,8 @@ export default class CalculationsList extends Component {
   }
 
   render() {
-    const { calculations, deleteCalculation, theme } = this.props
-    const styles = _styles(theme)
+    const { calculations, deleteCalculation, getStyles, theme } = this.props
+    const styles = getStyles(theme)
     const results = mapIndexed((calculation, index) =>
       <Calculation
         calculation={calculation}

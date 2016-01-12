@@ -26,10 +26,10 @@ describe('(Component) CalculatorButton', function () {
         paddingBottom: '10px'
       },
       inactive: {
-        color: 'blue'
+        color: theme.blue
       },
       active: {
-        color: 'red'
+        color: theme.red
       }
     }
   }
@@ -37,7 +37,10 @@ describe('(Component) CalculatorButton', function () {
     keyCode: 13,
     display: '='
   }
-  const theme = baseThemeVariables
+  const theme = R.merge(baseThemeVariables, {
+    blue: 'blue',
+    red: 'red'
+  })
   let button
   let component
   let nextProps
@@ -109,10 +112,20 @@ describe('(Component) CalculatorButton', function () {
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
 
-    it('should update if theme changes', function () {
+    it('should not update if theme changes but styles stay the same',
+      function () {
+        nextProps = R.merge(props, {
+          theKey,
+          theme: R.merge(theme, { green: '#4EF64A' })
+        })
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if styles change', function () {
       nextProps = R.merge(props, {
         theKey,
-        theme: R.merge(theme, { foo: 'bar' })
+        theme: R.merge(theme, { blue: '#14BCF6' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })

@@ -31,6 +31,11 @@ describe('(Component) CalculationList', function () {
   }
   const calculations = [calculation(), calculation()]
   const deleteCalculation = sinon.spy()
+  const getStyles = (theme) => {
+    return {
+      color: theme.dark
+    }
+  }
   const theme = baseThemeVariables
   let calculationComponents
   let component
@@ -39,7 +44,7 @@ describe('(Component) CalculationList', function () {
   let rendered
 
   beforeEach(function () {
-    props = { calculations, deleteCalculation, theme }
+    props = { calculations, deleteCalculation, getStyles, theme }
     component = shallowRenderWithProps(props)
     rendered = renderWithProps(props)
 
@@ -71,6 +76,8 @@ describe('(Component) CalculationList', function () {
     }
   )
 
+  it('should scroll to bottom on componentDidUpdate')
+
   describe('shouldComponentUpdate', function () {
     it('should not update if calculations and theme are the same', function () {
       nextProps = { calculations, theme }
@@ -85,10 +92,20 @@ describe('(Component) CalculationList', function () {
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
 
-    it('should update if theme changes', function () {
+    it('should not update if theme changes but styles stay the same',
+      function () {
+        nextProps = R.merge(props, {
+          calculations,
+          theme: R.merge(theme, { light: '#EEE' })
+        })
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
+
+    it('should update if styles change', function () {
       nextProps = R.merge(props, {
         calculations,
-        theme: R.merge(theme, { foo: 'bar' })
+        theme: R.merge(theme, { dark: '#444' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })

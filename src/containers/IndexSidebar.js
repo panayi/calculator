@@ -7,7 +7,7 @@ import CalculatorButton from 'components/CalculatorButton'
 import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
 
-const _styles = (theme) => {
+const getStyles = function (theme) {
   return {
     logo: {
       margin: 0,
@@ -38,7 +38,7 @@ export class IndexSidebar extends Component {
 
   render() {
     const { buttonClicked, keys, theme } = this.props
-    const styles = _styles(theme)
+    const styles = getStyles(theme)
     const buttons = mapIndexed((key, index) =>
       <CalculatorButton
         key={index}

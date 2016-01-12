@@ -8,27 +8,16 @@ import CalculatorButton from 'components/CalculatorButton'
 import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
 
-const _styles = (themeVariables) => {
+const _styles = (theme) => {
   return {
     logo: {
       margin: 0,
-      fontSize: '11.7vw',
-      lineHeight: '11.7vw',
-      color: tinycolor(themeVariables.colors.text).desaturate(30).setAlpha(0.5).toString(),
-      '@media (max-width: 645px)': {
-        fontSize: '75.465px',
-        lineHeight: '75.465px'
-      }
-    },
-    itemsWrapper: {
-      margin: '0 -3px',
-      '@media (max-width: 645px)': {
-        flexWrap: 'nowrap'
-      }
-    },
-    author: {
-      '@media (max-width: 645px)': {
-        display: 'none'
+      fontSize: '185px',
+      lineHeight: '185px',
+      color: tinycolor(theme.colors.text).desaturate(30).setAlpha(0.5).toString(),
+      [theme.screens.smallHeight]: {
+        fontSize: '23.5vh',
+        lineHeight: '23.5vh'
       }
     },
     tweet: {
@@ -66,18 +55,14 @@ export class IndexSidebar extends Component {
 
     return (
       <Flex preset="box" theme={theme} vertical inner>
-        <Flex preset="content" theme={theme} grow="4" gutter>
+        <Flex preset="content" theme={theme} grow="4" gutterLeft>
           {buttons}
         </Flex>
-        <Flex preset="content" theme={theme} nogrow alignSelf="center" gutter>
+        <Flex preset="content" theme={theme} nogrow alignSelf="center">
           <h1 style={styles.logo}>3R</h1>
         </Flex>
-        <Flex preset="box" theme={theme} nogrow gutter="tiny"
-          justifyContent="center" style={styles.itemsWrapper}
-        >
-          <Flex preset="column" theme={theme} inner="tiny"
-            style={styles.author}
-          >
+        <Flex preset="box" theme={theme} nogrow gutter="tiny" alignSelf="center">
+          <Flex preset="column" theme={theme} inner="tiny" style={styles.author}>
             <a className="author-name" href={settings.authorUrl}>
               {settings.authorName}
             </a>

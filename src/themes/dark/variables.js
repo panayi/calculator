@@ -17,6 +17,8 @@ export default {
     accentContrast: accentContrastColor,
     canvas: canvasColor,
     canvasDark: tinycolor(canvasColor).darken(9).toString(),
+    canvasDarker: tinycolor(canvasColor).darken(18).desaturate(5).setAlpha(0.7)
+                  .toString(),
     text: primaryColor,
     fadedText: tinycolor(canvasColor).setAlpha(0.7).toString(),
     border: tinycolor(primaryColor).setAlpha(0.35).toString(),

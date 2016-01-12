@@ -43,7 +43,7 @@ export default class Calculation extends Component {
     const styles = _styles(theme)
 
     return (
-      <Flex preset="box" theme={theme} inner="small">
+      <Flex preset="box" theme={theme} inner="small" nowrap>
         <Flex preset="content" theme={theme} gutter="small" inner="small"
           nogrow style={styles.pointer}
         >

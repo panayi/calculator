@@ -3,6 +3,17 @@ import { propsChanged } from 'helpers/pureFunctions'
 import Flex from 'containers/Flex'
 import connect from 'helpers/connectAndTheme'
 
+const getStyles = function (theme) {
+  return {
+    sidebar: {
+      width: theme.layout.sidebarWidth,
+      [theme.screens.smallWidth]: {
+        display: 'none'
+      }
+    }
+  }
+}
+
 export class App extends Component {
   static propTypes = {
     main: PropTypes.element.isRequired,
@@ -16,13 +27,16 @@ export class App extends Component {
 
   render() {
     const { main, sidebar, theme } = this.props
-
+    const styles = getStyles(theme)
+    console.log(styles)
     return (
       <Flex preset="frame" theme={theme}>
-        <Flex preset="box" theme={theme} fullHeight nogrow noshrink width="min-content">
+        <Flex preset="box" theme={theme} fullHeight nogrow noshrink
+          style={styles.sidebar}
+        >
           {sidebar}
         </Flex>
-        <Flex preset="box" theme={theme} fullHeight>
+        <Flex preset="box" theme={theme} fullHeight gutterLeft>
           {main}
         </Flex>
       </Flex>

@@ -18,6 +18,15 @@ const _styles = (theme) => {
       margin: 'auto',
       textAlign: 'center',
       color: theme.colors.fadedText,
+      [theme.screens.smallWidth]: {
+        width: '35%'
+      }
+    },
+    threeR: {
+      display: 'none',
+      [theme.screens.smallWidth]: {
+        display: 'inline'
+      }
     },
     wrapper: {
       height: '100%',
@@ -62,7 +71,9 @@ export default class CalculationsList extends Component {
     return (
       <Flex preset="box" theme={theme} vertical justifyContent="flex-end" inner>
         <div ref="wrapper" style={styles.wrapper}>
-          <h1 style={styles.overlay}>calculator</h1>
+          <h1 style={styles.overlay}>
+            <span style={styles.threeR}>3R </span>calculator
+          </h1>
           {results}
         </div>
       </Flex>

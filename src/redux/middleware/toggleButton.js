@@ -3,7 +3,7 @@ import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 import { actionTypes as keysActionTypes, activateKey, deactivateKey } from 'redux/modules/keys'
 import { invokeLater, isActionOfType, dispatch, keyCode } from 'helpers/pureFunctions'
 
-const activeDurationMs = 140
+const activeDurationMs = 160
 
 // dispatchActivateKey :: Function -> Function
 const dispatchActivateKey = (keyCodeSelector) =>

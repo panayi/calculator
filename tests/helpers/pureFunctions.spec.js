@@ -17,23 +17,23 @@ describe('(Helpers) pureFunctions', function () {
     })
 
     it('should return false when picked props are equal', function () {
-      expect(propsChanged(['a'], {
-        a: 1,
-        b: 2,
-      }, {
-        a: 1,
-        b: 3,
-      })).to.be.false
+      expect(
+        propsChanged(
+          ['a'],
+          { a: 1, b: 2 },
+          { a: 1, b: 3 }
+        )
+      ).to.be.false
     })
 
     it('should return true when picked props are not equal', function () {
-      expect(propsChanged(['b'], {
-        a: 1,
-        b: 2,
-      }, {
-        a: 1,
-        b: 3,
-      })).to.be.true
+      expect(
+        propsChanged(
+          ['b'],
+          { a: 1, b: 2 },
+          { a: 1, b: 3 }
+        )
+      ).to.be.true
     })
   })
 

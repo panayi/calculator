@@ -34,10 +34,7 @@ describe('(Container) ThemeManager', function () {
   })
 
   it('should render children', function () {
-    const child = TestUtils.findRenderedDOMComponentWithClass(
-      rendered,
-      'child'
-    )
+    const child = TestUtils.findRenderedDOMComponentWithClass(rendered, 'child')
     expect(child).to.exist
   })
 

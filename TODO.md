@@ -17,6 +17,6 @@ TODO
 * ~~Should focus input on Calculate.componentDidUpdate.~~
 * ~~Add `<ThemeSelector>` buttons~~
 * ~~Add a light theme.~~
+* ~~DRY tests with helpers.~~
 
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html
-* DRY tests with helpers.

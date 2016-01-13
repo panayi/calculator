@@ -78,10 +78,7 @@ describe('(Component) Button', function () {
     const styles = getStyles(theme)
     const expectedStyles = R.merge(styles.base, styles.active)
     rendered = render(Button, R.merge(props, { active: true }))
-    button = TestUtils.findRenderedDOMComponentWithTag(
-      rendered,
-      'span'
-    )
+    button = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
     expect(button.props.style).to.deep.equal(expectedStyles)
   })
 

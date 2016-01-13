@@ -11,13 +11,13 @@ import { shouldIgnoreOtherProps, shouldUpdate }
   from '../test-helpers/shouldComponentUpdate'
 
 describe('(Container) IndexSidebar', function () {
-  const oneKey = { keyCode: 49, display: '1' }
   const enterKey = { keyCode: 13, display: '=' }
-  const keys = [oneKey, enterKey]
   const nextThemeName = 'dark'
   const nextThemeVariables = R.merge(baseThemeVariables, darkThemeVariables)
+  const oneKey = { keyCode: 49, display: '1' }
   const spies = {}
   const theme = baseThemeVariables
+  const keys = [oneKey, enterKey]
   let buttons
   let component
   let props

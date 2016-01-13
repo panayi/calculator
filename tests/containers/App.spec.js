@@ -65,7 +65,7 @@ describe('(Container) App', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if main, sidebar and theme is the same',
+    it('should not update if main, sidebar and theme are the same',
       function () {
         nextProps = { main, sidebar, theme }
         expect(rendered.shouldComponentUpdate(nextProps)).to.be.false

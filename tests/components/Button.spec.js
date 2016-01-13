@@ -17,12 +17,13 @@ function shallowRenderWithProps(props = {}) {
 
 function renderWithProps(props = {}, children) {
   return TestUtils.renderIntoDocument(
-    <Button {...props}>{children}</Button>
+    <Button {...props} />
   )
 }
 
 describe('(Component) Button', function () {
   const active = false
+  const children = <b className="child">a button</b>
   const getStyles = function (theme) {
     return {
       base: {
@@ -41,7 +42,6 @@ describe('(Component) Button', function () {
     red: 'red'
   })
   let button
-  let children
   let component
   let nextProps
   let props
@@ -52,13 +52,13 @@ describe('(Component) Button', function () {
     spies = {}
     props = {
       active,
+      children,
       getStyles,
       onClick: (spies.onClick = sinon.spy()),
       theme
     }
-    children = <b>a button</b>
     component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props, children)
+    rendered = renderWithProps(props)
     button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
       'span'
@@ -70,7 +70,11 @@ describe('(Component) Button', function () {
   })
 
   it('should render children', function () {
-    expect(button.textContent).to.equal('a button')
+    const child = TestUtils.findRenderedDOMComponentWithClass(
+      rendered,
+      'child'
+    )
+    expect(child).to.exist
   })
 
   it('should dispatch onClick', function () {

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { mapIndexed, propsOrStylesChanged } from 'helpers/pureFunctions'
 import Calculation from 'components/Calculation'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 const _getStyles = function (theme) {
   return {

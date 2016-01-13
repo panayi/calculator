@@ -14,7 +14,7 @@ import Author from 'components/Author'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import connect from 'helpers/connectAndTheme'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 const getStyles = function (theme) {
   return {

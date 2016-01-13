@@ -5,7 +5,7 @@ import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculation from 'components/Calculation'
 import CalculationsList from 'components/CalculationsList'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()

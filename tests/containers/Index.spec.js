@@ -8,7 +8,7 @@ import Author from 'components/Author'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()

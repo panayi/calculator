@@ -7,7 +7,7 @@ import { keysSelector, nextThemeNameSelector,
 import { mapIndexed, propsChanged } from 'helpers/pureFunctions'
 import Button from 'components/Button'
 import connect from 'helpers/connectAndTheme'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 const getStyles = function (theme) {
   return {

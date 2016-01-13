@@ -4,7 +4,7 @@ import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Author from 'components/Author'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import Octicon from 'react-octicon'
 import { propsOrStylesChanged } from 'helpers/pureFunctions'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 const _getStyles = function (theme) {
   return {

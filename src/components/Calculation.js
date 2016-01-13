@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { propsOrStylesChanged } from 'helpers/pureFunctions'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 const _getStyles = function (theme) {
   return {

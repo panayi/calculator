@@ -6,7 +6,7 @@ import { IndexSidebar } from 'containers/IndexSidebar'
 import baseThemeVariables from 'themes/_base/variables'
 import Button from 'components/Button'
 import darkThemeVariables from 'themes/dark/variables'
-import Flex from 'containers/Flex'
+import Flex from 'components/Flex'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()

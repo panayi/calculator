@@ -42,12 +42,12 @@ export default class CalculationsList extends Component {
     deleteCalculation: PropTypes.func.isRequired,
     getStyles: PropTypes.func,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   static defaultProps = {
     calculations: [],
     getStyles: _getStyles
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsOrStylesChanged(['calculations'], this.props.getStyles,

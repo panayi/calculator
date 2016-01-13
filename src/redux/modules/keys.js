@@ -47,4 +47,4 @@ export default handleActions({
   [actionTypes.SET_KEYS]: (state, { payload }) => {
     return payload
   }
-}, {})
+}, [])

@@ -4,13 +4,13 @@ import { Style } from 'radium'
 import { createStructuredSelector } from 'reselect'
 import { propsChanged } from 'helpers/pureFunctions'
 import { themeStylesSelector } from 'redux/selectors'
-import 'styles/normalize.css'
+import 'normalize.css/normalize.css'
 
 export class ThemeManager extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired,
     children: PropTypes.node
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsChanged(['styles', 'children'], this.props, nextProps)

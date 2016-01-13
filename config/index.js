@@ -8,7 +8,7 @@ debug(`Apply environment overrides for NODE_ENV "${base.env}".`)
 let overrides
 try {
   overrides = require(`./_${base.env}`)(base)
-} catch (e) {
+} catch (error) {
   debug(
     `No configuration overrides found for NODE_ENV "${base.env}"`
   )

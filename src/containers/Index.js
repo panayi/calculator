@@ -58,7 +58,7 @@ export class Index extends Component {
     settings: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     updateCalculation: PropTypes.func.isRequired
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsChanged([

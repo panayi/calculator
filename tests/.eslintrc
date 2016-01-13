@@ -1,12 +1,12 @@
 {
-  "extends" : "../.eslintrc",
-  "env"     : {
-    "mocha" : true
+  "extends": "../.eslintrc",
+  "env": {
+    "mocha": true
   },
-  "globals" : {
+  "globals": {
     "$": false,
-    "expect" : false,
-    "should" : false,
-    "sinon"  : false
+    "expect": false,
+    "should": false,
+    "sinon": false
   }
 }

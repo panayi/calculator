@@ -32,11 +32,11 @@ class Button extends Component {
     getStyles: PropTypes.func,
     onClick: PropTypes.func,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   static defaultProps = {
     getStyles: _getStyles
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsOrStylesChanged(['active', 'children'], this.props.getStyles,

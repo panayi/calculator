@@ -35,7 +35,7 @@ export class IndexSidebar extends Component {
     nextThemeName: PropTypes.string.isRequired,
     nextThemeVariables: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsChanged(['keys', 'nextThemeName', 'theme'],

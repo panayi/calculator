@@ -237,12 +237,12 @@ class Flex extends Component {
 
     // fullWidth && fullHeight
     full: PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     preset: 'base',
     style: {}
-  }
+  };
 
   getStyles() {
     const {

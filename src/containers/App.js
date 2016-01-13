@@ -19,7 +19,7 @@ export class App extends Component {
     main: PropTypes.element.isRequired,
     sidebar: PropTypes.element,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsChanged(['main', 'sidebar', 'theme'], this.props, nextProps)

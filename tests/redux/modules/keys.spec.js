@@ -16,7 +16,7 @@ describe('(Redux Module) keys', function () {
     })
 
     it('should return the initial state', function () {
-      expect(reducer(undefined, {})).to.deep.equal({})
+      expect(reducer(undefined, {})).to.deep.equal([])
     })
 
     it('should handle SET_KEYS', function () {

@@ -10,24 +10,24 @@ const karmaConfig = {
   files: [
     './node_modules/phantomjs-polyfill/bind-polyfill.js',
     {
-      pattern: `./${config.dir_test}/**/*.js`,
+      pattern: `./${config.dir_test}/test-bundler.js`,
       watched: false,
       served: true,
       included: true
     }
   ],
   singleRun: !argv.watch,
-  frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai', 'jquery-1.8.3'],
+  frameworks: ['mocha', 'chai-sinon', 'chai-as-promised', 'chai',
+    'jquery-1.8.3'],
   preprocessors: {
-    [`${config.dir_test}/**/*.js`]: ['webpack']
+    [`${config.dir_test}/test-bundler.js`]: ['webpack']
   },
   reporters: ['spec'],
   browsers: ['PhantomJS'],
   webpack: {
     devtool: 'inline-source-map',
     resolve: webpackConfig.resolve,
-    plugins: webpackConfig.plugins
-      .filter(plugin => !plugin.__KARMA_IGNORE__),
+    plugins: webpackConfig.plugins,
     module: {
       loaders: webpackConfig.module.loaders
     },
@@ -46,7 +46,8 @@ if (config.coverage_enabled) {
   karmaConfig.webpack.module.preLoaders = [{
     test: /\.(js|jsx)$/,
     include: new RegExp(config.dir_client),
-    loader: 'isparta'
+    loader: 'isparta',
+    exclude: /node_modules/
   }]
 }
 

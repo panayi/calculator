@@ -36,11 +36,11 @@ export default class Calculate extends Component {
     onKeyPress: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   static defaultProps = {
     getStyles: _getStyles
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsOrStylesChanged(['calculation'], this.props.getStyles,

@@ -29,11 +29,11 @@ export default class Calculate extends Component {
     getStyles: PropTypes.func,
     settings: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   static defaultProps = {
     getStyles: _getStyles
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsOrStylesChanged(['settings'], this.props.getStyles,

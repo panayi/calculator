@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 import { routeReducer } from 'redux-simple-router'
-import calculations from './calculations'
-import keys from './keys'
-import settings from './settings'
-import themes from './themes'
+import calculations from './modules/calculations'
+import keys from './modules/keys'
+import settings from './modules/settings'
+import themes from './modules/themes'
 
 export default combineReducers({
   calculations,

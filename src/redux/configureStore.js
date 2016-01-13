@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
-import rootReducer from './modules'
 import handleEventsMiddleware from './middleware/handleEvents'
 import toggleButtonMiddleware from './middleware/toggleButton'
+import rootReducer from './rootReducer'
 
 export default function configureStore(initialState: ?Object) {
   let createStoreWithMiddleware
@@ -14,20 +14,20 @@ export default function configureStore(initialState: ?Object) {
   if (__DEBUG__) {
     createStoreWithMiddleware = compose(
       middleware,
-      require('containers/DevTools').instrument()
+      window.devToolsExtension
+        ? window.devToolsExtension()
+        : require('containers/DevTools').default.instrument()
     )
   } else {
-    createStoreWithMiddleware = compose(
-      middleware
-    )
+    createStoreWithMiddleware = compose(middleware)
   }
 
   const store = createStoreWithMiddleware(createStore)(
     rootReducer, initialState
   )
   if (module.hot) {
-    module.hot.accept('./modules', () => {
-      const nextRootReducer = require('./modules')
+    module.hot.accept('./rootReducer', () => {
+      const nextRootReducer = require('./rootReducer')
 
       store.replaceReducer(nextRootReducer)
     })

@@ -33,11 +33,11 @@ export default class Calculation extends Component {
     getStyles: PropTypes.func,
     onPointerClick: PropTypes.func.isRequired,
     theme: PropTypes.object.isRequired
-  }
+  };
 
   static defaultProps = {
     getStyles: _getStyles
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return propsOrStylesChanged(['calculation'], this.props.getStyles,

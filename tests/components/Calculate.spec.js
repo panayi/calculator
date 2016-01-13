@@ -5,6 +5,8 @@ import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import { render, shallowRender } from '../test-helpers/render'
 import createCalculation from '../test-helpers/createCalculation'
+import { shouldIgnoreOtherProps, shouldUpdate }
+  from '../test-helpers/shouldComponentUpdate'
 
 describe('(Component) Calculate', function () {
   const getStyles = (theme) => {
@@ -16,7 +18,6 @@ describe('(Component) Calculate', function () {
   let calculation = createCalculation('1+1', 2)
   let component
   let input
-  let nextProps
   let props
   let rendered
   let spies
@@ -106,32 +107,25 @@ describe('(Component) Calculate', function () {
 
   describe('shouldComponentUpdate', function () {
     it('should not update if calculation and theme are the same', function () {
-      nextProps = { calculation, theme }
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      const nextProps = { calculation, theme }
+      shouldIgnoreOtherProps(rendered, nextProps)
     })
 
     it('should update if calculation changes', function () {
-      nextProps = R.merge(props, { calculation: createCalculation('1+12', 13),
-        theme })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newCalculation = createCalculation('1+12', 13)
+      shouldUpdate(rendered, { calculation: newCalculation }).is.true
     })
 
     it('should not update if theme changes but styles stay the same',
       function () {
-        nextProps = R.merge(props, {
-          calculation,
-          theme: R.merge(theme, { light: '#EEE' })
-        })
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const newTheme = R.merge(theme, { light: '#EEE' })
+        shouldUpdate(rendered, { theme: newTheme }).is.false
       }
     )
 
     it('should update if styles change', function () {
-      nextProps = R.merge(props, {
-        calculation,
-        theme: R.merge(theme, { dark: '#444' })
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newTheme = R.merge(theme, { dark: '#444' })
+      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

@@ -6,6 +6,8 @@ import { App } from 'containers/App'
 import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
+import { shouldIgnoreOtherProps, shouldUpdate }
+  from '../test-helpers/shouldComponentUpdate'
 
 describe('(Container) App', function () {
   const mainClassName = 'main-component'
@@ -13,7 +15,6 @@ describe('(Container) App', function () {
   const theme = baseThemeVariables
   let component
   let main
-  let nextProps
   let props
   let rendered
   let sidebar
@@ -54,36 +55,24 @@ describe('(Container) App', function () {
   describe('shouldComponentUpdate', function () {
     it('should not update if main, sidebar and theme are the same',
       function () {
-        nextProps = { main, sidebar, theme }
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const nextProps = { main, sidebar, theme }
+        shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
 
     it('should update if main changes', function () {
-      nextProps = R.merge(props, {
-        main: <div></div>,
-        sidebar,
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newMain = <div></div>
+      shouldUpdate(rendered, { main: newMain }).is.true
     })
 
     it('should update if sidebar changes', function () {
-      nextProps = R.merge(props, {
-        main,
-        sidebar: <div></div>,
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newSidebar = <div></div>
+      shouldUpdate(rendered, { sidebar: newSidebar }).is.true
     })
 
     it('should update if theme changes', function () {
-      nextProps = R.merge(props, {
-        main,
-        sidebar,
-        theme: R.merge(theme, { foo: 'bar' })
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newTheme = R.merge(theme, { foo: 'bar' })
+      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

@@ -7,6 +7,8 @@ import Button from 'components/Button'
 import darkThemeVariables from 'themes/dark/variables'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
+import { shouldIgnoreOtherProps, shouldUpdate }
+  from '../test-helpers/shouldComponentUpdate'
 
 describe('(Container) IndexSidebar', function () {
   const oneKey = { keyCode: 49, display: '1' }
@@ -18,7 +20,6 @@ describe('(Container) IndexSidebar', function () {
   const theme = baseThemeVariables
   let buttons
   let component
-  let nextProps
   let props
   let rendered
 
@@ -70,36 +71,24 @@ describe('(Container) IndexSidebar', function () {
   describe('shouldComponentUpdate', function () {
     it('should not update if keys, theme and nextThemeName are the same',
       function () {
-        nextProps = { keys, nextThemeName, theme }
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const nextProps = { keys, nextThemeName, theme }
+        shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
 
     it('should update if keys changes', function () {
-      nextProps = R.merge(props, {
-        keys: R.tail(keys),
-        nextThemeName,
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newKeys = R.tail(keys)
+      shouldUpdate(rendered, { keys: newKeys }).is.true
     })
 
     it('should update if nextTheme changes', function () {
-      nextProps = R.merge(props, {
-        keys: R.tail(keys),
-        nextThemeName: 'light',
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newNextThemeName = 'light'
+      shouldUpdate(rendered, { nextThemeName: newNextThemeName }).is.true
     })
 
     it('should update if theme changes', function () {
-      nextProps = R.merge(props, {
-        keys,
-        nextThemeName,
-        theme: R.merge(theme, { foo: 'bar' })
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newTheme = R.merge(theme, { foo: 'bar' })
+      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

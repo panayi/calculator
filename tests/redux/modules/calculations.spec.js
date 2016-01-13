@@ -67,7 +67,6 @@ describe('(Redux Module) calculations', function () {
           const input = '6+1+'
           const action = updateCalculation(input)
           const newCalculation = createCalculation(input, undefined, true)
-          console.log(reducer([calculation], action)[0], newCalculation)
           expect(reducer([calculation], action)).to.deep.equal([newCalculation])
         }
       )

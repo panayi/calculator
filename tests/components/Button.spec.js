@@ -5,6 +5,8 @@ import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Button, { _getStyles } from 'components/Button'
 import { render, shallowRender } from '../test-helpers/render'
+import { shouldIgnoreOtherProps, shouldUpdate }
+  from '../test-helpers/shouldComponentUpdate'
 
 describe('(Component) Button', function () {
   const active = false
@@ -28,7 +30,6 @@ describe('(Component) Button', function () {
   })
   let button
   let component
-  let nextProps
   let props
   let rendered
   let spies
@@ -87,47 +88,31 @@ describe('(Component) Button', function () {
   describe('shouldComponentUpdate', function () {
     it('should not update if active, children and theme are the same',
       function () {
-        nextProps = { active, children, theme }
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const nextProps = { active, children, theme }
+        shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
 
     it('should update if active changes', function () {
-      nextProps = R.merge(props, {
-        active: R.not(active),
-        children,
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newActive = R.not(active)
+      shouldUpdate(rendered, { active: newActive }).is.true
     })
 
     it('should update if children change', function () {
-      nextProps = R.merge(props, {
-        active,
-        children: <b>A new button!</b>,
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newChildren = <b>A new button!</b>
+      shouldUpdate(rendered, { children: newChildren }).is.true
     })
 
     it('should not update if theme changes but styles stay the same',
       function () {
-        nextProps = R.merge(props, {
-          active,
-          children,
-          theme: R.merge(theme, { green: '#4EF64A' })
-        })
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const newTheme = R.merge(theme, { green: '#4EF64A' })
+        shouldUpdate(rendered, { theme: newTheme }).is.true
       }
     )
 
     it('should update if styles change', function () {
-      nextProps = R.merge(props, {
-        active,
-        children,
-        theme: R.merge(theme, { blue: '#14BCF6' })
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newTheme = R.merge(theme, { blue: '#14BCF6' })
+      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 

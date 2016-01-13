@@ -4,6 +4,8 @@ import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import { ThemeManager } from 'containers/ThemeManager'
 import { render, shallowRender } from '../test-helpers/render'
+import { shouldIgnoreOtherProps, shouldUpdate }
+  from '../test-helpers/shouldComponentUpdate'
 
 describe('(Container) ThemeManager', function () {
   const children = <h1 className="child">Header</h1>
@@ -14,7 +16,6 @@ describe('(Container) ThemeManager', function () {
   }
   const styleContent = 'html{height: 100%;}'
   let component
-  let nextProps
   let props
   let rendered
 
@@ -52,25 +53,19 @@ describe('(Container) ThemeManager', function () {
   describe('shouldComponentUpdate', function () {
     it('should not update if children and styles are the same',
       function () {
-        nextProps = { children, styles }
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const nextProps = { children, styles }
+        shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
 
     it('should update if children change', function () {
-      nextProps = R.merge(props, {
-        children: <a>a link</a>,
-        styles
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newChildren = <a>a link</a>
+      shouldUpdate(rendered, { children: newChildren }).is.true
     })
 
     it('should update if styles change', function () {
-      nextProps = R.merge(props, {
-        children,
-        styles: R.merge(styles, { body: { height: '100%' } })
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newStyles = R.merge(styles, { body: { height: '100%' } })
+      shouldUpdate(rendered, { styles: newStyles }).is.true
     })
 
   })

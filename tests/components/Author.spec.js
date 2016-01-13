@@ -5,6 +5,8 @@ import baseThemeVariables from 'themes/_base/variables'
 import Author from 'components/Author'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
+import { shouldIgnoreOtherProps, shouldUpdate }
+  from '../test-helpers/shouldComponentUpdate'
 
 describe('(Component) Author', function () {
   const getStyles = (theme) => {
@@ -21,7 +23,6 @@ describe('(Component) Author', function () {
   }
   const theme = baseThemeVariables
   let component
-  let nextProps
   let props
   let rendered
 
@@ -58,34 +59,24 @@ describe('(Component) Author', function () {
 
   describe('shouldComponentUpdate', function () {
     it('should not update if theme and settings are the same', function () {
-      nextProps = { theme, settings }
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      shouldIgnoreOtherProps(rendered, { theme, settings })
     })
 
     it('should update if settings change', function () {
-      nextProps = R.merge(props, {
-        settings: R.merge(settings, { foo: 'bar' }),
-        theme
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newSettings = R.merge(settings, { foo: 'bar' })
+      shouldUpdate(rendered, { settings: newSettings }).is.true
     })
 
     it('should not update if theme changes but styles stay the same',
       function () {
-        nextProps = R.merge(props, {
-          settings,
-          theme: R.merge(theme, { light: '#EEE' })
-        })
-        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+        const newTheme = R.merge(theme, { light: '#EEE' })
+        shouldUpdate(rendered, { theme: newTheme }).is.false
       }
     )
 
     it('should update if styles change', function () {
-      nextProps = R.merge(props, {
-        settings,
-        theme: R.merge(theme, { dark: '#444' })
-      })
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+      const newTheme = R.merge(theme, { dark: '#444' })
+      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

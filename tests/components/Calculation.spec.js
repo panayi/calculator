@@ -5,12 +5,10 @@ import Calculation from 'components/Calculation'
 import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
+import createCalculation from '../test-helpers/createCalculation'
 
 describe('(Component) Calculation', function () {
-  const calculation = {
-    input: '12+12',
-    output: 24
-  }
+  const calculation = createCalculation('1+1', 2)
   const getStyles = (theme) => {
     return {
       color: theme.dark
@@ -72,11 +70,7 @@ describe('(Component) Calculation', function () {
 
     it('should update if calculation changes', function () {
       nextProps = R.merge(props, {
-        calculation: {
-          input: '12+120',
-          output: 132,
-          isError: false
-        },
+        calculation: createCalculation('12+120', 132),
         theme
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true

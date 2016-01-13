@@ -38,11 +38,16 @@ const isValidCalculation = R.converge(R.and, [
 // tryCalculation :: Input -> Calculation
 const tryCalculation = (input) => {
   try {
-    return R.compose(calculation, formatInput)(input)
+    return R.compose(
+      R.set(R.lensProp('isError'), false),
+      calculation,
+      formatInput
+    )(input)
   } catch (error) {
     return {
       input,
-      isError: true
+      isError: true,
+      output: undefined
     }
   }
 }

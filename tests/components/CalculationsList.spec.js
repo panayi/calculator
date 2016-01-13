@@ -6,16 +6,13 @@ import Calculation from 'components/Calculation'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
+import createCalculation from '../test-helpers/createCalculation'
 
 describe('(Component) CalculationsList', function () {
-  const calculation = (input = '1+1', output = 2) => {
-    return {
-      input,
-      output,
-      isError: false
-    }
-  }
-  const calculations = [calculation(), calculation()]
+  const calculations = [
+    createCalculation('1+1', 2),
+    createCalculation('1+2', 3)
+  ]
   const deleteCalculation = sinon.spy()
   const getStyles = (theme) => {
     return {

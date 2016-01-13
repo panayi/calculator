@@ -4,6 +4,7 @@ import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import { render, shallowRender } from '../test-helpers/render'
+import createCalculation from '../test-helpers/createCalculation'
 
 describe('(Component) Calculate', function () {
   const getStyles = (theme) => {
@@ -12,11 +13,7 @@ describe('(Component) Calculate', function () {
     }
   }
   const theme = baseThemeVariables
-  let calculation = {
-    input: '1+1',
-    output: 2,
-    isError: false
-  }
+  let calculation = createCalculation('1+1', 2)
   let component
   let input
   let nextProps
@@ -59,7 +56,7 @@ describe('(Component) Calculate', function () {
   })
 
   it('should display ERROR when "isError"', function () {
-    calculation = { input: '5+', isError: true }
+    calculation = createCalculation('5+', null, true)
     rendered = render(Calculate, R.merge(props, { calculation }))
     const span = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
     expect(span.textContent).to.equal('Ans = ERROR')
@@ -68,7 +65,7 @@ describe('(Component) Calculate', function () {
   it('should display "output" when "input" is not empty and not "isError"',
     function () {
       const output = 10
-      calculation = { input: '5+5', output }
+      calculation = createCalculation('5+5', output)
       rendered = render(Calculate, R.merge(props, { calculation }))
       const span = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
       expect(span.textContent).to.equal(`Ans = ${output}`)
@@ -114,11 +111,8 @@ describe('(Component) Calculate', function () {
     })
 
     it('should update if calculation changes', function () {
-      nextProps = R.merge(props, { calculation: {
-        input: '1+12',
-        output: 13,
-        isError: false
-      }, theme })
+      nextProps = R.merge(props, { calculation: createCalculation('1+12', 13),
+        theme })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
     })
 

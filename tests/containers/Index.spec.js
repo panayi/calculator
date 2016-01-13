@@ -9,17 +9,14 @@ import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
+import createCalculation from '../test-helpers/createCalculation'
 
 describe('(Container) Index', function () {
-  const calculation = (input = '1+1', output = 2) => {
-    return {
-      input,
-      output,
-      isError: false
-    }
-  }
-  const currentCalculation = calculation()
-  const previousCalculations = [calculation(), calculation()]
+  const currentCalculation = createCalculation('1+1', 2)
+  const previousCalculations = [
+    createCalculation('1+2', 3),
+    createCalculation('1+3', 4)
+  ]
   const settings = {}
   const theme = baseThemeVariables
   let component
@@ -113,7 +110,7 @@ describe('(Container) Index', function () {
 
     it('should update if currentCalculation changes', function () {
       nextProps = R.merge(props, {
-        currentCalculation: calculation('1+2', 3),
+        currentCalculation: createCalculation('1+2', 3),
         previousCalculations,
         settings,
         theme
@@ -124,7 +121,10 @@ describe('(Container) Index', function () {
     it('should update if previousCalculations change', function () {
       nextProps = R.merge(props, {
         currentCalculation,
-        previousCalculations: R.append(calculation(), previousCalculations),
+        previousCalculations: R.append(
+          createCalculation('1+10', 11),
+          previousCalculations
+        ),
         settings,
         theme
       })

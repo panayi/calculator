@@ -19,4 +19,4 @@ TODO
 * ~~Add a light theme.~~
 
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html
-* Refactor tests with helpers.
+* DRY tests with helpers.

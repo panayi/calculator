@@ -44,11 +44,15 @@ export const themesSelector = R.prop('themes')
 // themeName :: Theme -> String
 export const themeName = R.compose(R.prop('name'), R.defaultTo({}))
 
+// activeTheme :: Themes -> Theme
+export const activeThemeSelector = R.find(R.propEq('active', true))
+
 // activeThemeNameSelector :: State -> Theme
 export const activeThemeNameSelector = createSelector(
   themesSelector,
   R.compose(themeName, R.find(R.propEq('active', true)))
 )
+
 
 // nextThemeNameSelector :: State -> Theme
 export const nextThemeNameSelector = createSelector(
@@ -56,12 +60,9 @@ export const nextThemeNameSelector = createSelector(
   themesSelector,
   R.compose(
     themeName,
-    R.converge(R.compose(R.head, R.reject(R.isNil), R.of), [
-      R.converge(R.nth, [
-        R.compose(R.inc, R.indexOf),
-        R.nthArg(1)
-      ]),
-      R.compose(R.head, R.nthArg(1))
+    R.converge(R.nth, [
+      R.compose(R.inc, R.useWith(R.findIndex, [R.propEq('name'), R.identity])),
+      R.compose(R.converge(R.concat, [R.identity, R.identity]), R.nthArg(1))
     ])
   )
 )

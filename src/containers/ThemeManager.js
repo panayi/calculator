@@ -13,7 +13,7 @@ export class ThemeManager extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['theme', 'children'], this.props, nextProps)
+    return propsChanged(['styles', 'children'], this.props, nextProps)
   }
 
   render() {

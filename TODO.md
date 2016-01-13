@@ -15,7 +15,8 @@ TODO
 * ~~Show error when input is invalid.~~
 * ~~Finalize styles and layout.~~
 * ~~Should focus input on Calculate.componentDidUpdate.~~
+* ~~Add `<ThemeSelector>` buttons~~
+* ~~Add a light theme.~~
 
-* Add `<ThemeSelector>` buttons
-* Add a light theme.
 * Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html
+* Refactor tests with helpers.

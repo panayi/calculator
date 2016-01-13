@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import configureStore from 'redux-mock-store'
 import R from 'ramda'
-import { actionTypes as calculationsActionTypes } from 'redux/modules/calculations'
+import { actionTypes as calculationsActionTypes }
+  from 'redux/modules/calculations'
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 import handleEventsMiddleware from 'redux/middleware/handleEvents'
 

@@ -70,7 +70,9 @@ export const nextThemeNameSelector = createSelector(
 const themeVariables = (_themeName) => {
   const baseModule = require('themes/_base/index')
   const baseVariables = baseModule.variables
-  const themeModule = _themeName ? require('themes/' + _themeName + '/index') : {}
+  const themeModule = _themeName
+    ? require('themes/' + _themeName + '/index')
+    : {}
   const variables = _themeName ? themeModule.variables : {}
   return R.merge(baseVariables, variables)
 }
@@ -91,7 +93,9 @@ export const nextThemeVariablesSelector = createSelector(
 const themeStyles = (_themeName) => {
   const variables = themeVariables(_themeName)
   const baseModule = require('themes/_base/index')
-  const themeModule = _themeName ? require('themes/' + _themeName + '/index') : {}
+  const themeModule = _themeName
+    ? require('themes/' + _themeName + '/index')
+    : {}
 
   return R.merge(
     baseModule.styles(variables),

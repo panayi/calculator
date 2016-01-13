@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import reducer, { actionTypes, updateCalculation } from 'redux/modules/calculations'
+import reducer, { actionTypes, updateCalculation }
+  from 'redux/modules/calculations'
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 
 describe('(Redux Module) calculations', function () {

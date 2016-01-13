@@ -96,10 +96,12 @@ describe('(Component) Button', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if active, children and theme are the same', function () {
-      nextProps = { active, children, theme }
-      expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
-    })
+    it('should not update if active, children and theme are the same',
+      function () {
+        nextProps = { active, children, theme }
+        expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
+      }
+    )
 
     it('should update if active changes', function () {
       nextProps = R.merge(props, {

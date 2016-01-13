@@ -131,7 +131,8 @@ describe('(Redux Selectors)', function () {
 
     it('should return _base styles when no theme is active', function () {
       themes = [darkTheme, lightTheme]
-      expect(themeStylesSelector({ themes })).to.deep.equal(baseStyles(baseVariables))
+      expect(themeStylesSelector({ themes }))
+        .to.deep.equal(baseStyles(baseVariables))
     })
   })
 })

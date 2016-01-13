@@ -22,6 +22,7 @@ export default {
     text: primaryColor,
     fadedText: tinycolor(canvasColor).setAlpha(0.7).toString(),
     border: tinycolor(primaryColor).setAlpha(0.35).toString(),
-    lightBorder: tinycolor(canvasColor).darken(3).toString()
+    lightBorder: tinycolor(canvasColor).darken(3).toString(),
+    logo: tinycolor(primaryColor).desaturate(30).setAlpha(0.5).toString()
   }
 }

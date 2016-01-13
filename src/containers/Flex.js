@@ -7,7 +7,10 @@ const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 const styles = {
   alignSelf: R.objOf('alignSelf'),
   boxSizing: R.objOf('boxSizing'),
-  center: R.merge(R.objOf('alignItems', 'center'), R.objOf('justifyContent', 'center')),
+  center: R.merge(
+    R.objOf('alignItems', 'center'),
+    R.objOf('justifyContent', 'center')
+  ),
   flex: R.objOf('display', 'flex'),
   flexBasis: R.objOf('flexBasis'),
   full: R.merge(R.objOf('width', '100%'), R.objOf('height', '100%')),

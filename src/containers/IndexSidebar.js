@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import Octicon from 'react-octicon'
-import tinycolor from 'tinycolor2'
 import { activateTheme as _activateTheme } from 'redux/modules/themes'
 import { buttonClicked as _buttonClicked } from 'redux/modules/events'
 import { keysSelector, nextThemeNameSelector,
@@ -16,7 +15,7 @@ const getStyles = function (theme) {
       margin: 0,
       fontSize: '224px',
       lineHeight: '176px',
-      color: tinycolor(theme.colors.text).desaturate(30).setAlpha(0.5).toString(),
+      color: theme.colors.logo,
       [theme.screens.mediumHeight]: {
         fontSize: '28vh',
         lineHeight: '22vh'

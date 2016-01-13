@@ -1,7 +1,9 @@
 import R from 'ramda'
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
-import { actionTypes as keysActionTypes, activateKey, deactivateKey } from 'redux/modules/keys'
-import { invokeLater, isActionOfType, dispatch, keyCode } from 'helpers/pureFunctions'
+import { actionTypes as keysActionTypes, activateKey, deactivateKey }
+  from 'redux/modules/keys'
+import { invokeLater, isActionOfType, dispatch, keyCode }
+  from 'helpers/pureFunctions'
 
 const activeDurationMs = 160
 

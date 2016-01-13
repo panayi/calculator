@@ -84,7 +84,9 @@ export class Index extends Component {
     return (
       <Flex preset="box" theme={theme} vertical innerMargin gutterRight nowrap>
         <div style={styles.margin} />
-        <Flex preset="box" theme={theme} fullWidth style={styles.resultsWrapper}>
+        <Flex preset="box" theme={theme} fullWidth
+          style={styles.resultsWrapper}
+        >
           <CalculationsList
             calculations={previousCalculations}
             deleteCalculation={deleteCalculation}
@@ -97,7 +99,9 @@ export class Index extends Component {
         <Flex preset="box" theme={theme} fullWidth justifyContent="flex-end"
           nogrow style={styles.inputWrapper}
         >
-          <Flex preset="content" theme={theme} gutter nogrow style={styles.inputBox}>
+          <Flex preset="content" theme={theme} gutter nogrow
+            style={styles.inputBox}
+          >
             <Calculate
               calculation={currentCalculation}
               onChange={updateCalculation}

@@ -33,7 +33,10 @@ const setActiveProp = R.set(R.lensProp('active'))
 // toggleKey :: Boolean -> State -> KeyCode
 const toggleKey = R.curry((active, state, { payload }) => {
   return R.map(
-    R.when(R.compose(R.equals(payload), R.prop('keyCode')), setActiveProp(active)),
+    R.when(
+      R.compose(R.equals(payload), R.prop('keyCode')),
+      setActiveProp(active)
+    ),
     state
   )
 })

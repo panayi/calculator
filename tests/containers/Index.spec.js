@@ -117,9 +117,10 @@ describe('(Container) Index', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if currentCalculation, previousCalculations, settings and theme are the same',
+    it('should not update if props are the same',
       function () {
-        nextProps = { currentCalculation, previousCalculations, settings, theme }
+        nextProps = { currentCalculation, previousCalculations, settings,
+          theme }
         expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
       }
     )

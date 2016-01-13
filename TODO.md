@@ -18,5 +18,4 @@ TODO
 * ~~Add `<ThemeSelector>` buttons~~
 * ~~Add a light theme.~~
 * ~~DRY tests with helpers.~~
-
-* Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html
+* ~~Performance profile with Chrome devTools and https://facebook.github.io/react/docs/perf.html. ~~

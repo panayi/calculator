@@ -66,7 +66,10 @@ export class IndexSidebar extends Component {
             onClick={() => activateTheme(nextThemeName)}
             ref="themeButton"
           >
-            <Octicon name="color-mode" style={{ fontSize: '37px' }}/>
+            <Octicon
+              name="color-mode"
+              style={{ fontSize: theme.fontSizes.button }}
+            />
           </Button>
           {buttons}
         </Flex>

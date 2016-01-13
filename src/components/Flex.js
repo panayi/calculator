@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 import Radium from 'radium'
+import { propsOrStylesChanged } from 'helpers/pureFunctions'
 
 const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 
@@ -243,6 +244,11 @@ class Flex extends Component {
     preset: 'base',
     style: {}
   };
+
+  shouldComponentUpdate(nextProps) {
+    return propsOrStylesChanged(['children'], this.getStyles.bind(this),
+      this.props, nextProps)
+  }
 
   getStyles() {
     const {

@@ -8,7 +8,8 @@ export default {
     base: '14px',
     large: '18px',
     small: '12px',
-    xlarge: '22px'
+    xlarge: '22px',
+    button: '37px'
   },
   gutters: {
     xlarge: 50,

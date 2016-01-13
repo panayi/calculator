@@ -5,7 +5,7 @@ import { propsOrStylesChanged } from 'helpers/pureFunctions'
 export const _getStyles = function (theme) {
   return {
     base: {
-      fontSize: '37px',
+      fontSize: theme.fontSizes.button,
       width: '56.5px',
       margin: '0 6px 6px 0',
       padding: '1px 0',

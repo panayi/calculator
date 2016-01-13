@@ -24,7 +24,7 @@ describe('(Redux Module) calculations', function () {
     })
 
     describe('DONE_CALCULATION', function () {
-      it('should append an empty calculation when is valid', () => {
+      it('should append an empty calculation when is valid', function () {
         const calculation = {
           input: '6+16',
           output: 22
@@ -35,7 +35,7 @@ describe('(Redux Module) calculations', function () {
         })).to.deep.equal([calculation, {}])
       })
 
-      it('should not append an empty calculation when "isError"', () => {
+      it('should not append an empty calculation when "isError"', function () {
         const calculation = {
           input: '6+',
           isError: true
@@ -46,7 +46,7 @@ describe('(Redux Module) calculations', function () {
         })).to.deep.equal([calculation])
       })
 
-      it('should not append an empty calculation when "input" is empty', () => {
+      it('should not append an empty calculation when "input" is empty', function () {
         const calculation = {
           input: '  ',
           output: ''

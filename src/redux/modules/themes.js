@@ -1,24 +1,31 @@
 import { handleActions, createAction } from 'redux-actions'
+import R from 'ramda'
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 export const actionTypes = {
-  SET_THEME: 'SET_THEME'
+  ACTIVATE_THEME: 'ACTIVATE_THEME'
 }
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-// setTheme :: String -> Action
-export const setTheme = createAction(actionTypes.SET_THEME)
+// activateTheme :: String -> Action
+export const activateTheme = createAction(actionTypes.ACTIVATE_THEME)
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 export default handleActions({
-  [actionTypes.SET_THEME]: (state, { payload }) => {
-    return payload
+  [actionTypes.ACTIVATE_THEME]: (state, { payload }) => {
+    return R.map(
+      R.converge(R.set(R.lensProp('active')), [
+        R.compose(R.equals(payload), R.prop('name')),
+        R.identity
+      ]),
+      state
+    )
   }
-}, '')
+}, [])

@@ -3,7 +3,7 @@ import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
-import CalculatorButton, { _getStyles } from 'components/CalculatorButton'
+import Button, { _getStyles } from 'components/Button'
 
 function shallowRender(component) {
   const renderer = TestUtils.createRenderer()
@@ -12,14 +12,17 @@ function shallowRender(component) {
 }
 
 function shallowRenderWithProps(props = {}) {
-  return shallowRender(<CalculatorButton {...props} />)
+  return shallowRender(<Button {...props} />)
 }
 
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<CalculatorButton {...props} />)
+function renderWithProps(props = {}, children) {
+  return TestUtils.renderIntoDocument(
+    <Button {...props}>{children}</Button>
+  )
 }
 
-describe('(Component) CalculatorButton', function () {
+describe('(Component) Button', function () {
+  const active = false
   const getStyles = function (theme) {
     return {
       base: {
@@ -33,15 +36,12 @@ describe('(Component) CalculatorButton', function () {
       }
     }
   }
-  const theKey = {
-    keyCode: 13,
-    display: '='
-  }
   const theme = R.merge(baseThemeVariables, {
     blue: 'blue',
     red: 'red'
   })
   let button
+  let children
   let component
   let nextProps
   let props
@@ -51,13 +51,14 @@ describe('(Component) CalculatorButton', function () {
   beforeEach(function () {
     spies = {}
     props = {
+      active,
       getStyles,
       onClick: (spies.onClick = sinon.spy()),
-      theKey,
       theme
     }
+    children = <b>a button</b>
     component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    rendered = renderWithProps(props, children)
     button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
       'span'
@@ -68,8 +69,8 @@ describe('(Component) CalculatorButton', function () {
     expect(component.type).to.equal('span')
   })
 
-  it('should render "display"', function () {
-    expect(button.textContent).to.equal(theKey.display)
+  it('should render children', function () {
+    expect(button.textContent).to.equal('a button')
   })
 
   it('should dispatch onClick', function () {
@@ -83,11 +84,10 @@ describe('(Component) CalculatorButton', function () {
     expect(button.props.style).to.deep.equal(expectedStyles)
   })
 
-  it('should use inactive styles when "active" is false', function () {
+  it('should use active styles when "active" is true', function () {
     const styles = getStyles(theme)
     const expectedStyles = R.merge(styles.base, styles.active)
-    const activeKey = R.merge(theKey, { active: true })
-    rendered = renderWithProps(R.merge(props, { theKey: activeKey }))
+    rendered = renderWithProps(R.merge(props, { active: true }))
     button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
       'span'
@@ -96,17 +96,24 @@ describe('(Component) CalculatorButton', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if theKey and theme are the same', function () {
-      nextProps = { theKey, theme }
+    it('should not update if active, children and theme are the same', function () {
+      nextProps = { active, children, theme }
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
     })
 
-    it('should update if theKey changes', function () {
+    it('should update if active changes', function () {
       nextProps = R.merge(props, {
-        theKey: {
-          keyCode: 48,
-          display: '0'
-        },
+        active: R.not(active),
+        children,
+        theme
+      })
+      expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
+    })
+
+    it('should update if children change', function () {
+      nextProps = R.merge(props, {
+        active,
+        children: <b>A new button!</b>,
         theme
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true
@@ -115,7 +122,8 @@ describe('(Component) CalculatorButton', function () {
     it('should not update if theme changes but styles stay the same',
       function () {
         nextProps = R.merge(props, {
-          theKey,
+          active,
+          children,
           theme: R.merge(theme, { green: '#4EF64A' })
         })
         expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
@@ -124,7 +132,8 @@ describe('(Component) CalculatorButton', function () {
 
     it('should update if styles change', function () {
       nextProps = R.merge(props, {
-        theKey,
+        active,
+        children,
         theme: R.merge(theme, { blue: '#14BCF6' })
       })
       expect(rendered.shouldComponentUpdate(nextProps)).to.be.true

@@ -9,5 +9,8 @@ export default {
     tweetText: '3R Calculator build with React Redux and Ramda',
     tweetVia: 'ppanagi'
   },
-  theme: 'dark'
+  themes: [
+    { name: 'dark', active: false },
+    { name: 'light', active: true }
+  ]
 }

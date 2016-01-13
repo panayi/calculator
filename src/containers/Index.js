@@ -61,8 +61,12 @@ export class Index extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['currentCalculation', 'previousCalculations', 'theme'],
-      this.props, nextProps)
+    return propsChanged([
+      'currentCalculation',
+      'previousCalculations',
+      'settings',
+      'theme'
+    ], this.props, nextProps)
   }
 
   render() {

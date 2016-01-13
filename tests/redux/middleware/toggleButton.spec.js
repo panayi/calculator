@@ -4,7 +4,7 @@ import toggleButttonMiddleware from 'redux/middleware/toggleButton'
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 import { actionTypes as keysActionTypes } from 'redux/modules/keys'
 
-describe('(Redux Middleware) toggleButton', () => {
+describe('(Redux Middleware) toggleButton', function () {
   const BKeycode = 66
   const BKey = { keyCode: BKeycode, display: 'B' }
   const initialState = {

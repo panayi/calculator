@@ -2,48 +2,105 @@ import { createSelector } from 'reselect'
 import R from 'ramda'
 
 // ------------------------------------
-// Selectors
+// Calculations
 // ------------------------------------
-const allCalculationsSelector = R.prop('calculations')
 
+// allCalculationsSelector :: State -> Calculations
+export const allCalculationsSelector = R.prop('calculations')
+
+// previousCalculationsSelector :: State -> Calculations
 export const previousCalculationsSelector = createSelector(
   allCalculationsSelector,
-  R.compose(R.reverse, R.tail, R.reverse)
+  R.init
 )
+
+// currentCalculationSelector :: State -> Calculation
 export const currentCalculationSelector = createSelector(
   allCalculationsSelector,
-  R.compose(R.head, R.reverse)
+  R.last
 )
 
+// ------------------------------------
+// Keys
+// ------------------------------------
+
+// keysSelector :: State -> Keys
 export const keysSelector = R.prop('keys')
 
+// ------------------------------------
+// Settings
+// ------------------------------------
+
+// settingsSelector :: State -> Settings
 export const settingsSelector = R.prop('settings')
 
-export const themeSelector = R.prop('theme')
+// ------------------------------------
+// Themes
+// ------------------------------------
 
-export const themeVariablesSelector = createSelector(
-  themeSelector,
-  (theme) => {
-    const baseModule = require('themes/_base/index')
-    const baseVariables = baseModule.variables
+// themesSelector :: State -> Themes
+export const themesSelector = R.prop('themes')
 
-    const themeModule = theme ? require('themes/' + theme + '/index') : {}
-    const themeVariables = theme ? themeModule.variables : {}
+// themeName :: Theme -> String
+export const themeName = R.compose(R.prop('name'), R.defaultTo({}))
 
-    return R.merge(baseVariables, themeVariables)
-  }
+// activeThemeNameSelector :: State -> Theme
+export const activeThemeNameSelector = createSelector(
+  themesSelector,
+  R.compose(themeName, R.find(R.propEq('active', true)))
 )
 
-export const themeStylesSelector = createSelector(
-  themeSelector,
-  themeVariablesSelector,
-  (theme, variables) => {
-    const baseModule = require('themes/_base/index')
-    const themeModule = theme ? require('themes/' + theme + '/index') : {}
+// nextThemeNameSelector :: State -> Theme
+export const nextThemeNameSelector = createSelector(
+  activeThemeNameSelector,
+  themesSelector,
+  R.compose(
+    themeName,
+    R.converge(R.compose(R.head, R.reject(R.isNil), R.of), [
+      R.converge(R.nth, [
+        R.compose(R.inc, R.indexOf),
+        R.nthArg(1)
+      ]),
+      R.compose(R.head, R.nthArg(1))
+    ])
+  )
+)
 
-    return R.merge(
-      baseModule.styles(variables),
-      themeModule.styles ? themeModule.styles(variables) : {}
-    )
-  }
+// themeVariables :: String -> Object
+const themeVariables = (_themeName) => {
+  const baseModule = require('themes/_base/index')
+  const baseVariables = baseModule.variables
+  const themeModule = _themeName ? require('themes/' + _themeName + '/index') : {}
+  const variables = _themeName ? themeModule.variables : {}
+  return R.merge(baseVariables, variables)
+}
+
+// themeVariablesSelector :: State -> Object
+export const themeVariablesSelector = createSelector(
+  activeThemeNameSelector,
+  themeVariables
+)
+
+// nextThemeVariablesSelector :: State -> Object
+export const nextThemeVariablesSelector = createSelector(
+  nextThemeNameSelector,
+  themeVariables
+)
+
+// themeStyles :: String -> Object
+const themeStyles = (_themeName) => {
+  const variables = themeVariables(_themeName)
+  const baseModule = require('themes/_base/index')
+  const themeModule = _themeName ? require('themes/' + _themeName + '/index') : {}
+
+  return R.merge(
+    baseModule.styles(variables),
+    themeModule.styles ? themeModule.styles(variables) : {}
+  )
+}
+
+// themeStylesSelector :: State -> Object
+export const themeStylesSelector = createSelector(
+  activeThemeNameSelector,
+  themeStyles
 )

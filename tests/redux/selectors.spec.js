@@ -1,17 +1,22 @@
+/* eslint-disable no-unused-expressions */
 import R from 'ramda'
 import {
+  activeThemeNameSelector,
+  allCalculationsSelector,
   currentCalculationSelector,
   keysSelector,
+  nextThemeNameSelector,
   previousCalculationsSelector,
   settingsSelector,
-  themeSelector,
+  themeName,
+  themesSelector,
   themeStylesSelector,
   themeVariablesSelector
 } from 'redux/selectors'
 import { variables as baseVariables, styles as baseStyles } from 'themes/_base'
 import { variables as darkVariables, styles as darkStyles } from 'themes/dark'
 
-describe('(Redux Selector) ', function () {
+describe('(Redux Selectors)', function () {
   describe('calculations', function () {
     const first = {
       input: 'input1',
@@ -27,26 +32,31 @@ describe('(Redux Selector) ', function () {
     }
     const calculations = [first, second, third]
 
-    it('should return the previous calculations', () => {
+    it('it should return all calculations', function () {
+      expect(allCalculationsSelector({ calculations }))
+        .to.deep.equal(calculations)
+    })
+
+    it('should return the previous calculations', function () {
       expect(previousCalculationsSelector({ calculations }))
         .to.deep.equal([first, second])
     })
 
-    it('should return the current calculation', () => {
+    it('should return the current calculation', function () {
       expect(currentCalculationSelector({ calculations }))
         .to.deep.equal(third)
     })
   })
 
   describe('keys', function () {
-    it('should return the keys state', () => {
+    it('should return the keys state', function () {
       const keys = 'a,b,c'
       expect(keysSelector({ keys })).to.deep.equal(keys)
     })
   })
 
   describe('settings', function () {
-    it('should return the settings state', () => {
+    it('should return the settings state', function () {
       const settings = {
         foo: 1,
         bar: 2
@@ -56,34 +66,72 @@ describe('(Redux Selector) ', function () {
   })
 
   describe('theme', function () {
-    let theme
+    let darkTheme
+    let lightTheme
+    let themes
     let variables
     let styles
 
     beforeEach(function () {
-      theme = 'dark'
+      darkTheme = { name: 'dark', active: false }
+      lightTheme = { name: 'light', active: false }
       variables = R.merge(baseVariables, darkVariables)
       styles = R.merge(baseStyles(variables), darkStyles(variables))
     })
 
-    it('should return the input state', function () {
-      expect(themeSelector({ theme })).to.equal(theme)
+    it('should return the "themes" state', function () {
+      themes = [darkTheme, lightTheme]
+      expect(themesSelector({ themes })).to.deep.equal(themes)
     })
 
-    it('should merge theme variables with _base variables', () => {
-      expect(themeVariablesSelector({ theme })).to.deep.equal(variables)
+    it('should return the "name" of the passed theme', function () {
+      expect(themeName(lightTheme)).to.equal('light')
     })
 
-    it('should return _base variables when state.theme is empty', () => {
-      expect(themeVariablesSelector({})).to.deep.equal(baseVariables)
+    it('should return "undefined" when passed "undefined"', function () {
+      expect(themeName(undefined)).to.be.undefined
+    })
+
+    it('should return the activated theme', function () {
+      themes = [
+        R.merge(darkTheme, { active: true }),
+        lightTheme
+      ]
+      expect(activeThemeNameSelector({ themes })).to.deep.equal('dark')
+    })
+
+    it('should return the next theme', function () {
+      themes = [
+        darkTheme,
+        R.merge(lightTheme, { active: true }),
+      ]
+      expect(nextThemeNameSelector({ themes })).to.deep.equal('dark')
+    })
+
+    it('should merge theme variables with _base variables', function () {
+      themes = [
+        R.merge(darkTheme, { active: true }),
+        lightTheme
+      ]
+      expect(themeVariablesSelector({ themes })).to.deep.equal(variables)
+    })
+
+    it('should return _base variables when no theme is active', function () {
+      themes = [darkTheme, lightTheme]
+      expect(themeVariablesSelector({ themes })).to.deep.equal(baseVariables)
     })
 
     it('should merge theme styles with _base styles', function () {
-      expect(themeStylesSelector({ theme, variables })).to.deep.equal(styles)
+      themes = [
+        R.merge(darkTheme, { active: true }),
+        lightTheme
+      ]
+      expect(themeStylesSelector({ themes })).to.deep.equal(styles)
     })
 
-    it('should merge _base styles when state.theme is empty', function () {
-      expect(themeStylesSelector({ variables })).to.deep.equal(baseStyles(variables))
+    it('should return _base styles when no theme is active', function () {
+      themes = [darkTheme, lightTheme]
+      expect(themeStylesSelector({ themes })).to.deep.equal(baseStyles(baseVariables))
     })
   })
 })

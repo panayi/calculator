@@ -25,16 +25,13 @@ export const _getStyles = function (theme) {
   }
 }
 
-class CalculatorButton extends Component {
+class Button extends Component {
   static propTypes = {
-    theKey: PropTypes.shape({
-      active: PropTypes.bool,
-      display: PropTypes.string.isRequired,
-      keyCode: PropTypes.number.isRequired
-    }).isRequired,
+    active: PropTypes.bool,
+    children: PropTypes.node,
     getStyles: PropTypes.func,
-    theme: PropTypes.object,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func,
+    theme: PropTypes.object.isRequired
   }
 
   static defaultProps = {
@@ -42,29 +39,31 @@ class CalculatorButton extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return propsOrStylesChanged(['theKey'], this.props.getStyles,
+    return propsOrStylesChanged(['active', 'children'], this.props.getStyles,
       this.props, nextProps)
   }
 
   render() {
     const {
+      active,
+      children,
       getStyles,
       onClick,
-      theKey,
-      theKey: { active, display },
       theme
     } = this.props
     const stateStyles = active ? 'active' : 'inactive'
     const styles = getStyles(theme)
 
     return (
-      <span onClick={() => onClick(theKey)}
+      <span
+        ref="clickTarget"
+        onClick={onClick}
         style={[styles.base, styles[stateStyles]]}
       >
-        {display}
+        {children}
       </span>
     )
   }
 }
 
-export default Radium(CalculatorButton)
+export default Radium(Button)

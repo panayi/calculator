@@ -1,9 +1,12 @@
 import React, { Component, PropTypes } from 'react'
+import Octicon from 'react-octicon'
 import tinycolor from 'tinycolor2'
+import { activateTheme as _activateTheme } from 'redux/modules/themes'
 import { buttonClicked as _buttonClicked } from 'redux/modules/events'
-import { keysSelector } from 'redux/selectors'
+import { keysSelector, nextThemeNameSelector,
+  nextThemeVariablesSelector } from 'redux/selectors'
 import { mapIndexed, propsChanged } from 'helpers/pureFunctions'
-import CalculatorButton from 'components/CalculatorButton'
+import Button from 'components/Button'
 import connect from 'helpers/connectAndTheme'
 import Flex from 'containers/Flex'
 
@@ -27,30 +30,45 @@ const getStyles = function (theme) {
 
 export class IndexSidebar extends Component {
   static propTypes = {
-    keys: PropTypes.array.isRequired,
+    activateTheme: PropTypes.func.isRequired,
     buttonClicked: PropTypes.func.isRequired,
+    keys: PropTypes.array.isRequired,
+    nextThemeName: PropTypes.string.isRequired,
+    nextThemeVariables: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired
   }
 
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['keys', 'settings', 'theme'], this.props, nextProps)
+    return propsChanged(['keys', 'nextThemeName', 'theme'],
+      this.props, nextProps)
   }
 
   render() {
-    const { buttonClicked, keys, theme } = this.props
+    const { activateTheme, buttonClicked, keys, nextThemeName,
+      nextThemeVariables, theme } = this.props
     const styles = getStyles(theme)
     const buttons = mapIndexed((key, index) =>
-      <CalculatorButton
+      <Button
+        active={key.active}
         key={index}
-        onClick={buttonClicked}
-        theKey={key}
+        onClick={() => buttonClicked(key)}
+        ref={`keyButton_${key.keyCode}`}
         theme={theme}
-      />
+      >
+        {key.display}
+      </Button>
     , keys)
 
     return (
       <Flex preset="box" theme={theme} vertical inner gutterLeft>
         <Flex preset="content" theme={theme}>
+          <Button
+            theme={nextThemeVariables}
+            onClick={() => activateTheme(nextThemeName)}
+            ref="themeButton"
+          >
+            <Octicon name="color-mode" style={{ fontSize: '37px' }}/>
+          </Button>
           {buttons}
         </Flex>
         <Flex preset="content" theme={theme} nogrow alignSelf="center">
@@ -62,10 +80,13 @@ export class IndexSidebar extends Component {
 }
 
 const selectors = {
-  keys: keysSelector
+  keys: keysSelector,
+  nextThemeName: nextThemeNameSelector,
+  nextThemeVariables: nextThemeVariablesSelector
+}
+const actions = {
+  activateTheme: _activateTheme,
+  buttonClicked: _buttonClicked
 }
 
-export default connect(
-  selectors,
-  { buttonClicked: _buttonClicked }
-)(IndexSidebar)
+export default connect(selectors, actions)(IndexSidebar)

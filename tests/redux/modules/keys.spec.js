@@ -3,7 +3,7 @@ import R from 'ramda'
 import reducer, { actionTypes } from 'redux/modules/keys'
 
 describe('(Redux Module) keys', function () {
-  describe('reducer', () => {
+  describe('reducer', function () {
     let initialState
     let finalState
     const AKeyCode = 65

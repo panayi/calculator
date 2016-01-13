@@ -5,7 +5,7 @@ import { actionTypes as calculationsActionTypes } from 'redux/modules/calculatio
 import { actionTypes as eventsActionTypes } from 'redux/modules/events'
 import handleEventsMiddleware from 'redux/middleware/handleEvents'
 
-describe('(Redux Middleware) handleEvents', () => {
+describe('(Redux Middleware) handleEvents', function () {
   const BKeycode = 66
   const QKeycode = 81
   const enterKeyCode = 13
@@ -31,7 +31,7 @@ describe('(Redux Middleware) handleEvents', () => {
   let mockStore
   let store
 
-  beforeEach(() => {
+  beforeEach(function () {
     mockStore = configureStore([handleEventsMiddleware])
   })
 
@@ -85,7 +85,7 @@ describe('(Redux Middleware) handleEvents', () => {
     event.preventDefault.should.have.been.called
   })
 
-  it('should pass-through KEY_PRESSED actions for valid keys', () => {
+  it('should pass-through KEY_PRESSED actions for valid keys', function () {
     event = createKeyPressEvent(BKeycode)
     action = {
       type: eventsActionTypes.KEY_PRESSED,

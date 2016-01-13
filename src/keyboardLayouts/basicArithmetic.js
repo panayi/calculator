@@ -1,5 +1,4 @@
 export default [
-  { keyCode: -1, display: '' },
   { keyCode: 40, display: '(' },
   { keyCode: 41, display: ')' },
   { keyCode: 94, display: '^' },

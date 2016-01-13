@@ -1,9 +1,9 @@
 import tinycolor from 'tinycolor2'
 
-const primaryColor = '#16a085'
-const accentColor = '#FAAB22'
-const accent2Color = '#EE213D'
-const canvasColor = '#27313E'
+const primaryColor = '#005B82'
+const accentColor = '#99173C'
+const accent2Color = '#D57100'
+const canvasColor = '#DADADA'
 const primaryContrastColor = 'white'
 const accentContrastColor = 'white'
 

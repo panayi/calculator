@@ -42,7 +42,7 @@ describe('(Container) Index', function () {
   let rendered
   let spies
 
-  beforeEach(() => {
+  beforeEach(function () {
     spies = {}
     props = {
       currentCalculation,
@@ -90,7 +90,7 @@ describe('(Container) Index', function () {
   describe('Calculator input', function () {
     let inputComponent
 
-    beforeEach(() => {
+    beforeEach(function () {
       inputComponent = TestUtils.findRenderedDOMComponentWithClass(
         renderWithProps({ ...props }), 'calculator-input'
       )
@@ -119,7 +119,7 @@ describe('(Container) Index', function () {
   describe('shouldComponentUpdate', function () {
     it('should not update if currentCalculation, previousCalculations, settings and theme are the same',
       function () {
-        nextProps = { currentCalculation, previousCalculations, theme }
+        nextProps = { currentCalculation, previousCalculations, settings, theme }
         expect(rendered.shouldComponentUpdate(nextProps)).to.be.false
       }
     )
@@ -147,7 +147,7 @@ describe('(Container) Index', function () {
     it('should update if settings change', function () {
       nextProps = R.merge(props, {
         currentCalculation,
-        previousCalculations: R.append(calculation(), previousCalculations),
+        previousCalculations,
         settings: R.merge(settings, { foo: 'bar' }),
         theme
       })

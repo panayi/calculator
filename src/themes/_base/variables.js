@@ -1,10 +1,21 @@
 export default {
-  fontFamily: '\'Helvetica\', \'Arial\', sans-serif',
-  colors: {
+  colors: {},
+  fontFamilies: {
+    text: '\'Lato\', \'Helvetica\', \'Arial\', sans-serif',
+    header: '\'Lobster\', sans-serif'
   },
   fontSizes: {
+    base: '14px',
+    large: '18px',
+    small: '12px',
+    xlarge: '22px'
   },
   gutters: {
+    xlarge: 50,
+    large: 40,
+    base: 20,
+    small: 10,
+    tiny: 3
   },
   layout: {
     sidebarWidth: '270px'

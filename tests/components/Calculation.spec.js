@@ -1,24 +1,10 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import R from 'ramda'
 import Calculation from 'components/Calculation'
 import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'components/Flex'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<Calculation {...props} />)
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<Calculation {...props} />)
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Component) Calculation', function () {
   const calculation = {
@@ -40,8 +26,8 @@ describe('(Component) Calculation', function () {
 
   beforeEach(function () {
     props = { calculation, getStyles, onPointerClick, theme }
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(Calculation, props)
+    rendered = render(Calculation, props)
 
     pointer = TestUtils.findRenderedDOMComponentWithTag(
       rendered,

@@ -3,20 +3,7 @@ import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import { ThemeManager } from 'containers/ThemeManager'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<ThemeManager {...props} />)
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<ThemeManager {...props} />)
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Container) ThemeManager', function () {
   const children = <h1 className="child">Header</h1>
@@ -37,8 +24,8 @@ describe('(Container) ThemeManager', function () {
       styles
     }
 
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(ThemeManager, props)
+    rendered = render(ThemeManager, props)
   })
 
   it('Should render as a div.', function () {

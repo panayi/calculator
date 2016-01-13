@@ -1,27 +1,13 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculation from 'components/Calculation'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'components/Flex'
+import { render, shallowRender } from '../test-helpers/render'
 
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<CalculationsList {...props} />)
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<CalculationsList {...props} />)
-}
-
-describe('(Component) CalculationList', function () {
+describe('(Component) CalculationsList', function () {
   const calculation = (input = '1+1', output = 2) => {
     return {
       input,
@@ -45,8 +31,8 @@ describe('(Component) CalculationList', function () {
 
   beforeEach(function () {
     props = { calculations, deleteCalculation, getStyles, theme }
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(CalculationsList, props)
+    rendered = render(CalculationsList, props)
 
     calculationComponents = TestUtils.scryRenderedComponentsWithType(
       rendered, Calculation

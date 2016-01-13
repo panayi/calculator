@@ -1,23 +1,9 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<Calculate {...props} />)
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<Calculate {...props} />)
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Component) Calculate', function () {
   const getStyles = (theme) => {
@@ -49,7 +35,7 @@ describe('(Component) Calculate', function () {
       onSubmit: (spies.onSubmit = sinon.spy()),
       theme
     }
-    component = shallowRenderWithProps(props)
+    component = shallowRender(Calculate, props)
   })
 
   it('should render as a <div>.', function () {
@@ -57,7 +43,7 @@ describe('(Component) Calculate', function () {
   })
 
   it('should render calculation input', function () {
-    rendered = renderWithProps(props)
+    rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
       'calculator-input'
@@ -67,14 +53,14 @@ describe('(Component) Calculate', function () {
 
   it('should not display output when "input" is empty', function () {
     calculation = { input: '' }
-    rendered = renderWithProps(R.merge(props, { calculation }))
+    rendered = render(Calculate, R.merge(props, { calculation }))
     const span = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
     expect(span.textContent).to.equal('')
   })
 
   it('should display ERROR when "isError"', function () {
     calculation = { input: '5+', isError: true }
-    rendered = renderWithProps(R.merge(props, { calculation }))
+    rendered = render(Calculate, R.merge(props, { calculation }))
     const span = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
     expect(span.textContent).to.equal('Ans = ERROR')
   })
@@ -83,14 +69,14 @@ describe('(Component) Calculate', function () {
     function () {
       const output = 10
       calculation = { input: '5+5', output }
-      rendered = renderWithProps(R.merge(props, { calculation }))
+      rendered = render(Calculate, R.merge(props, { calculation }))
       const span = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
       expect(span.textContent).to.equal(`Ans = ${output}`)
     }
   )
 
   it('should dispatch onChange when input has changed', function () {
-    rendered = renderWithProps(props)
+    rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
       'calculator-input'
@@ -100,7 +86,7 @@ describe('(Component) Calculate', function () {
   })
 
   it('should dispatch onPaste on input paste', function () {
-    rendered = renderWithProps(props)
+    rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
       'calculator-input'
@@ -110,7 +96,7 @@ describe('(Component) Calculate', function () {
   })
 
   it('should focus on componentDidUpdate', function () {
-    rendered = renderWithProps(props)
+    rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
       'calculator-input'

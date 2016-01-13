@@ -5,20 +5,7 @@ import TestUtils from 'react-addons-test-utils'
 import { App } from 'containers/App'
 import baseThemeVariables from 'themes/_base/variables'
 import Flex from 'components/Flex'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<App {...props} />)
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<App {...props} />)
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Container) App', function () {
   const mainClassName = 'main-component'
@@ -40,8 +27,8 @@ describe('(Container) App', function () {
       theme
     }
 
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(App, props)
+    rendered = render(App, props)
   })
 
   it('Should render as a <Flex>.', function () {

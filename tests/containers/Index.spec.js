@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
@@ -9,20 +8,7 @@ import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'components/Flex'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<Index {...props} />)
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<Index {...props} />)
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Container) Index', function () {
   const calculation = (input = '1+1', output = 2) => {
@@ -55,8 +41,8 @@ describe('(Container) Index', function () {
         updateCalculation: (spies.updateCalculation = sinon.spy())
       }, spies.dispatch = sinon.spy())
     }
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(Index, props)
+    rendered = render(Index, props)
   })
 
   it('Should render as a <Flex>.', function () {
@@ -92,7 +78,7 @@ describe('(Container) Index', function () {
 
     beforeEach(function () {
       inputComponent = TestUtils.findRenderedDOMComponentWithClass(
-        renderWithProps({ ...props }), 'calculator-input'
+        render(Index, { ...props }), 'calculator-input'
       )
     })
 

@@ -1,24 +1,10 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Author from 'components/Author'
 import Flex from 'components/Flex'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<Author {...props} />)
-}
-
-function renderWithProps(props = {}) {
-  return TestUtils.renderIntoDocument(<Author {...props} />)
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Component) Author', function () {
   const getStyles = (theme) => {
@@ -41,8 +27,8 @@ describe('(Component) Author', function () {
 
   beforeEach(function () {
     props = { getStyles, settings, theme }
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(Author, props)
+    rendered = render(Author, props)
   })
 
   it('should render as a <Flex>.', function () {

@@ -4,22 +4,7 @@ import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
 import baseThemeVariables from 'themes/_base/variables'
 import Button, { _getStyles } from 'components/Button'
-
-function shallowRender(component) {
-  const renderer = TestUtils.createRenderer()
-  renderer.render(component)
-  return renderer.getRenderOutput()
-}
-
-function shallowRenderWithProps(props = {}) {
-  return shallowRender(<Button {...props} />)
-}
-
-function renderWithProps(props = {}, children) {
-  return TestUtils.renderIntoDocument(
-    <Button {...props} />
-  )
-}
+import { render, shallowRender } from '../test-helpers/render'
 
 describe('(Component) Button', function () {
   const active = false
@@ -57,8 +42,8 @@ describe('(Component) Button', function () {
       onClick: (spies.onClick = sinon.spy()),
       theme
     }
-    component = shallowRenderWithProps(props)
-    rendered = renderWithProps(props)
+    component = shallowRender(Button, props)
+    rendered = render(Button, props)
     button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
       'span'
@@ -91,7 +76,7 @@ describe('(Component) Button', function () {
   it('should use active styles when "active" is true', function () {
     const styles = getStyles(theme)
     const expectedStyles = R.merge(styles.base, styles.active)
-    rendered = renderWithProps(R.merge(props, { active: true }))
+    rendered = render(Button, R.merge(props, { active: true }))
     button = TestUtils.findRenderedDOMComponentWithTag(
       rendered,
       'span'

@@ -10,7 +10,7 @@ export default {
     tweetVia: 'ppanagi'
   },
   themes: [
-    { name: 'dark', active: false },
-    { name: 'light', active: true }
+    { name: 'dark', active: true },
+    { name: 'light', active: false }
   ]
 }

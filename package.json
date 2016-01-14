@@ -30,7 +30,8 @@
     "deploy": {
       "command": "npm run clean && npm run compile",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "BASENAME": "/calculator"
       }
     },
     "start": {

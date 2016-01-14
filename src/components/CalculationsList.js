@@ -26,9 +26,8 @@ const _getStyles = function (theme) {
       display: 'none',
     },
     '.Wrapper': {
-      height: '100%',
       overflow: 'auto',
-      marginBottom: - theme.gutters.small
+      marginBottom: `${- theme.gutters.small}px`
     },
     mediaQueries: {
       [theme.screens.smallWidth]: {

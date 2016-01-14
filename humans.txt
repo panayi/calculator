@@ -7,5 +7,5 @@
 	Last update: 2015/01/13
 	Language: English
 	Doctype: HTML5
-  Components: React, Redux, Ramda
+	Components: React, Redux, Ramda
 	IDE: Atom

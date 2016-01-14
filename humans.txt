@@ -1,0 +1,11 @@
+/* TEAM */
+	Developer: Panagiotis Panagi
+	Twitter: @ppanagi
+	From: Limassol, Cyprus
+
+/* SITE */
+	Last update: 2015/01/13
+	Language: English
+	Doctype: HTML5
+  Components: React, Redux, Ramda
+	IDE: Atom

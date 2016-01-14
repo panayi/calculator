@@ -16,15 +16,16 @@ export default {
     large: 40,
     base: 20,
     small: 10,
+    xsmall: 6,
     tiny: 3
   },
   layout: {
     sidebarWidth: '270px'
   },
   screens: {
-    mediumWidth: '@media only screen and (max-width: 992px)',
-    smallWidth: '@media only screen and (max-width: 645px)',
-    mediumHeight: '@media only screen and (max-height: 800px)',
-    smallHeight: '@media only screen and (max-height: 445px)'
+    mediumWidth: '(max-width: 992px) and (min-width: 646px)',
+    smallWidth: '(max-width: 645px)',
+    mediumHeight: '(max-height: 800px) and (min-height: 446px)',
+    smallHeight: '(max-height: 445px)'
   }
 }

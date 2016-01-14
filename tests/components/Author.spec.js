@@ -38,14 +38,14 @@ describe('(Component) Author', function () {
 
   it('should render the author', function () {
     const authorAnchor = TestUtils.findRenderedDOMComponentWithClass(
-      rendered, 'author-name'
+      rendered, 'AuthorName'
     )
     expect(authorAnchor).to.exist
   })
 
   it('should render a link to the repo', function () {
     const repoAnchor = TestUtils.findRenderedDOMComponentWithClass(
-      rendered, 'repo-url'
+      rendered, 'Github'
     )
     expect(repoAnchor).to.exist
   })

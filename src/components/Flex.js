@@ -123,6 +123,7 @@ const createPresets = (theme) => {
 class Flex extends Component {
   static propTypes = {
     theme: PropTypes.object.isRequired,
+    className: PropTypes.string,
     preset: PropTypes.oneOf([
       'frame',
       'box',
@@ -272,8 +273,9 @@ class Flex extends Component {
   }
 
   render() {
+    const { className, children } = this.props
     return (
-      <div style={this.getStyles()}>{this.props.children}</div>
+      <div className={className} style={this.getStyles()}>{children}</div>
     )
   }
 }

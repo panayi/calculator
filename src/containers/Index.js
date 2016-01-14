@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import Radium from 'radium'
 import {
   currentCalculationSelector,
   previousCalculationsSelector,
@@ -126,4 +127,4 @@ const actions = {
   keyPressed: _keyPressed,
   updateCalculation: _updateCalculation
 }
-export default connect(selectors, actions)(Index)
+export default connect(selectors, actions)(Radium(Index))

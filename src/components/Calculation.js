@@ -1,25 +1,26 @@
 import React, { Component, PropTypes } from 'react'
+import { Style } from 'radium'
 import { propsOrStylesChanged } from 'helpers/pureFunctions'
 import Flex from 'components/Flex'
 
 const _getStyles = function (theme) {
   return {
-    output: {
+    '.Output': {
       fontSize: theme.fontSizes.xlarge,
       color: theme.colors.accent
     },
-    input: {
+    '.Input': {
       fontSize: theme.fontSizes.small,
       marginTop: - theme.gutters.tiny
     },
-    pointer: {
+    '.Pointer': {
       textAlign: 'right',
       width: `${theme.gutters.xlarge}px`,
       cursor: 'pointer',
-      color: theme.colors.fadedText,
-      ':hover': {
-        color: theme.colors.text
-      }
+      color: theme.colors.fadedText
+    },
+    '.Pointer:hover': {
+      color: theme.colors.text
     }
   }
 }
@@ -46,21 +47,23 @@ export default class Calculation extends Component {
 
   render() {
     const { calculation, getStyles, onPointerClick, theme } = this.props
-    const styles = getStyles(theme)
 
     return (
-      <Flex preset="box" theme={theme} inner="small" nowrap>
-        <Flex preset="content" theme={theme} gutter="small" inner="small"
-          nogrow style={styles.pointer}
+      <Flex className="Calculation" preset="box" theme={theme} inner="small"
+        nowrap
+      >
+        <Flex className="Pointer" preset="content" theme={theme} gutter="small"
+          inner="small" nogrow
         >
           <span onClick={onPointerClick}>—</span>
         </Flex>
         <Flex preset="content" theme={theme} gutter>
           <div>
-            <div style={styles.output}>{calculation.output}</div>
-            <div style={styles.input}>= {calculation.input}</div>
+            <div className="Output">{calculation.output}</div>
+            <div className="Input">= {calculation.input}</div>
           </div>
         </Flex>
+        <Style scopeSelector=".Calculation" rules={getStyles(theme)} />
       </Flex>
     )
   }

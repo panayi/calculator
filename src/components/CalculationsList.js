@@ -1,37 +1,41 @@
 import React, { Component, PropTypes } from 'react'
 import { mapIndexed, propsOrStylesChanged } from 'helpers/pureFunctions'
+import { Style } from 'radium'
 import Calculation from 'components/Calculation'
 import Flex from 'components/Flex'
 
 const _getStyles = function (theme) {
   return {
-    overlay: {
+    h2: {
       position: 'absolute',
       zIndex: 0,
       top: 0,
       bottom: 0,
       left: 0,
       right: 0,
-      fontSize: '6vw',
-      width: '29%',
-      height: '29%',
+      display: 'table',
+      width: '50%',
+      height: 'auto',
       margin: 'auto',
+      paddingLeft: `${theme.gutters.xlarge}px`,
+      fontSize: '6vw',
       textAlign: 'center',
       color: theme.colors.fadedText,
-      [theme.screens.smallWidth]: {
-        width: '35%'
-      }
     },
-    threeR: {
+    '.ThreeR': {
       display: 'none',
-      [theme.screens.smallWidth]: {
-        display: 'inline'
-      }
     },
-    wrapper: {
+    '.Wrapper': {
       height: '100%',
       overflow: 'auto',
       marginBottom: - theme.gutters.small
+    },
+    mediaQueries: {
+      [theme.screens.smallWidth]: {
+        '.ThreeR': {
+          display: 'inline'
+        }
+      }
     }
   }
 }
@@ -61,7 +65,6 @@ export default class CalculationsList extends Component {
 
   render() {
     const { calculations, deleteCalculation, getStyles, theme } = this.props
-    const styles = getStyles(theme)
     const results = mapIndexed((calculation, index) =>
       <Calculation
         calculation={calculation}
@@ -72,13 +75,16 @@ export default class CalculationsList extends Component {
     , calculations)
 
     return (
-      <Flex preset="box" theme={theme} vertical justifyContent="flex-end" inner>
-        <div ref="wrapper" style={styles.wrapper}>
-          <h1 style={styles.overlay}>
-            <span style={styles.threeR}>3R </span>calculator
-          </h1>
+      <Flex className="CalculationsList" preset="box" theme={theme} vertical
+        justifyContent="flex-end" inner
+      >
+        <div ref="wrapper" className="Wrapper">
+          <h2>
+            <span className="ThreeR">3R </span>calculator
+          </h2>
           {results}
         </div>
+        <Style scopeSelector=".CalculationsList" rules={getStyles(theme)} />
       </Flex>
     )
   }

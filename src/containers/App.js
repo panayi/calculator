@@ -1,14 +1,19 @@
 import React, { Component, PropTypes } from 'react'
+import { Style } from 'radium'
 import { propsChanged } from 'helpers/pureFunctions'
 import Flex from 'components/Flex'
 import connect from 'helpers/connectAndTheme'
 
 const getStyles = function (theme) {
   return {
-    sidebar: {
-      width: theme.layout.sidebarWidth,
+    '.Sidebar': {
+      width: theme.layout.sidebarWidth
+    },
+    mediaQueries: {
       [theme.screens.smallWidth]: {
-        display: 'none'
+        '.Sidebar': {
+          display: 'none !important'
+        }
       }
     }
   }
@@ -27,18 +32,18 @@ export class App extends Component {
 
   render() {
     const { main, sidebar, theme } = this.props
-    const styles = getStyles(theme)
 
     return (
-      <Flex preset="frame" theme={theme}>
-        <Flex preset="box" theme={theme} fullHeight nogrow noshrink
-          style={styles.sidebar}
+      <Flex className="App" preset="frame" theme={theme}>
+        <Flex className="Sidebar" preset="box" theme={theme} fullHeight nogrow
+          noshrink
         >
           {sidebar}
         </Flex>
         <Flex preset="box" theme={theme} fullHeight gutterLeft>
           {main}
         </Flex>
+        <Style scopeSelector=".App" rules={getStyles(theme)} />
       </Flex>
     )
   }

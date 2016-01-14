@@ -7,7 +7,7 @@ export const _getStyles = function (theme) {
     base: {
       fontSize: theme.fontSizes.button,
       width: '56.5px',
-      margin: '0 6px 6px 0',
+      margin: `0 ${theme.gutters.xsmall}px ${theme.gutters.xsmall}px 0`,
       padding: '1px 0',
       textAlign: 'center',
       display: 'inline-block',

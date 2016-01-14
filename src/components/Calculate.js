@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
+import Radium from 'radium'
 import { propsOrStylesChanged } from 'helpers/pureFunctions'
 
 const _getStyles = function (theme) {
@@ -24,7 +25,7 @@ const _getStyles = function (theme) {
   }
 }
 
-export default class Calculate extends Component {
+class Calculate extends Component {
   static propTypes = {
     calculation: PropTypes.shape({
       input: PropTypes.string,
@@ -79,3 +80,5 @@ export default class Calculate extends Component {
     )
   }
 }
+
+export default Radium(Calculate)

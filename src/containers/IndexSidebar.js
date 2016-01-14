@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Octicon from 'react-octicon'
+import { Style } from 'radium'
 import { activateTheme as _activateTheme } from 'redux/modules/themes'
 import { buttonClicked as _buttonClicked } from 'redux/modules/events'
 import { keysSelector, nextThemeNameSelector,
@@ -11,17 +12,23 @@ import Flex from 'components/Flex'
 
 const getStyles = function (theme) {
   return {
-    logo: {
+    h1: {
       margin: 0,
       fontSize: '224px',
       lineHeight: '176px',
-      color: theme.colors.logo,
+      color: theme.colors.logo
+    },
+    mediaQueries: {
       [theme.screens.mediumHeight]: {
-        fontSize: '28vh',
-        lineHeight: '22vh'
+        h1: {
+          fontSize: '28vh',
+          lineHeight: '22vh'
+        }
       },
       [theme.screens.smallHeight]: {
-        display: 'none'
+        h1: {
+          display: 'none'
+        }
       }
     }
   }
@@ -45,7 +52,6 @@ export class IndexSidebar extends Component {
   render() {
     const { activateTheme, buttonClicked, keys, nextThemeName,
       nextThemeVariables, theme } = this.props
-    const styles = getStyles(theme)
     const buttons = mapIndexed((key, index) =>
       <Button
         active={key.active}
@@ -59,8 +65,8 @@ export class IndexSidebar extends Component {
     , keys)
 
     return (
-      <Flex preset="box" theme={theme} vertical inner gutterLeft>
-        <Flex preset="content" theme={theme}>
+      <Flex className="IndexSidebar" preset="box" theme={theme} vertical inner>
+        <Flex preset="content" theme={theme} gutterLeft>
           <Button
             theme={nextThemeVariables}
             onClick={() => activateTheme(nextThemeName)}
@@ -74,8 +80,9 @@ export class IndexSidebar extends Component {
           {buttons}
         </Flex>
         <Flex preset="content" theme={theme} nogrow alignSelf="center">
-          <h1 style={styles.logo}>3R</h1>
+          <h1>3R</h1>
         </Flex>
+        <Style scopeSelector=".IndexSidebar" rules={getStyles(theme)} />
       </Flex>
     )
   }

@@ -17,7 +17,8 @@ const _getStyles = function (theme) {
       textAlign: 'right',
       width: `${theme.gutters.xlarge}px`,
       cursor: 'pointer',
-      color: theme.colors.fadedText
+      color: theme.colors.fadedText,
+      userSelect: 'none'
     },
     '.Pointer:hover': {
       color: theme.colors.text

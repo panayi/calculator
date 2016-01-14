@@ -16,7 +16,8 @@ const getStyles = function (theme) {
       margin: 0,
       fontSize: '224px',
       lineHeight: '176px',
-      color: theme.colors.logo
+      color: theme.colors.logo,
+      userSelect: 'none'
     },
     mediaQueries: {
       [theme.screens.mediumHeight]: {

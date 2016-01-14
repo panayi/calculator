@@ -21,6 +21,7 @@ const _getStyles = function (theme) {
       fontSize: '6vw',
       textAlign: 'center',
       color: theme.colors.fadedText,
+      userSelect: 'none'
     },
     '.ThreeR': {
       display: 'none',

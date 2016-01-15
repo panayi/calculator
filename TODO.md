@@ -1,6 +1,9 @@
 TODO
 =======================
 
+* Move input box to the top (thanks @demestav).
+* Add animations with ReactCSSTransitionGroup.
+
 * ~~Extract calculation item into Calculation component~~
 * ~~Refactor configuration settings (such as author, repo URL) into an easy to edit file. Store the settings into Redux store for easy access within the components.~~
 * ~~Refactor the application of styles. Currently styles are in multiple places. Consider moving to a single place, or modularize everywhere. Remove Radium if not used.~~
@@ -19,7 +22,4 @@ TODO
 * ~~Add a light theme.~~
 * ~~DRY tests with helpers.~~
 * ~~Performance profile with Chrome devTools and http://facebook.github.io/react/docs/perf.html.~~
-
-
-* Add animations with ReactCSSTransitionGroup.
-* Refactor styling to not use Radium.
+* ~~Refactor styling to not use Radium.~~

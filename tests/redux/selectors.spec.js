@@ -10,11 +10,7 @@ import {
   settingsSelector,
   themeName,
   themesSelector,
-  themeStylesSelector,
-  themeVariablesSelector
 } from 'redux/selectors'
-import { variables as baseVariables, styles as baseStyles } from 'themes/_base'
-import { variables as darkVariables, styles as darkStyles } from 'themes/dark'
 
 describe('(Redux Selectors)', function () {
   describe('calculations', function () {
@@ -69,14 +65,10 @@ describe('(Redux Selectors)', function () {
     let darkTheme
     let lightTheme
     let themes
-    let variables
-    let styles
 
     beforeEach(function () {
       darkTheme = { name: 'dark', active: false }
       lightTheme = { name: 'light', active: false }
-      variables = R.merge(baseVariables, darkVariables)
-      styles = R.merge(baseStyles(variables), darkStyles(variables))
     })
 
     it('should return the "themes" state', function () {
@@ -106,33 +98,6 @@ describe('(Redux Selectors)', function () {
         R.merge(lightTheme, { active: true }),
       ]
       expect(nextThemeNameSelector({ themes })).to.deep.equal('dark')
-    })
-
-    it('should merge theme variables with _base variables', function () {
-      themes = [
-        R.merge(darkTheme, { active: true }),
-        lightTheme
-      ]
-      expect(themeVariablesSelector({ themes })).to.deep.equal(variables)
-    })
-
-    it('should return _base variables when no theme is active', function () {
-      themes = [darkTheme, lightTheme]
-      expect(themeVariablesSelector({ themes })).to.deep.equal(baseVariables)
-    })
-
-    it('should merge theme styles with _base styles', function () {
-      themes = [
-        R.merge(darkTheme, { active: true }),
-        lightTheme
-      ]
-      expect(themeStylesSelector({ themes })).to.deep.equal(styles)
-    })
-
-    it('should return _base styles when no theme is active', function () {
-      themes = [darkTheme, lightTheme]
-      expect(themeStylesSelector({ themes }))
-        .to.deep.equal(baseStyles(baseVariables))
     })
   })
 })

@@ -13,7 +13,7 @@ const event = R.compose(R.defaultTo({}), R.prop('payload'))
 
 // isEventsAction :: Action :: Boolean
 const isEventsAction = R.either(
-  isActionOfType(eventsActionTypes.BUTTON_CLICKED),
+  isActionOfType(eventsActionTypes.KEY_CLICKED),
   isActionOfType(eventsActionTypes.KEY_PRESSED)
 )
 

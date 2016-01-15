@@ -72,7 +72,7 @@ describe('(Redux Module) calculations', function () {
       )
     })
 
-    describe('BUTTON_CLICKED', function () {
+    describe('KEY_CLICKED', function () {
       const input = '1'
       const character = '5'
       const keyCode = 53
@@ -86,7 +86,7 @@ describe('(Redux Module) calculations', function () {
             parseInt(newInput, 10)
           )
           expect(reducer([calculation, calculation], {
-            type: eventsActionTypes.BUTTON_CLICKED,
+            type: eventsActionTypes.KEY_CLICKED,
             payload: { keyCode, display: character }
           })).to.deep.equal([calculation, newCalculation])
         }

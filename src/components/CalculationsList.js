@@ -1,61 +1,20 @@
 import React, { Component, PropTypes } from 'react'
-import { mapIndexed, propsOrStylesChanged } from 'helpers/pureFunctions'
-import { Style } from 'radium'
+import { mapIndexed, propsChanged } from 'helpers/pureFunctions'
 import Calculation from 'components/Calculation'
 import Flex from 'components/Flex'
-
-const _getStyles = function (theme) {
-  return {
-    h2: {
-      position: 'absolute',
-      zIndex: 0,
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      display: 'table-cell',
-      width: '50%',
-      height: '7.5vw',
-      margin: 'auto',
-      paddingLeft: `${theme.gutters.xlarge}px`,
-      fontSize: '6vw',
-      textAlign: 'center',
-      color: theme.colors.fadedText,
-      userSelect: 'none'
-    },
-    '.ThreeR': {
-      display: 'none',
-    },
-    '.Wrapper': {
-      overflow: 'auto',
-      marginBottom: `${- theme.gutters.small}px`
-    },
-    mediaQueries: {
-      [theme.screens.smallWidth]: {
-        '.ThreeR': {
-          display: 'inline'
-        }
-      }
-    }
-  }
-}
 
 export default class CalculationsList extends Component {
   static propTypes = {
     calculations: PropTypes.array.isRequired,
     deleteCalculation: PropTypes.func.isRequired,
-    getStyles: PropTypes.func,
-    theme: PropTypes.object.isRequired
   };
 
   static defaultProps = {
-    calculations: [],
-    getStyles: _getStyles
+    calculations: []
   };
 
   shouldComponentUpdate(nextProps) {
-    return propsOrStylesChanged(['calculations'], this.props.getStyles,
-      this.props, nextProps)
+    return propsChanged(['calculations'], this.props, nextProps)
   }
 
   componentDidUpdate() {
@@ -64,27 +23,23 @@ export default class CalculationsList extends Component {
   }
 
   render() {
-    const { calculations, deleteCalculation, getStyles, theme } = this.props
+    const { calculations, deleteCalculation } = this.props
     const results = mapIndexed((calculation, index) =>
       <Calculation
         calculation={calculation}
         key={index}
         onPointerClick={() => deleteCalculation(index)}
-        theme={theme}
       />
     , calculations)
 
     return (
-      <Flex className="CalculationsList" preset="box" theme={theme} vertical
-        justifyContent="flex-end" inner
-      >
-        <div ref="wrapper" className="Wrapper">
-          <h2>
-            <span className="ThreeR">3R </span>calculator
+      <Flex preset="box" vertical justifyContent="flex-end" inner>
+        <div className="calculations-list__content" ref="wrapper">
+          <h2 className="calculations-list__overlay">
+            <span className="calculations-list__3r">3R </span>calculator
           </h2>
           {results}
         </div>
-        <Style scopeSelector=".CalculationsList" rules={getStyles(theme)} />
       </Flex>
     )
   }

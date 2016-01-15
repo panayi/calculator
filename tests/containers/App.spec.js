@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
-import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
-import { App } from 'containers/App'
-import baseThemeVariables from 'themes/_base/variables'
+import App from 'containers/App'
 import Flex from 'components/Flex'
 import { render, shallowRender } from '../test-helpers/render'
 import { shouldIgnoreOtherProps, shouldUpdate }
@@ -12,7 +10,6 @@ import { shouldIgnoreOtherProps, shouldUpdate }
 describe('(Container) App', function () {
   const mainClassName = 'main-component'
   const sidebarClassName = 'sidebar-component'
-  const theme = baseThemeVariables
   let component
   let main
   let props
@@ -22,12 +19,7 @@ describe('(Container) App', function () {
   beforeEach(function () {
     main = <article className={mainClassName}>Main Component</article>
     sidebar = <aside className={sidebarClassName}>Sidebar Component</aside>
-    props = {
-      main,
-      sidebar,
-      theme
-    }
-
+    props = { main, sidebar }
     component = shallowRender(App, props)
     rendered = render(App, props)
   })
@@ -53,9 +45,9 @@ describe('(Container) App', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if main, sidebar and theme are the same',
+    it('should not update if main and sidebar are the same',
       function () {
-        const nextProps = { main, sidebar, theme }
+        const nextProps = { main, sidebar }
         shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
@@ -68,11 +60,6 @@ describe('(Container) App', function () {
     it('should update if sidebar changes', function () {
       const newSidebar = <div></div>
       shouldUpdate(rendered, { sidebar: newSidebar }).is.true
-    })
-
-    it('should update if theme changes', function () {
-      const newTheme = R.merge(theme, { foo: 'bar' })
-      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

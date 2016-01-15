@@ -4,7 +4,6 @@ import TestUtils from 'react-addons-test-utils'
 import { bindActionCreators } from 'redux'
 import { Index } from 'containers/Index'
 import Author from 'components/Author'
-import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'components/Flex'
@@ -20,7 +19,6 @@ describe('(Container) Index', function () {
     createCalculation('1+3', 4)
   ]
   const settings = {}
-  const theme = baseThemeVariables
   let component
   let props
   let rendered
@@ -32,7 +30,6 @@ describe('(Container) Index', function () {
       currentCalculation,
       previousCalculations,
       settings,
-      theme,
       ...bindActionCreators({
         keyPressed: (spies.keyPressed = sinon.spy()),
         deleteCalculation: (spies.deleteCalculation = sinon.spy()),
@@ -76,7 +73,7 @@ describe('(Container) Index', function () {
 
     beforeEach(function () {
       inputComponent = TestUtils.findRenderedDOMComponentWithClass(
-        render(Index, { ...props }), 'calculator-input'
+        render(Index, { ...props }), 'calculate__input'
       )
     })
 
@@ -103,8 +100,7 @@ describe('(Container) Index', function () {
   describe('shouldComponentUpdate', function () {
     it('should not update if props are the same',
       function () {
-        const nextProps = { currentCalculation, previousCalculations, settings,
-          theme }
+        const nextProps = { currentCalculation, previousCalculations, settings }
         shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
@@ -125,11 +121,6 @@ describe('(Container) Index', function () {
     it('should update if settings change', function () {
       const newSettings = R.merge(settings, { foo: 'bar' })
       shouldUpdate(rendered, { settings: newSettings }).is.true
-    })
-
-    it('should update if theme change', function () {
-      const newTheme = R.merge(theme, { foo: 'bar' })
-      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

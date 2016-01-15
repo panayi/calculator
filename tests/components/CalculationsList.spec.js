@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
-import baseThemeVariables from 'themes/_base/variables'
 import Calculation from 'components/Calculation'
 import CalculationsList from 'components/CalculationsList'
 import Flex from 'components/Flex'
@@ -16,19 +15,13 @@ describe('(Component) CalculationsList', function () {
     createCalculation('1+2', 3)
   ]
   const deleteCalculation = sinon.spy()
-  const getStyles = (theme) => {
-    return {
-      color: theme.dark
-    }
-  }
-  const theme = baseThemeVariables
   let calculationComponents
   let component
   let props
   let rendered
 
   beforeEach(function () {
-    props = { calculations, deleteCalculation, getStyles, theme }
+    props = { calculations, deleteCalculation }
     component = shallowRender(CalculationsList, props)
     rendered = render(CalculationsList, props)
 
@@ -63,26 +56,14 @@ describe('(Component) CalculationsList', function () {
   it('should scroll to bottom on componentDidUpdate')
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if calculations and theme are the same', function () {
-      const nextProps = { calculations, theme }
+    it('should not update if calculations are the same', function () {
+      const nextProps = { calculations }
       shouldIgnoreOtherProps(rendered, nextProps)
     })
 
     it('should update if calculations change', function () {
       const newCalculations = R.tail(calculations)
       shouldUpdate(rendered, { calculations: newCalculations }).is.true
-    })
-
-    it('should not update if theme changes but styles stay the same',
-      function () {
-        const newTheme = R.merge(theme, { light: '#EEE' })
-        shouldUpdate(rendered, { theme: newTheme }).is.false
-      }
-    )
-
-    it('should update if styles change', function () {
-      const newTheme = R.merge(theme, { dark: '#444' })
-      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

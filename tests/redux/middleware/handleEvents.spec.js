@@ -54,11 +54,11 @@ describe('(Redux Middleware) handleEvents', function () {
     }
   )
 
-  it('should dispatch DONE_CALCULATION on BUTTON_CLICKED(ENTER) action',
+  it('should dispatch DONE_CALCULATION on KEY_CLICKED(ENTER) action',
     function () {
       event = createKeyPressEvent(enterKeyCode)
       action = {
-        type: eventsActionTypes.BUTTON_CLICKED,
+        type: eventsActionTypes.KEY_CLICKED,
         payload: enterKey
       }
       const doneCalculationAction = {

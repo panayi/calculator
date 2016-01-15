@@ -13,7 +13,7 @@ const dispatchActivateKey = (keyCodeSelector) =>
 
 // handleAction :: Action -> Store -> Action|TimeoutID|Boolean
 const handleAction = R.cond([
-  [isActionOfType(eventsActionTypes.BUTTON_CLICKED),
+  [isActionOfType(eventsActionTypes.KEY_CLICKED),
     dispatchActivateKey(R.prop('keyCode'))],
 
   [isActionOfType(eventsActionTypes.KEY_PRESSED),

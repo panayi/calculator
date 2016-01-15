@@ -3,32 +3,30 @@ import { connect } from 'react-redux'
 import { Style } from 'radium'
 import { createStructuredSelector } from 'reselect'
 import { propsChanged } from 'helpers/pureFunctions'
-import { themeStylesSelector } from 'redux/selectors'
+import { activeThemeNameSelector } from 'redux/selectors'
+import createStyles from 'styles'
 import 'normalize.css/normalize.css'
 
 export class ThemeManager extends Component {
   static propTypes = {
-    styles: PropTypes.object.isRequired,
-    children: PropTypes.node
+    activeThemeName: PropTypes.string.isRequired,
   };
 
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['styles', 'children'], this.props, nextProps)
+    return propsChanged(['activeThemeName'], this.props, nextProps)
   }
 
   render() {
-    const { styles } = this.props
+    const { activeThemeName } = this.props
+    const styles = createStyles(activeThemeName)
 
     return (
-      <div>
-        <Style rules={styles} />
-        {this.props.children}
-      </div>
+      <Style rules={styles} />
     )
   }
 }
 
 const selector = createStructuredSelector({
-  styles: themeStylesSelector
+  activeThemeName: activeThemeNameSelector
 })
 export default connect(selector)(ThemeManager)

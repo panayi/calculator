@@ -27,10 +27,10 @@ describe('(Redux Middleware) toggleButton', function () {
     mockStore = configureStore([toggleButttonMiddleware])
   })
 
-  it('should dispatch ACTIVATE_KEY and then DEACTIVATE_KEY on BUTTON_CLICKED',
+  it('should dispatch ACTIVATE_KEY and then DEACTIVATE_KEY on KEY_CLICKED',
     function (done) {
       action = {
-        type: eventsActionTypes.BUTTON_CLICKED,
+        type: eventsActionTypes.KEY_CLICKED,
         payload: BKey
       }
       expectedActions = [activateKeyAction, action, deactivateKeyAction]

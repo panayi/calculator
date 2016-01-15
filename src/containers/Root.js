@@ -37,10 +37,11 @@ export default class Root extends React.Component {
   render() {
     return (
       <Provider store={this.props.store}>
-        <ThemeManager>
+        <div>
           {this.content}
           {this.devTools}
-        </ThemeManager>
+          <ThemeManager />
+        </div>
       </Provider>
     )
   }

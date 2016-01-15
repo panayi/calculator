@@ -1,13 +1,15 @@
+import R from 'ramda'
 import tinycolor from 'tinycolor2'
+import base from './base'
 
-const primaryColor = '#16a085'
-const accentColor = '#FAAB22'
-const accent2Color = '#EE213D'
-const canvasColor = '#27313E'
+const primaryColor = '#0A6987'
+const accentColor = '#DA1415'
+const accent2Color = '#363B40'
+const canvasColor = '#DADADA'
 const primaryContrastColor = 'white'
 const accentContrastColor = 'white'
 
-export default {
+export default R.merge(base, {
   colors: {
     primary: primaryColor,
     primaryDark: tinycolor(primaryColor).saturate(3).darken(17).toString(),
@@ -25,4 +27,4 @@ export default {
     lightBorder: tinycolor(canvasColor).darken(3).toString(),
     logo: tinycolor(primaryColor).desaturate(30).setAlpha(0.5).toString()
   }
-}
+})

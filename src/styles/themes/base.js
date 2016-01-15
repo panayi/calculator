@@ -1,5 +1,7 @@
 export default {
-  colors: {},
+  colors: {
+
+  },
   fontFamilies: {
     text: '\'Lato\', \'Helvetica\', \'Arial\', sans-serif',
     header: '\'Lobster\', sans-serif'

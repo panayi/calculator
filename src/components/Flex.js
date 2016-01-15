@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
 import Radium from 'radium'
-import { propsOrStylesChanged } from 'helpers/pureFunctions'
+import { propsChanged } from 'helpers/pureFunctions'
+import layout from 'styles/layout/base'
 
 const getGutterKey = R.compose(R.defaultTo('base'), R.find(R.is(String)), R.of)
 
@@ -37,208 +38,138 @@ const styles = {
   verticalReverse: R.objOf('flexDirection', 'column-reverse'),
   width: R.objOf('width'),
   wrap: R.objOf('flexWrap', 'wrap'),
-  gutter: (value, theme) => {
+  gutter: (value) => {
     const key = getGutterKey(value)
     return {
-      paddingRight: `${theme.gutters[key]}px`,
-      paddingLeft: `${theme.gutters[key]}px`
+      paddingRight: `${layout.gutters[key]}px`,
+      paddingLeft: `${layout.gutters[key]}px`
     }
   },
-  gutterLeft: (value, theme) => {
+  gutterLeft: (value) => {
     const key = getGutterKey(value)
-    return { paddingLeft: `${theme.gutters[key]}px` }
+    return { paddingLeft: `${layout.gutters[key]}px` }
   },
-  gutterRight: (value, theme) => {
+  gutterRight: (value) => {
     const key = getGutterKey(value)
-    return { paddingRight: `${theme.gutters[key]}px` }
+    return { paddingRight: `${layout.gutters[key]}px` }
   },
-  inner: (value, theme) => {
+  inner: (value) => {
     const key = getGutterKey(value)
     return {
-      paddingTop: `${theme.gutters[key]}px`,
-      paddingBottom: `${theme.gutters[key]}px`
+      paddingTop: `${layout.gutters[key]}px`,
+      paddingBottom: `${layout.gutters[key]}px`
     }
   },
-  innerMargin: (value, theme) => {
+  innerMargin: (value) => {
     const key = getGutterKey(value)
     return {
-      marginTop: `${theme.gutters[key]}px`,
-      marginBottom: `${theme.gutters[key]}px`
+      marginTop: `${layout.gutters[key]}px`,
+      marginBottom: `${layout.gutters[key]}px`
     }
   }
 }
 
-const createPresets = (theme) => {
-  return {
-    base: {
-    },
+const presets = {
+  base: {},
 
-    frame: R.mergeAll([
-      styles.height('100vh'),
-      styles.overflowX('hidden'),
-      styles.overflowY('hidden'),
-      styles.flex,
-      styles.grow(1),
-      styles.shrink(1),
-      styles.flexBasis('auto'),
-      styles.horizontal,
-      styles.nowrap,
-      styles.justifyContent('flex-start'),
-      styles.order(0),
-      styles.boxSizing('border-box'),
-      styles.position('relative')
-    ]),
+  frame: R.mergeAll([
+    styles.height('100vh'),
+    styles.overflowX('hidden'),
+    styles.overflowY('hidden'),
+    styles.flex,
+    styles.grow(1),
+    styles.shrink(1),
+    styles.flexBasis('auto'),
+    styles.horizontal,
+    styles.nowrap,
+    styles.justifyContent('flex-start'),
+    styles.order(0),
+    styles.boxSizing('border-box'),
+    styles.position('relative')
+  ]),
 
-    box: R.mergeAll([
-      styles.height('auto'),
-      styles.flex,
-      styles.grow(1),
-      styles.shrink(1),
-      styles.flexBasis('auto'),
-      styles.horizontal,
-      styles.wrap,
-      styles.justifyContent('flex-start'),
-      styles.order(0),
-      styles.boxSizing('border-box'),
-      styles.position('relative'),
-    ]),
+  box: R.mergeAll([
+    styles.height('auto'),
+    styles.flex,
+    styles.grow(1),
+    styles.shrink(1),
+    styles.flexBasis('auto'),
+    styles.horizontal,
+    styles.wrap,
+    styles.justifyContent('flex-start'),
+    styles.order(0),
+    styles.boxSizing('border-box'),
+    styles.position('relative'),
+  ]),
 
-    content: R.mergeAll([
-      styles.grow(1),
-      styles.shrink(1),
-      styles.flexBasis('auto'),
-      styles.boxSizing('border-box')
-    ]),
+  content: R.mergeAll([
+    styles.grow(1),
+    styles.shrink(1),
+    styles.flexBasis('auto'),
+    styles.boxSizing('border-box')
+  ]),
 
-    column: R.mergeAll([
-      styles.grow(0),
-      styles.shrink(0),
-      styles.flexBasis('auto'),
-      styles.boxSizing('border-box'),
-      styles.gutter('tiny', theme)
-    ])
-  }
+  column: R.mergeAll([
+    styles.grow(0),
+    styles.shrink(0),
+    styles.flexBasis('auto'),
+    styles.boxSizing('border-box'),
+    styles.gutter('tiny')
+  ])
 }
 
 class Flex extends Component {
   static propTypes = {
-    theme: PropTypes.object.isRequired,
-    className: PropTypes.string,
-    preset: PropTypes.oneOf([
-      'frame',
-      'box',
-      'column',
-      'content'
-    ]),
-    style: PropTypes.object,
-    children: PropTypes.node,
-    width: PropTypes.string,
-    height: PropTypes.string,
-
-    // align-self: {value}
     alignSelf: PropTypes.string,
-
-    // max-width: {value}
-    maxWidth: PropTypes.string,
-
-    // max-height: {value}
-    maxHeight: PropTypes.string,
-
-    // display: flex
+    center: PropTypes.bool,
+    children: PropTypes.node,
+    className: PropTypes.string,
     flex: PropTypes.bool,
-
-    // flex-wrap: wrap
-    wrap: PropTypes.bool,
-
-    // flex-wrap: nowrap
-    nowrap: PropTypes.bool,
-
-    // flex-direction: column
-    vertical: PropTypes.bool,
-
-    // flex-direction: row
-    horizontal: PropTypes.bool,
-
-    // flex-direction: column-reverse
-    verticalReverse: PropTypes.bool,
-
-    // flex-direction: row-reverse
-    horizontalReverse: PropTypes.bool,
-
-    // flex-grow: {value}
-    grow: PropTypes.string,
-
-    // flex-grow: 0
-    nogrow: PropTypes.bool,
-
-    // flex-shrink: {value}
-    shrink: PropTypes.string,
-
-    // flex-shrink: 0
-    noshrink: PropTypes.bool,
-
-    // flex-basis: {value}
     flexBasis: PropTypes.string,
-
-    // justify-content: {value}
-    justifyContent: PropTypes.string,
-
-    // order: {value}
-    order: PropTypes.number,
-
-    // position: {value}
-    position: PropTypes.object,
-
-    // overflow-x: {value}
-    overflowX: PropTypes.object,
-
-    // overflow-y: {value}
-    overflowY: PropTypes.object,
-
-    // padding-left: theme.gutters[{value}]
-    gutterLeft: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool
-    ]),
-
-    // padding-right: theme.gutters[{value}]
-    gutterRight: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool
-    ]),
-
-    // gutterLeft && gutterRight
+    full: PropTypes.bool,
+    fullHeight: PropTypes.bool,
+    fullWidth: PropTypes.bool,
+    grow: PropTypes.string,
     gutter: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.bool
     ]),
-
-    // padding-top: theme.gutters[{value}]
-    // padding-bottom: theme.gutters[{value}]
+    gutterLeft: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
+    gutterRight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.bool
+    ]),
+    height: PropTypes.string,
+    horizontal: PropTypes.bool,
+    horizontalReverse: PropTypes.bool,
     inner: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.bool
     ]),
-
-    // margin-top: theme.gutters[{value}]
-    // margin-bottom: theme.gutters[{value}]
     innerMargin: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.bool
     ]),
-
-    // align-items: center;
-    // justify-content: center;
-    center: PropTypes.bool,
-
-    // width: 100%
-    fullWidth: PropTypes.bool,
-
-    // height: 100%
-    fullHeight: PropTypes.bool,
-
-    // fullWidth && fullHeight
-    full: PropTypes.bool
+    justifyContent: PropTypes.string,
+    maxHeight: PropTypes.string,
+    maxWidth: PropTypes.string,
+    nogrow: PropTypes.bool,
+    noshrink: PropTypes.bool,
+    nowrap: PropTypes.bool,
+    order: PropTypes.number,
+    overflowX: PropTypes.object,
+    overflowY: PropTypes.object,
+    position: PropTypes.object,
+    preset: PropTypes.oneOf(['frame', 'box', 'column', 'content']),
+    shrink: PropTypes.string,
+    style: PropTypes.object,
+    vertical: PropTypes.bool,
+    verticalReverse: PropTypes.bool,
+    width: PropTypes.string,
+    wrap: PropTypes.bool
   };
 
   static defaultProps = {
@@ -247,21 +178,19 @@ class Flex extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return propsOrStylesChanged(['children'], this.getStyles.bind(this),
-      this.props, nextProps)
+    const { propTypes } = this.constructor
+    return propsChanged(R.keys(propTypes), this.props, nextProps)
   }
 
   getStyles() {
     const {
       preset,
       style,
-      theme,
       ...props
     } = this.props
-    const presets = createPresets(theme)
 
     const propToStyle = R.converge((thisStyle, propValue) =>
-        R.is(Function, thisStyle) ? thisStyle(propValue, theme) : thisStyle,
+        R.is(Function, thisStyle) ? thisStyle(propValue) : thisStyle,
       [R.prop(R.__, styles), R.prop(R.__, props)]
     )
 

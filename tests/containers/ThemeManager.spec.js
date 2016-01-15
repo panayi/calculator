@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React from 'react'
-import R from 'ramda'
+import { Style } from 'radium'
 import TestUtils from 'react-addons-test-utils'
 import { ThemeManager } from 'containers/ThemeManager'
 import { render, shallowRender } from '../test-helpers/render'
@@ -8,34 +7,22 @@ import { shouldIgnoreOtherProps, shouldUpdate }
   from '../test-helpers/shouldComponentUpdate'
 
 describe('(Container) ThemeManager', function () {
-  const children = <h1 className="child">Header</h1>
-  const styles = {
-    html: {
-      height: '100%'
-    }
-  }
-  const styleContent = 'html{height: 100%;}'
+  const activeThemeName = 'dark'
   let component
   let props
   let rendered
 
   beforeEach(function () {
     props = {
-      children,
-      styles
+      activeThemeName
     }
 
     component = shallowRender(ThemeManager, props)
     rendered = render(ThemeManager, props)
   })
 
-  it('Should render as a div.', function () {
-    expect(component.type).to.equal('div')
-  })
-
-  it('should render children', function () {
-    const child = TestUtils.findRenderedDOMComponentWithClass(rendered, 'child')
-    expect(child).to.exist
+  it('Should render as a <Style>.', function () {
+    expect(component.type).to.equal(Style)
   })
 
   it('should render a <style> tag with "styles"', function () {
@@ -44,26 +31,19 @@ describe('(Container) ThemeManager', function () {
       'style'
     )
     expect(style).to.exist
-    expect(style.textContent).to.equal(styleContent)
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if children and styles are the same',
+    it('should not update if activeThemeName is the same',
       function () {
-        const nextProps = { children, styles }
+        const nextProps = { activeThemeName }
         shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
 
-    it('should update if children change', function () {
-      const newChildren = <a>a link</a>
-      shouldUpdate(rendered, { children: newChildren }).is.true
+    it('should update if activeThemeName change', function () {
+      const newActiveThemeName = 'light'
+      shouldUpdate(rendered, { activeThemeName: newActiveThemeName }).is.true
     })
-
-    it('should update if styles change', function () {
-      const newStyles = R.merge(styles, { body: { height: '100%' } })
-      shouldUpdate(rendered, { styles: newStyles }).is.true
-    })
-
   })
 })

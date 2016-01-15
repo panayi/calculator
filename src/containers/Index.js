@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import Radium from 'radium'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import {
   currentCalculationSelector,
   previousCalculationsSelector,
@@ -14,41 +15,7 @@ import { propsChanged } from 'helpers/pureFunctions'
 import Author from 'components/Author'
 import Calculate from 'components/Calculate'
 import CalculationsList from 'components/CalculationsList'
-import connect from 'helpers/connectAndTheme'
 import Flex from 'components/Flex'
-
-const getStyles = function (theme) {
-  return {
-    authorWrapper: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      padding: '3px 9px 2px',
-      backgroundColor: theme.colors.canvas,
-      borderBottomLeftRadius: '3px'
-    },
-    inputWrapper: {
-      backgroundColor: theme.colors.canvasDark,
-      borderTop: `1px solid ${theme.colors.lightBorder}`,
-      borderRadius: '0 0 2px 2px'
-    },
-    inputBox: {
-      width: `calc(100% - ${theme.gutters.xlarge}px)`
-    },
-    margin: {
-      position: 'absolute',
-      left: theme.gutters.xlarge,
-      height: '100%',
-      zIndex: 1,
-      borderRight: `1px solid ${theme.colors.border}`
-    },
-    resultsWrapper: {
-      overflow: 'auto',
-      backgroundColor: theme.colors.canvasDark,
-      borderRadius: '2px 2px 0 0'
-    }
-  }
-}
 
 export class Index extends Component {
   static propTypes = {
@@ -57,7 +24,6 @@ export class Index extends Component {
     keyPressed: PropTypes.func.isRequired,
     previousCalculations: PropTypes.array.isRequired,
     settings: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
     updateCalculation: PropTypes.func.isRequired
   };
 
@@ -66,7 +32,6 @@ export class Index extends Component {
       'currentCalculation',
       'previousCalculations',
       'settings',
-      'theme'
     ], this.props, nextProps)
   }
 
@@ -78,37 +43,29 @@ export class Index extends Component {
       previousCalculations,
       updateCalculation,
       settings,
-      theme
     } = this.props
-    const styles = getStyles(theme)
 
     return (
-      <Flex preset="box" theme={theme} vertical innerMargin gutterRight nowrap>
-        <div style={styles.margin} />
-        <Flex preset="box" theme={theme} fullWidth
-          style={styles.resultsWrapper}
-        >
+      <Flex preset="box" vertical innerMargin gutterRight nowrap>
+        <div className="index__margin" />
+        <Flex className="index__calculations" preset="box" fullWidth>
           <CalculationsList
             calculations={previousCalculations}
             deleteCalculation={deleteCalculation}
-            theme={theme}
           />
-          <div style={styles.authorWrapper}>
-            <Author settings={settings} theme={theme} />
+          <div className="index__author">
+            <Author settings={settings} />
           </div>
         </Flex>
-        <Flex preset="box" theme={theme} fullWidth justifyContent="flex-end"
-          nogrow style={styles.inputWrapper}
+        <Flex className="index__calculate-wrapper" preset="box" fullWidth nogrow
+          justifyContent="flex-end"
         >
-          <Flex preset="content" theme={theme} gutter nogrow
-            style={styles.inputBox}
-          >
+          <Flex className="index__calculate" preset="content" gutter nogrow>
             <Calculate
               calculation={currentCalculation}
               onChange={updateCalculation}
               onKeyPress={keyPressed}
               onPaste={(event) => event.preventDefault()}
-              theme={theme}
             />
           </Flex>
         </Flex>
@@ -117,14 +74,14 @@ export class Index extends Component {
   }
 }
 
-const selectors = {
+const selector = createStructuredSelector({
   currentCalculation: currentCalculationSelector,
   previousCalculations: previousCalculationsSelector,
   settings: settingsSelector
-}
+})
 const actions = {
   deleteCalculation: _deleteCalculation,
   keyPressed: _keyPressed,
   updateCalculation: _updateCalculation
 }
-export default connect(selectors, actions)(Radium(Index))
+export default connect(selector, actions)(Index)

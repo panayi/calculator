@@ -2,8 +2,7 @@
 import React from 'react'
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
-import baseThemeVariables from 'themes/_base/variables'
-import Button, { _getStyles } from 'components/Button'
+import Button from 'components/Button'
 import { render, shallowRender } from '../test-helpers/render'
 import { shouldIgnoreOtherProps, shouldUpdate }
   from '../test-helpers/shouldComponentUpdate'
@@ -11,23 +10,6 @@ import { shouldIgnoreOtherProps, shouldUpdate }
 describe('(Component) Button', function () {
   const active = false
   const children = <b className="child">a button</b>
-  const getStyles = function (theme) {
-    return {
-      base: {
-        paddingBottom: '10px'
-      },
-      inactive: {
-        color: theme.blue
-      },
-      active: {
-        color: theme.red
-      }
-    }
-  }
-  const theme = R.merge(baseThemeVariables, {
-    blue: 'blue',
-    red: 'red'
-  })
   let button
   let component
   let props
@@ -39,9 +21,7 @@ describe('(Component) Button', function () {
     props = {
       active,
       children,
-      getStyles,
       onClick: (spies.onClick = sinon.spy()),
-      theme
     }
     component = shallowRender(Button, props)
     rendered = render(Button, props)
@@ -68,24 +48,10 @@ describe('(Component) Button', function () {
     spies.onClick.should.have.been.called
   })
 
-  it('should use inactive styles when "active" is false', function () {
-    const styles = getStyles(theme)
-    const expectedStyles = R.merge(styles.base, styles.inactive)
-    expect(button.props.style).to.deep.equal(expectedStyles)
-  })
-
-  it('should use active styles when "active" is true', function () {
-    const styles = getStyles(theme)
-    const expectedStyles = R.merge(styles.base, styles.active)
-    rendered = render(Button, R.merge(props, { active: true }))
-    button = TestUtils.findRenderedDOMComponentWithTag(rendered, 'span')
-    expect(button.props.style).to.deep.equal(expectedStyles)
-  })
-
   describe('shouldComponentUpdate', function () {
-    it('should not update if active, children and theme are the same',
+    it('should not update if active and children are the same',
       function () {
-        const nextProps = { active, children, theme }
+        const nextProps = { active, children }
         shouldIgnoreOtherProps(rendered, nextProps)
       }
     )
@@ -98,27 +64,6 @@ describe('(Component) Button', function () {
     it('should update if children change', function () {
       const newChildren = <b>A new button!</b>
       shouldUpdate(rendered, { children: newChildren }).is.true
-    })
-
-    it('should not update if theme changes but styles stay the same',
-      function () {
-        const newTheme = R.merge(theme, { green: '#4EF64A' })
-        shouldUpdate(rendered, { theme: newTheme }).is.true
-      }
-    )
-
-    it('should update if styles change', function () {
-      const newTheme = R.merge(theme, { blue: '#14BCF6' })
-      shouldUpdate(rendered, { theme: newTheme }).is.true
-    })
-  })
-
-  describe('_getStyles', function () {
-    it('should return a valid object', function () {
-      const styles = _getStyles(theme)
-      expect(styles.base).to.be.an('object')
-      expect(styles.inactive).to.be.an('object')
-      expect(styles.active).to.be.an('object')
     })
   })
 })

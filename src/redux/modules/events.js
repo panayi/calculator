@@ -4,7 +4,7 @@ import { createAction } from 'redux-actions'
 // Constants
 // ------------------------------------
 export const actionTypes = {
-  BUTTON_CLICKED: 'BUTTON_CLICKED',
+  KEY_CLICKED: 'KEY_CLICKED',
   KEY_PRESSED: 'KEY_PRESSED'
 }
 
@@ -12,8 +12,8 @@ export const actionTypes = {
 // Actions
 // ------------------------------------
 
-// buttonClicked :: Key -> Action
-export const buttonClicked = createAction(actionTypes.BUTTON_CLICKED)
+// keyClicked :: Key -> Action
+export const keyClicked = createAction(actionTypes.KEY_CLICKED)
 
 // keyPressed :: Event -> Action
 export const keyPressed = createAction(actionTypes.KEY_PRESSED)

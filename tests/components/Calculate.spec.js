@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import R from 'ramda'
 import TestUtils from 'react-addons-test-utils'
-import baseThemeVariables from 'themes/_base/variables'
 import Calculate from 'components/Calculate'
 import { render, shallowRender } from '../test-helpers/render'
 import createCalculation from '../test-helpers/createCalculation'
@@ -9,12 +8,6 @@ import { shouldIgnoreOtherProps, shouldUpdate }
   from '../test-helpers/shouldComponentUpdate'
 
 describe('(Component) Calculate', function () {
-  const getStyles = (theme) => {
-    return {
-      color: theme.dark
-    }
-  }
-  const theme = baseThemeVariables
   let calculation = createCalculation('1+1', 2)
   let component
   let input
@@ -26,12 +19,10 @@ describe('(Component) Calculate', function () {
     spies = {}
     props = {
       calculation,
-      getStyles,
       onChange: (spies.onChange = sinon.spy()),
       onKeyPress: (spies.onKeyPress = sinon.spy()),
       onPaste: (spies.onPaste = sinon.spy()),
       onSubmit: (spies.onSubmit = sinon.spy()),
-      theme
     }
     component = shallowRender(Calculate, props)
   })
@@ -44,7 +35,7 @@ describe('(Component) Calculate', function () {
     rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
-      'calculator-input'
+      'calculate__input'
     )
     expect(input.value).to.equal(calculation.input)
   })
@@ -77,7 +68,7 @@ describe('(Component) Calculate', function () {
     rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
-      'calculator-input'
+      'calculate__input'
     )
     TestUtils.Simulate.change(input)
     spies.onChange.should.have.been.called
@@ -87,7 +78,7 @@ describe('(Component) Calculate', function () {
     rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
-      'calculator-input'
+      'calculate__input'
     )
     TestUtils.Simulate.paste(input)
     spies.onPaste.should.have.been.called
@@ -97,7 +88,7 @@ describe('(Component) Calculate', function () {
     rendered = render(Calculate, props)
     input = TestUtils.findRenderedDOMComponentWithClass(
       rendered,
-      'calculator-input'
+      'calculate__input'
     )
     input.focus = sinon.spy()
     input.focus.should.not.have.been.called
@@ -106,26 +97,14 @@ describe('(Component) Calculate', function () {
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if calculation and theme are the same', function () {
-      const nextProps = { calculation, theme }
+    it('should not update if calculation is the same', function () {
+      const nextProps = { calculation }
       shouldIgnoreOtherProps(rendered, nextProps)
     })
 
     it('should update if calculation changes', function () {
       const newCalculation = createCalculation('1+12', 13)
       shouldUpdate(rendered, { calculation: newCalculation }).is.true
-    })
-
-    it('should not update if theme changes but styles stay the same',
-      function () {
-        const newTheme = R.merge(theme, { light: '#EEE' })
-        shouldUpdate(rendered, { theme: newTheme }).is.false
-      }
-    )
-
-    it('should update if styles change', function () {
-      const newTheme = R.merge(theme, { dark: '#444' })
-      shouldUpdate(rendered, { theme: newTheme }).is.true
     })
   })
 })

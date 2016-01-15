@@ -102,7 +102,7 @@ export default handleActions({
     R.prop('payload')
   ]),
 
-  [eventsActionTypes.BUTTON_CLICKED]: R.converge(R.append, [
+  [eventsActionTypes.KEY_CLICKED]: R.converge(R.append, [
     R.useWith(R.compose(tryCalculation, R.concat), [
       lastCalculationInput,
       keyCharacter

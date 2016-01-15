@@ -1,51 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import R from 'ramda'
-import Radium from 'radium'
-import { propsOrStylesChanged } from 'helpers/pureFunctions'
+import { propsChanged } from 'helpers/pureFunctions'
 
-const _getStyles = function (theme) {
-  return {
-    input: {
-      background: 'none',
-      border: 'none',
-      boxShadow: 'none',
-      outline: 'none',
-      fontSize: '20px',
-      padding: '16px 0 11px 0',
-      width: '100%',
-      color: theme.colors.accent
-    },
-    output: {
-      position: 'absolute',
-      fontSize: theme.fontSizes.small
-    },
-    wrapper: {
-      position: 'relative'
-    }
-  }
-}
-
-class Calculate extends Component {
+export default class Calculate extends Component {
   static propTypes = {
     calculation: PropTypes.shape({
       input: PropTypes.string,
       output: PropTypes.number,
       isError: PropTypes.boolean
     }).isRequired,
-    getStyles: PropTypes.func,
     onChange: PropTypes.func.isRequired,
     onKeyPress: PropTypes.func.isRequired,
     onPaste: PropTypes.func.isRequired,
-    theme: PropTypes.object.isRequired
-  };
-
-  static defaultProps = {
-    getStyles: _getStyles
   };
 
   shouldComponentUpdate(nextProps) {
-    return propsOrStylesChanged(['calculation'], this.props.getStyles,
-      this.props, nextProps)
+    return propsChanged(['calculation'], this.props, nextProps)
   }
 
   componentDidUpdate() {
@@ -53,9 +23,7 @@ class Calculate extends Component {
   }
 
   render() {
-    const { calculation, getStyles, onChange, onKeyPress, onPaste,
-      theme } = this.props
-    const styles = getStyles(theme)
+    const { calculation, onChange, onKeyPress, onPaste } = this.props
     const renderedOutput = R.cond([
       [R.prop('isError'), R.always('Ans = ERROR')],
       [R.compose(R.isEmpty, R.defaultTo(''), R.prop('output')), R.always('')],
@@ -63,22 +31,19 @@ class Calculate extends Component {
     ])(calculation)
 
     return (
-      <div style={styles.wrapper}>
-        <span style={styles.output}>{renderedOutput}</span>
+      <div className="calculate">
+        <span className="calculate__output">{renderedOutput}</span>
         <input
           type="text"
-          className="calculator-input"
+          className="calculate__input"
           ref="input"
           value={calculation.input}
           onKeyPress={onKeyPress}
           onChange={(event) => { onChange(event.target.value) }}
           onPaste={onPaste}
           placeholder="Enter an expression to calculate"
-          style={styles.input}
         />
       </div>
     )
   }
 }
-
-export default Radium(Calculate)

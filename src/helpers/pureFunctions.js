@@ -11,7 +11,7 @@ import R from 'ramda'
 // }
 
 // invokeLater :: Number -> Number -> Function -> Function
-const invokeLater = (arity, delay, callback) => {
+export const invokeLater = (arity, delay, callback) => {
   const invoker = function () {
     return window.setTimeout(() => {
       callback.apply(null, Array.prototype.slice.call(arguments))
@@ -21,30 +21,14 @@ const invokeLater = (arity, delay, callback) => {
 }
 
 // mapIndexed :: Function -> List -> List
-const mapIndexed = R.addIndex(R.map)
+export const mapIndexed = R.addIndex(R.map)
 
 // propsChanged :: String[] -> Object -> Object -> Boolean
-const propsChanged = (propsArray, props, nextProps) => {
+export const propsChanged = (propsArray, props, nextProps) => {
   return R.useWith(R.compose(R.not, R.equals), [
     R.pick(propsArray),
     R.pick(propsArray)
   ])(props, nextProps)
-}
-
-// stylesChanged :: Function -> Object -> Object -> Boolean
-const stylesChanged = (getStyles, props, nextProps) => {
-  return R.useWith(R.compose(R.not, R.equals), [
-    R.compose(getStyles, R.prop('theme')),
-    R.compose(getStyles, R.prop('theme'))
-  ])(props, nextProps)
-}
-
-// propsOrStylesChanged :: String[] -> Function -> Object -> Object -> Boolean
-const propsOrStylesChanged = (propsArray, getStyles, props, nextProps) => {
-  return R.or(
-    propsChanged(propsArray, props, nextProps),
-    stylesChanged(getStyles, props, nextProps)
-  )
 }
 
 // ------------------------------------
@@ -52,19 +36,19 @@ const propsOrStylesChanged = (propsArray, getStyles, props, nextProps) => {
 // ------------------------------------
 
 // dispatch -> Action -> Store -> ?
-const dispatch = R.useWith(R.flip(R.call), [
+export const dispatch = R.useWith(R.flip(R.call), [
   R.identity,
   R.prop('dispatch')
 ])
 
 // isActionOfType -> ActionType -> Action -> Boolean
-const isActionOfType = R.useWith(R.equals, [
+export const isActionOfType = R.useWith(R.equals, [
   R.identity,
   R.prop('type')
 ])
 
 // state -> Selector -> Store -> *
-const state = R.useWith(R.call, [
+export const state = R.useWith(R.call, [
   R.identity,
   R.invoker(0, 'getState')
 ])
@@ -73,31 +57,11 @@ const state = R.useWith(R.call, [
 // Key
 // ------------------------------------
 
-// keyCodeProp :: Event -> KeyCode
-const keyCodeProp = R.prop('keyCode')
-
-// whichProp :: Event -> KeyCode
-const whichProp = R.prop('which')
-
 // keyCode :: Event -> KeyCode
-const keyCode = R.either(whichProp, keyCodeProp)
+export const keyCode = R.either(R.prop('which'), R.prop('keyCode'))
 
 // characterFromKeyCode :: KeyCode -> Char
-const characterFromKeyCode = R.curry(code => String.fromCharCode(code))
+export const characterFromKeyCode = R.curry(code => String.fromCharCode(code))
 
 // character :: Event -> Char
-const character = R.compose(characterFromKeyCode, keyCode)
-
-export {
-  character,
-  characterFromKeyCode,
-  dispatch,
-  isActionOfType,
-  keyCode,
-  mapIndexed,
-  propsChanged,
-  propsOrStylesChanged,
-  stylesChanged,
-  state,
-  invokeLater
-}
+export const character = R.compose(characterFromKeyCode, keyCode)

@@ -1,69 +1,34 @@
 import React, { Component, PropTypes } from 'react'
-import Radium from 'radium'
-import { propsOrStylesChanged } from 'helpers/pureFunctions'
+import classnames from 'classnames'
+import { propsChanged } from 'helpers/pureFunctions'
 
-export const _getStyles = function (theme) {
-  return {
-    base: {
-      fontSize: theme.fontSizes.button,
-      width: '56.5px',
-      margin: `0 ${theme.gutters.xsmall}px ${theme.gutters.xsmall}px 0`,
-      padding: '1px 0',
-      textAlign: 'center',
-      display: 'inline-block',
-      cursor: 'pointer',
-      userSelect: 'none',
-      borderBottom: `5px solid ${theme.colors.canvasDarker}`
-    },
-    inactive: {
-      backgroundColor: theme.colors.canvasDark
-    },
-    active: {
-      color: theme.colors.accent,
-      backgroundColor: theme.colors.canvasDarker
-    }
-  }
-}
-
-class Button extends Component {
+export default class Button extends Component {
   static propTypes = {
     active: PropTypes.bool,
     children: PropTypes.node,
-    getStyles: PropTypes.func,
     onClick: PropTypes.func,
-    theme: PropTypes.object.isRequired
-  };
-
-  static defaultProps = {
-    getStyles: _getStyles
   };
 
   shouldComponentUpdate(nextProps) {
-    return propsOrStylesChanged(['active', 'children'], this.props.getStyles,
-      this.props, nextProps)
+    return propsChanged(['active', 'children'], this.props, nextProps)
   }
 
   render() {
     const {
       active,
       children,
-      getStyles,
       onClick,
-      theme
     } = this.props
-    const stateStyles = active ? 'active' : 'inactive'
-    const styles = getStyles(theme)
+
+    const btnClass = classnames({
+      'button': true,
+      'button--active': active,
+    })
 
     return (
-      <span
-        ref="clickTarget"
-        onClick={onClick}
-        style={[styles.base, styles[stateStyles]]}
-      >
+      <span className={btnClass} ref="clickTarget" onClick={onClick}>
         {children}
       </span>
     )
   }
 }
-
-export default Radium(Button)

@@ -19,7 +19,7 @@ export default class CalculationsList extends Component {
 
   componentDidUpdate() {
     const wrapperNode = this.refs.wrapper
-    wrapperNode.scrollTop = wrapperNode.scrollHeight
+    wrapperNode.scrollTop = 0
   }
 
   render() {
@@ -33,7 +33,7 @@ export default class CalculationsList extends Component {
     , calculations)
 
     return (
-      <Flex preset="box" vertical justifyContent="flex-end" inner>
+      <Flex preset="box" vertical inner>
         <div className="calculations-list__content" ref="wrapper">
           <h2 className="calculations-list__overlay">
             <span className="calculations-list__3r">3R </span>calculator

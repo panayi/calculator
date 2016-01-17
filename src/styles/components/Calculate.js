@@ -9,12 +9,13 @@ export default function (variables) {
       boxShadow: 'none',
       outline: 'none',
       fontSize: '20px',
-      padding: '16px 0 11px 0',
+      padding: '11px 0 17px 0',
       width: '100%',
       color: variables.colors.accent
     },
     '.calculate__output': {
       position: 'absolute',
+      bottom: '2px',
       fontSize: variables.fontSizes.small
     }
   }

@@ -32,7 +32,7 @@ export default class ThemeSelector extends Component {
         <Button ref="themeButton" onClick={this.handleClick.bind(this)}>
           <Octicon name="color-mode" className="theme-selector__icon" />
         </Button>
-        <Style scopeSelector="theme-selector" rules={styles} />
+        <Style scopeSelector=".theme-selector" rules={styles} />
       </span>
     )
   }

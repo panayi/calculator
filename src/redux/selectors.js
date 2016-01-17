@@ -11,7 +11,7 @@ export const allCalculationsSelector = R.prop('calculations')
 // previousCalculationsSelector :: State -> Calculations
 export const previousCalculationsSelector = createSelector(
   allCalculationsSelector,
-  R.init
+  R.compose(R.reverse, R.init)
 )
 
 // currentCalculationSelector :: State -> Calculation

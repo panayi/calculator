@@ -14,15 +14,15 @@ export default function (variables) {
     },
     '.index__author': {
       position: 'absolute',
-      top: 0,
+      bottom: 0,
       right: 0,
       padding: '3px 9px 2px',
       backgroundColor: variables.colors.canvas,
-      borderBottomLeftRadius: '3px'
+      borderTopLeftRadius: '3px'
     },
     '.index__calculate-wrapper': {
       backgroundColor: variables.colors.canvasDark,
-      borderTop: `1px solid ${variables.colors.lightBorder}`,
+      borderBottom: `1px solid ${variables.colors.lightBorder}`,
       borderRadius: '0 0 2px 2px'
     },
     '.index__calculate': {

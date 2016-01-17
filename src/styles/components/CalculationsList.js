@@ -2,7 +2,7 @@ export default function (variables) {
   return {
     '.calculations-list__content': {
       overflow: 'auto',
-      marginBottom: `${- variables.gutters.small}px`
+      marginTop: `${- variables.gutters.small}px`
     },
     '.calculations-list__overlay': {
       position: 'absolute',

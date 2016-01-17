@@ -33,9 +33,9 @@ describe('(Redux Selectors)', function () {
         .to.deep.equal(calculations)
     })
 
-    it('should return the previous calculations', function () {
+    it('should return the previous calculations in reverse order', function () {
       expect(previousCalculationsSelector({ calculations }))
-        .to.deep.equal([first, second])
+        .to.deep.equal([second, first])
     })
 
     it('should return the current calculation', function () {

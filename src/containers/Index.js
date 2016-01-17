@@ -48,15 +48,6 @@ export class Index extends Component {
     return (
       <Flex preset="box" vertical innerMargin gutterRight nowrap>
         <div className="index__margin" />
-        <Flex className="index__calculations" preset="box" fullWidth>
-          <CalculationsList
-            calculations={previousCalculations}
-            deleteCalculation={deleteCalculation}
-          />
-          <div className="index__author">
-            <Author settings={settings} />
-          </div>
-        </Flex>
         <Flex className="index__calculate-wrapper" preset="box" fullWidth nogrow
           justifyContent="flex-end"
         >
@@ -68,6 +59,15 @@ export class Index extends Component {
               onPaste={(event) => event.preventDefault()}
             />
           </Flex>
+        </Flex>
+        <Flex className="index__calculations" preset="box" fullWidth>
+          <CalculationsList
+            calculations={previousCalculations}
+            deleteCalculation={deleteCalculation}
+          />
+          <div className="index__author">
+            <Author settings={settings} />
+          </div>
         </Flex>
       </Flex>
     )

@@ -27,7 +27,7 @@ const calculation = R.converge(
 )
 
 // formatInput :: Input -> Input
-const formatInput = R.compose(R.trim, R.defaultTo(''), R.concat(''))
+const formatInput = R.compose(R.trim, R.concat(''), R.defaultTo(''))
 
 // isValidCalculation :: Calculation -> Boolean
 const isValidCalculation = R.converge(R.and, [

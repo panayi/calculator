@@ -40,6 +40,15 @@ describe('(Redux Module) calculations', function () {
         })).to.deep.equal([calculation])
       })
 
+      it('should not append an empty calculation when input is undefined',
+        function () {
+          const calculation = createCalculation()
+          expect(reducer([calculation], {
+            type: actionTypes.DONE_CALCULATION
+          })).to.deep.equal([calculation])
+        }
+      )
+
       it('should not append an empty calculation when input is empty',
         function () {
           const calculation = createCalculation('  ', '')

@@ -15,6 +15,9 @@ export default function (variables) {
       color: variables.colors.fadedText,
       userSelect: 'none'
     },
+    '.calculation__pointer span': {
+      padding: `${variables.gutters.tiny}px`
+    },
     '.calculation__pointer:hover': {
       color: variables.colors.text
     }

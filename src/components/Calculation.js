@@ -20,8 +20,8 @@ export default class Calculation extends Component {
 
     return (
       <Flex preset="box" inner="small" nowrap>
-        <Flex className="calculation__pointer" preset="content" gutter="small"
-          inner="small" nogrow
+        <Flex className="calculation__pointer" preset="content" gutter="xsmall"
+          inner="xsmall" nogrow
         >
           <span onClick={onPointerClick}>—</span>
         </Flex>

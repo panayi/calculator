@@ -50,7 +50,7 @@ export const activeThemeSelector = R.find(R.propEq('active', true))
 // activeThemeNameSelector :: State -> Theme
 export const activeThemeNameSelector = createSelector(
   themesSelector,
-  R.compose(themeName, R.find(R.propEq('active', true)))
+  R.compose(themeName, activeThemeSelector)
 )
 
 // nextThemeNameSelector :: State -> Theme

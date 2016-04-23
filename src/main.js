@@ -19,3 +19,6 @@ ReactDOM.render(
   <Root history={history} routes={routes} store={store} />,
   document.getElementById('root')
 )
+
+// Log current tag-commit
+console.log(`%c 3R Calculator: ${GIT.tag}@${GIT.commit}`, 'color: #2CA127')

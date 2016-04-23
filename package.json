@@ -55,6 +55,7 @@
     "classnames": "^2.2.3",
     "debug": "^2.2.0",
     "dotenv": "^1.2.0",
+    "git-rev-sync": "^1.5.1",
     "history": "^1.17.0",
     "koa": "^2.0.0-alpha.3",
     "koa-connect-history-api-fallback": "^0.3.0",

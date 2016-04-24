@@ -87,9 +87,8 @@ export const updateCalculation = createAction(
 // Reducer
 // ------------------------------------
 export default handleActions({
-  [actionTypes.DELETE_CALCULATION]: (state, { payload }) => {
-    return R.remove(payload, 1, state)
-  },
+  [actionTypes.DELETE_CALCULATION]: (state, { payload }) =>
+    R.remove(payload, 1, state),
 
   [actionTypes.DONE_CALCULATION]: R.ifElse(
     R.compose(isValidCalculation, R.last),

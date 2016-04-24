@@ -1,4 +1,4 @@
-# TODO
+# To do
 - Add animations with ReactCSSTransitionGroup.
 - cursor:pointer for remove-calculation button.
 - Small screens (iPhone size) should show the keypad and input only, not the previous calculations.

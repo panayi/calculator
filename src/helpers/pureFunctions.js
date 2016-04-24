@@ -24,12 +24,11 @@ export const invokeLater = (arity, delay, callback) => {
 export const mapIndexed = R.addIndex(R.map)
 
 // propsChanged :: String[] -> Object -> Object -> Boolean
-export const propsChanged = (propsArray, props, nextProps) => {
-  return R.useWith(R.compose(R.not, R.equals), [
+export const propsChanged = (propsArray, props, nextProps) =>
+  R.useWith(R.compose(R.not, R.equals), [
     R.pick(propsArray),
     R.pick(propsArray)
   ])(props, nextProps)
-}
 
 // ------------------------------------
 // Redux

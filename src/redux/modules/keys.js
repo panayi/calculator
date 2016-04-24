@@ -31,20 +31,18 @@ export const setKeys = createAction(actionTypes.SET_KEYS)
 const setActiveProp = R.set(R.lensProp('active'))
 
 // toggleKey :: Boolean -> State -> KeyCode
-const toggleKey = R.curry((active, state, { payload }) => {
-  return R.map(
+const toggleKey = R.curry((active, state, { payload }) =>
+  R.map(
     R.when(
       R.compose(R.equals(payload), R.prop('keyCode')),
       setActiveProp(active)
     ),
     state
   )
-})
+)
 
 export default handleActions({
   [actionTypes.ACTIVATE_KEY]: toggleKey(true),
   [actionTypes.DEACTIVATE_KEY]: toggleKey(false),
-  [actionTypes.SET_KEYS]: (state, { payload }) => {
-    return payload
-  }
+  [actionTypes.SET_KEYS]: (state, { payload }) => payload
 }, [])

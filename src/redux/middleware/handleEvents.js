@@ -45,12 +45,12 @@ const findAllowedKey = R.useWith(R.flip(R.find), [
 const preventDefault = R.invoker(0, 'preventDefault')
 
 // isKeyAllowed :: Store -> Action -> Event|undefined
-const isKeyAllowed = R.curry((store, action) => {
-  return R.unless(
+const isKeyAllowed = R.curry((store, action) =>
+  R.unless(
     findAllowedKey(allowedKeys(store)),
     preventDefault
   )(event(action))
-})
+)
 
 // handleEvents :: Store -> Function -> Action -> Action|undefined
 export default R.curry((store, next, action) => {

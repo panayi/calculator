@@ -19,7 +19,5 @@ export const setSetting = createAction(actionTypes.SET_SETTING)
 // Reducer
 // ------------------------------------
 export default handleActions({
-  [actionTypes.SET_SETTING]: (state, { payload }) => {
-    return R.merge(state, payload)
-  }
+  [actionTypes.SET_SETTING]: (state, { payload }) => R.merge(state, payload)
 }, {})

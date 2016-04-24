@@ -56,7 +56,7 @@ export class Index extends Component {
               calculation={currentCalculation}
               onChange={updateCalculation}
               onKeyPress={keyPressed}
-              onPaste={(event) => event.preventDefault()}
+              onPaste={function (event) { event.preventDefault() }}
             />
           </Flex>
         </Flex>

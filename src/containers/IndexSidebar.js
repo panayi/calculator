@@ -27,7 +27,7 @@ export class IndexSidebar extends Component {
       <Button
         active={key.active}
         key={index}
-        onClick={() => keyClicked(key)}
+        onClick={function () { keyClicked(key) }}
         ref={`keyButton_${key.keyCode}`}
       >
         {key.display}

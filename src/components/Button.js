@@ -21,7 +21,7 @@ export default class Button extends Component {
     } = this.props
 
     const btnClass = classnames({
-      'button': true,
+      button: true,
       'button--active': active,
     })
 

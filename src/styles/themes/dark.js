@@ -1,26 +1,10 @@
 import createTheme from './createTheme'
 
-const primaryColor = '#16a085'
-const accentColor = '#FAAB22'
-const accent2Color = '#EE213D'
-const canvasColor = '#27313E'
-const primaryContrastColor = 'white'
-const accentContrastColor = 'white'
-
-export default createTheme(tinycolor => ({
-  primary: primaryColor,
-  primaryDark: tinycolor(primaryColor).saturate(3).darken(17).toString(),
-  accent: accentColor,
-  accent2: accent2Color,
-  primaryContrast: primaryContrastColor,
-  accentContrast: accentContrastColor,
-  canvas: canvasColor,
-  canvasDark: tinycolor(canvasColor).darken(9).toString(),
-  canvasDarker: tinycolor(canvasColor).darken(18).desaturate(5).setAlpha(0.7)
-                .toString(),
-  text: primaryColor,
-  fadedText: tinycolor(canvasColor).setAlpha(0.7).toString(),
-  border: tinycolor(primaryColor).setAlpha(0.35).toString(),
-  lightBorder: tinycolor(canvasColor).darken(3).toString(),
-  logo: tinycolor(primaryColor).desaturate(30).setAlpha(0.5).toString()
-}))
+export default createTheme({
+  primaryColor: '#16a085',
+  accentColor: '#FAAB22',
+  accent2Color: '#EE213D',
+  canvasColor: '#27313E',
+  primaryContrastColor: 'white',
+  accentContrastColor: 'white'
+})

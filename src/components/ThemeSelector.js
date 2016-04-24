@@ -12,6 +12,11 @@ export default class ThemeSelector extends Component {
     onClick: PropTypes.func.isRequired
   };
 
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
   shouldComponentUpdate(nextProps) {
     return propsChanged(['themeName'], this.props, nextProps)
   }
@@ -29,7 +34,7 @@ export default class ThemeSelector extends Component {
 
     return (
       <span className="theme-selector">
-        <Button ref="themeButton" onClick={this.handleClick.bind(this)}>
+        <Button ref="themeButton" onClick={this.handleClick}>
           <Octicon name="color-mode" className="theme-selector__icon" />
         </Button>
         <Style scopeSelector=".theme-selector" rules={styles} />

@@ -8,22 +8,33 @@ export default class Calculation extends Component {
       input: PropTypes.string,
       output: PropTypes.number
     }).isRequired,
-    onPointerClick: PropTypes.func.isRequired,
+    deleteCalculation: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired
   };
 
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+
   shouldComponentUpdate(nextProps) {
-    return propsChanged(['calculation'], this.props, nextProps)
+    return propsChanged(['calculation', 'index'], this.props, nextProps)
+  }
+
+  handleClick() {
+    const { deleteCalculation, index } = this.props
+    deleteCalculation(index)
   }
 
   render() {
-    const { calculation, onPointerClick } = this.props
+    const { calculation } = this.props
 
     return (
       <Flex preset="box" inner="small" nowrap>
         <Flex className="calculation__pointer" preset="content" gutter="xsmall"
           inner="xsmall" nogrow
         >
-          <span onClick={onPointerClick}>—</span>
+          <span onClick={this.handleClick}>—</span>
         </Flex>
         <Flex preset="content" gutter>
           <div>

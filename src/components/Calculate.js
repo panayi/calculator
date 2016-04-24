@@ -14,6 +14,11 @@ export default class Calculate extends Component {
     onPaste: PropTypes.func.isRequired,
   };
 
+  constructor(props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
   shouldComponentUpdate(nextProps) {
     return propsChanged(['calculation'], this.props, nextProps)
   }
@@ -22,8 +27,13 @@ export default class Calculate extends Component {
     this.refs.input.focus()
   }
 
+  handleChange(event) {
+    const { onChange } = this.props
+    onChange(event.target.value)
+  }
+
   render() {
-    const { calculation, onChange, onKeyPress, onPaste } = this.props
+    const { calculation, onKeyPress, onPaste } = this.props
     const renderedOutput = R.cond([
       [R.prop('isError'), R.always('Ans = ERROR')],
       [R.compose(R.isEmpty, R.defaultTo(''), R.prop('output')), R.always('')],
@@ -39,7 +49,7 @@ export default class Calculate extends Component {
           ref="input"
           value={calculation.input}
           onKeyPress={onKeyPress}
-          onChange={(event) => { onChange(event.target.value) }}
+          onChange={this.handleChange}
           onPaste={onPaste}
           placeholder="Enter an expression to calculate"
         />

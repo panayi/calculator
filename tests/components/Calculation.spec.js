@@ -11,14 +11,15 @@ import { shouldIgnoreOtherProps, shouldUpdate }
 describe('(Component) Calculation', function () {
   const calculation = createCalculation('1+1', 2)
 
-  const onPointerClick = sinon.spy()
+  const deleteCalculation = sinon.spy()
+  const index = 4
   let component
   let pointer
   let props
   let rendered
 
   beforeEach(function () {
-    props = { calculation, onPointerClick }
+    props = { calculation, deleteCalculation, index }
     component = shallowRender(Calculation, props)
     rendered = render(Calculation, props)
 
@@ -51,21 +52,27 @@ describe('(Component) Calculation', function () {
     expect(pointer).to.exist
   })
 
-  it('should dispatch onPointerClick on clicking pointer', function () {
-    onPointerClick.should.not.have.been.called
+  it('should dispatch deleteCalculation on clicking pointer', function () {
+    deleteCalculation.should.not.have.been.called
     TestUtils.Simulate.click(pointer)
-    onPointerClick.should.have.been.called
+    deleteCalculation.should.have.been.called
+    expect(deleteCalculation.getCall(0).args[0]).to.equal(index)
   })
 
   describe('shouldComponentUpdate', function () {
-    it('should not update if calculation is the same', function () {
-      const nextProps = { calculation }
+    it('should not update if calculation and index are the same', function () {
+      const nextProps = { calculation, index }
       shouldIgnoreOtherProps(rendered, nextProps)
     })
 
     it('should update if calculation changes', function () {
       const newCalculation = createCalculation('12+120', 132)
       shouldUpdate(rendered, { calculation: newCalculation }).is.true
+    })
+
+    it('should update if index changes', function () {
+      const newIndex = 5
+      shouldUpdate(rendered, { index: newIndex }).is.true
     })
   })
 })

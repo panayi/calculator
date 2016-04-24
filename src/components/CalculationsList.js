@@ -27,8 +27,9 @@ export default class CalculationsList extends Component {
     const results = mapIndexed((calculation, index) =>
       <Calculation
         calculation={calculation}
+        deleteCalculation={deleteCalculation}
+        index={index}
         key={index}
-        onPointerClick={() => deleteCalculation(index)}
       />
     , calculations)
 

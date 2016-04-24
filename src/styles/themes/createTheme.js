@@ -4,7 +4,7 @@ import base from './base'
 
 export default R.compose(
   R.merge(base),
-  colors => ({ colors: {
+  (colors = {}) => ({ colors: {
     primary: colors.primaryColor,
     primaryDark: tinycolor(colors.primaryColor).saturate(3).darken(17)
       .toString(),

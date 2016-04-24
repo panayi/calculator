@@ -1,4 +1,4 @@
-# 3R (React, Redux, Ramda) Calculator [![Build Status](https://travis-ci.org/panayi/calculator.svg?branch=master)](https://travis-ci.org/panayi/calculator)
+# 3R (React, Redux, Ramda) Calculator [![Build Status](https://travis-ci.org/panayi/calculator.svg?branch=master)](https://travis-ci.org/panayi/calculator) [![Code Climate](https://codeclimate.com/github/panayi/calculator/badges/gpa.svg)](https://codeclimate.com/github/panayi/calculator)
 A calculator built with React, Redux, Ramda and point free functional programming.
 
 ## [DEMO](http://panayi.github.io/calculator/)

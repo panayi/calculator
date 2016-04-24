@@ -22,5 +22,8 @@ ratings:
   - "**.py"
   - "**.rb"
 exclude_paths:
+- bin/
+- build/
 - config/
+- server/
 - tests/

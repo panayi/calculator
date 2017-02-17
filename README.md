@@ -2,7 +2,7 @@
 A calculator built with React, Redux, Ramda and point free functional programming.
 
 ## [DEMO](http://panayi.github.io/calculator/)
-![3R Calculator](https://cloud.githubusercontent.com/assets/707005/12324852/797c1cbe-bace-11e5-8dff-f12f3c8a2e93.png)
+[![3R Calculator](https://cloud.githubusercontent.com/assets/707005/12324852/797c1cbe-bace-11e5-8dff-f12f3c8a2e93.png)](http://panayi.github.io/calculator/)
 
 ## Features
 - Point-free functional programming with [Ramda](http://ramdajs.com/).

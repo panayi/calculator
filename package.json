@@ -61,7 +61,7 @@
     "koa-connect-history-api-fallback": "^0.3.0",
     "koa-convert": "^1.2.0",
     "koa-static": "^2.0.0",
-    "mathjs": "^2.5.0",
+    "mathjs": "^7.2.0",
     "normalize.css": "^3.0.3",
     "radium": "^0.15.3",
     "ramda": "^0.18.0",
